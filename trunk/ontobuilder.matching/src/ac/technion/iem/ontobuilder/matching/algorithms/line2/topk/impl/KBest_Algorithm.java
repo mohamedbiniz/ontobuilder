@@ -2,12 +2,11 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 
 import java.util.Vector;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Tree;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.TreeNode;
-
-import schemamatchings.topk.graphs.BipartiteGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.BipartiteGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Tree;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.TreeNode;
 
 /**
  * <p>
@@ -176,7 +175,7 @@ public class KBest_Algorithm implements TopKAlgorithm
         for (int j = 0; j < t; j++)
         { // maxLeaf sons developing
             TreeNode tmpNode = new TreeNode(graph); // O(V^2)
-            tmpNode.setSe(maxLeaf.getSe(), (Edge) diff.getMember(j)); // Se(wj) = Se(w)U{ej} O(E)
+            tmpNode.setSet(maxLeaf.getSe(), (Edge) diff.getMember(j)); // Se(wj) = Se(w)U{ej} O(E)
             tmpNode.setSi(maxLeaf.getSi()); // O(1)
             for (int l = 0; l < j; l++)
             { // Si(wj) = Si(w)UU{el} l = 1,...,j-1 O(j-1)

@@ -1,6 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
 
 
 /**

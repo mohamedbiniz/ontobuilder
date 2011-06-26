@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs;
+package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities;
 
 import java.io.Serializable;
 import java.util.Iterator;

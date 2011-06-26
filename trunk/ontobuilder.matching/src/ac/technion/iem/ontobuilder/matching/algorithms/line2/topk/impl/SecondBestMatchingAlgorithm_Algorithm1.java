@@ -3,12 +3,12 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 import java.util.Iterator;
 import java.util.Vector;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.BipartiteGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.EdgeArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.VertexArray;
 
-import schemamatchings.topk.graphs.BipartiteGraph;
-import schemamatchings.topk.graphs.util.EdgeArray;
-import schemamatchings.topk.graphs.util.VertexArray;
 
 /**
  * <p>

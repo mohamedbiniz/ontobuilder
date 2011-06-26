@@ -2,8 +2,8 @@ package ac.technion.iem.ontobuilder.matching.meta.match;
 
 import java.util.Iterator;
 
-import schemamatchings.topk.graphs.Edge;
-import schemamatchings.topk.graphs.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
 
 /**
  * <p>Title: SimpleMapping</p>

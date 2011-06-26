@@ -1,10 +1,8 @@
-package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs;
+package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
-
-import schemamatchings.topk.graphs.BipartiteGraph;
 
 /**
  * <p>

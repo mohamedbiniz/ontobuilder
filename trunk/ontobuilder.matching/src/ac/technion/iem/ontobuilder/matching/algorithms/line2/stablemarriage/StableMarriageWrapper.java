@@ -2,11 +2,12 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.stablemarriage;
 
 import java.util.*;
 
-import com.modica.ontology.*;
-import com.modica.ontology.match.*;
-import schemamatchings.ontobuilder.*;
-import schemamatchings.util.*;
-import schemamatchings.meta.match.*;
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
+import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
+import ac.technion.iem.ontobuilder.matching.wrapper.OntoBuilderWrapper;
 
 /**
  * <p>
@@ -43,7 +44,7 @@ public class StableMarriageWrapper
         m_MenSet = new Hashtable<Man, TreeMap<?, ?>>();
         m_WomenSet = new Hashtable<Woman, TreeMap<?, ?>>();
         m_StableMarriage = new StableMarriage();
-        m_sAlgorithmName = MatchingAlgorithms.TERM;
+        m_sAlgorithmName = MatchingAlgorithmsNamesEnum.TERM.getName();
 
     }
 
