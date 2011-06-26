@@ -3,13 +3,11 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 import java.util.Iterator;
 import java.util.Vector;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
-
-import schemamatchings.topk.graphs.Cycle;
-import schemamatchings.topk.graphs.DGraph;
-import schemamatchings.topk.graphs.NegativeCycleInGraphException;
-import schemamatchings.topk.graphs.Path;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Cycle;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.DGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Path;
 
 /**
  * <p>

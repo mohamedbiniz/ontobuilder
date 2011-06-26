@@ -3,16 +3,15 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 import java.util.Iterator;
 import java.util.Stack;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Vertex;
-
-import schemamatchings.topk.graphs.BipartiteGraph;
-import schemamatchings.topk.graphs.Graph;
-import schemamatchings.topk.graphs.util.EdgeArray;
-import schemamatchings.topk.graphs.util.GraphUtilities;
-import schemamatchings.topk.graphs.util.VertexArray;
-import schemamatchings.topk.graphs.util.VertexPQ;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.BipartiteGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Graph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Vertex;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.EdgeArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.GraphUtilities;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.VertexArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.VertexPQ;
 
 /**
  * <p>

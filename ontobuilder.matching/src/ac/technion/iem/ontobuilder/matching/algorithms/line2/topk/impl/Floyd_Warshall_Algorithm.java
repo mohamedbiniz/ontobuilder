@@ -1,8 +1,8 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import schemamatchings.topk.graphs.NegativeCycleInGraphException;
-import schemamatchings.topk.graphs.Path;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.NegativeCycleInGraphException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Path;
 
 /**
  * <p>Title: Floyd_Warshall_Algorithm</p>

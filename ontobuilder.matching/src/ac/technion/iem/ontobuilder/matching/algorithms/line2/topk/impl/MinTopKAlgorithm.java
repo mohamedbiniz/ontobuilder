@@ -5,13 +5,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.Edge;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.EdgesSet;
-
-import schemamatchings.topk.graphs.BipartiteGraph;
-import schemamatchings.topk.graphs.Graph;
-import schemamatchings.topk.graphs.Path;
-import schemamatchings.topk.graphs.util.GraphUtilities;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.BipartiteGraph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Edge;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.EdgesSet;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Graph;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities.Path;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.GraphUtilities;
 
 /**
  * <p>Title: MinTopKAlgorithm</p>

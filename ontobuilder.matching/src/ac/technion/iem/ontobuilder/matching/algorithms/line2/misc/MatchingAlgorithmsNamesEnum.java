@@ -34,7 +34,7 @@ public enum MatchingAlgorithmsNamesEnum
         return _name;
     }
 
-    public String[] getAllNames()
+    public static String[] getAllNames()
     {
         String[] allNames =
         {

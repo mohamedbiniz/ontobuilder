@@ -17,14 +17,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-
-import schemamatchings.topk.wrapper.SchemaMatchingsException;
-import schemamatchings.topk.wrapper.SchemaMatchingsWrapper;
-
+import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
+import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMapping;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 
 import com.modica.ontology.OntologyUtilities;
-import com.modica.ontology.Term;
 import com.modica.ontology.match.Match;
 import com.modica.ontology.match.MatchInformation;
 

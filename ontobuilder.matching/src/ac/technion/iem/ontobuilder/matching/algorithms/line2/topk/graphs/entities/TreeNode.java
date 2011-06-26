@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs;
+package ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.entities;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,9 +6,10 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import schemamatchings.topk.graphs.BipartiteGraph;
-import schemamatchings.topk.graphs.util.EdgeArray;
-import schemamatchings.topk.graphs.util.VertexArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.EdgeArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.VertexArray;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.impl.MaxWeightBipartiteMatchingAlgorithm;
+
 
 /**
  * <p>
@@ -112,7 +113,7 @@ public class TreeNode implements Serializable
      * @param eg the si of the nodes father, an {@link EdgesSet}
      * @param e the ej, an {@link Edge}
      */
-    public void setSe(EdgesSet eg, Edge e) // O(E)
+    public void setSet(EdgesSet eg, Edge e) // O(E)
     {
         Vector<Edge> tmp = new Vector<Edge>();
         tmp.add(e);
