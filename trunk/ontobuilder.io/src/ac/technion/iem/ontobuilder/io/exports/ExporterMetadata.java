@@ -7,9 +7,6 @@ package ac.technion.iem.ontobuilder.io.exports;
  */
 public class ExporterMetadata
 {
-    public static final String ONTOLOGY = "Ontology";
-    public static final String MATCHING = "Matching";
-
     private String key;
     private String icon;
     private String classpath;

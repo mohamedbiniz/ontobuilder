@@ -41,7 +41,7 @@ public class BizTalkOntologyExporter implements Exporter
      */
     public String getType()
     {
-        return ExporterMetadata.ONTOLOGY;
+        return ExportersTypeEnum.ONTOLOGY.getName();
     }
 
 }

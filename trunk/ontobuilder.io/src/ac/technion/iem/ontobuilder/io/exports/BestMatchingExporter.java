@@ -44,7 +44,7 @@ public class BestMatchingExporter implements Exporter
      */
     public String getType()
     {
-        return ExporterMetadata.MATCHING;
+        return ExportersTypeEnum.MATCHING.getName();
     }
     
     
