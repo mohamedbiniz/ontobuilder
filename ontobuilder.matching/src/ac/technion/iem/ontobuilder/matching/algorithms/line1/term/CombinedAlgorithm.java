@@ -12,6 +12,7 @@ import org.jdom.Element;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
@@ -20,7 +21,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.Preceden
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 import com.modica.ontology.OntologyUtilities;
@@ -91,7 +91,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
      */
     public String getName()
     {
-        return ApplicationUtilities.getResourceString("algorithm.combined");
+        return PropertiesHandler.getResourceString("algorithm.combined");
     }
 
     /**
@@ -101,7 +101,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
      */
     public String getDescription()
     {
-        return ApplicationUtilities.getResourceString("algorithm.combined.description");
+        return PropertiesHandler.getResourceString("algorithm.combined.description");
     }
     
     /**
@@ -225,28 +225,28 @@ public class CombinedAlgorithm extends TermValueAlgorithm
         if (termAlgorithm == null)
         {
             termAlgorithm = (TermAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.term")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.term")).makeCopy();
             if (termAlgorithm == null)
                 return null;
         }
         if (valueAlgorithm == null)
         {
             valueAlgorithm = (ValueAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.value")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.value")).makeCopy();
             if (valueAlgorithm == null)
                 return null;
         }
         if (graphAlgorithm == null)
         {
             graphAlgorithm = (GraphAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.graph")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.graph")).makeCopy();
             if (graphAlgorithm == null)
                 return null;
         }
         if (precedenceAlgorithm == null)
         {
             precedenceAlgorithm = (PrecedenceAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.precedence")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.precedence")).makeCopy();
             if (precedenceAlgorithm == null)
                 return null;
         }
@@ -334,12 +334,12 @@ public class CombinedAlgorithm extends TermValueAlgorithm
     // {
     // if(termAlgorithm==null)
     // {
-    // termAlgorithm=(TermAlgorithm)AlgorithmUtilities.getAlgorithm(ApplicationUtilities.getResourceString("algorithm.term")).makeCopy();
+    // termAlgorithm=(TermAlgorithm)AlgorithmUtilities.getAlgorithm(PropertiesHandler.getResourceString("algorithm.term")).makeCopy();
     // if(termAlgorithm==null) return null;
     // }
     // if(valueAlgorithm==null)
     // {
-    // valueAlgorithm=(ValueAlgorithm)AlgorithmUtilities.getAlgorithm(ApplicationUtilities.getResourceString("algorithm.value")).makeCopy();
+    // valueAlgorithm=(ValueAlgorithm)AlgorithmUtilities.getAlgorithm(PropertiesHandler.getResourceString("algorithm.value")).makeCopy();
     // if(valueAlgorithm==null) return null;
     // }
     //
@@ -365,7 +365,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
     // //end new version
     // double matchMatrix[][]=combineMatrices(termMatchMatrix,valueMatchMatrix);
     // String
-    // columnNames[]={ApplicationUtilities.getResourceString("ontology.match.candidate"),ApplicationUtilities.getResourceString("ontology.match.target"),ApplicationUtilities.getResourceString("ontology.match.effectiveness")};
+    // columnNames[]={PropertiesHandler.getResourceString("ontology.match.candidate"),PropertiesHandler.getResourceString("ontology.match.target"),PropertiesHandler.getResourceString("ontology.match.effectiveness")};
     // /*gabi - ceating the matchTable and adding it to MatchInformation - 5/2/2003*/
     // Object matchTable[][]=new Object[targetTerms.size()*candidateTerms.size()][3];
     // //added by haggai - 6/12/03
@@ -517,9 +517,9 @@ public class CombinedAlgorithm extends TermValueAlgorithm
         {
             String columnNames[] =
             {
-                ApplicationUtilities.getResourceString("ontology.match.candidate"),
-                ApplicationUtilities.getResourceString("ontology.match.target"),
-                ApplicationUtilities.getResourceString("ontology.match.effectiveness")
+                PropertiesHandler.getResourceString("ontology.match.candidate"),
+                PropertiesHandler.getResourceString("ontology.match.target"),
+                PropertiesHandler.getResourceString("ontology.match.effectiveness")
             };
             Object matchTable[][] = new Object[targetTerms.size() * candidateTerms.size()][3];
 
@@ -536,10 +536,10 @@ public class CombinedAlgorithm extends TermValueAlgorithm
                 }
             }
 
-            System.out.println(ApplicationUtilities.getResourceString("algorithm.term") + " + " +
-                ApplicationUtilities.getResourceString("algorithm.value") + " + " +
-                ApplicationUtilities.getResourceString("algorithm.graph") + " + " +
-                ApplicationUtilities.getResourceString("algorithm.precedence"));
+            System.out.println(PropertiesHandler.getResourceString("algorithm.term") + " + " +
+                PropertiesHandler.getResourceString("algorithm.value") + " + " +
+                PropertiesHandler.getResourceString("algorithm.graph") + " + " +
+                PropertiesHandler.getResourceString("algorithm.precedence"));
             System.out.println();
             System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
                 new PropertiesTableModel(columnNames, 4, matchTable))));

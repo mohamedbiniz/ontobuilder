@@ -31,6 +31,7 @@ import org.jdom.output.XMLOutputter;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithm;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
@@ -44,7 +45,6 @@ import com.jgraph.graph.DefaultGraphCell;
 import com.jgraph.graph.DefaultGraphModel;
 import com.jgraph.graph.DefaultPort;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.graph.GraphUtilities;
 import com.modica.io.StringOutputStream;
 import com.modica.ontology.OntologyUtilities;
@@ -411,7 +411,7 @@ public class MatchInformation
         Object columnNames[] =
         {
             targetOntology.getName(), candidateOntology.getName(),
-            ApplicationUtilities.getResourceString("ontology.match.effectiveness")
+            PropertiesHandler.getResourceString("ontology.match.effectiveness")
         };
         return new JTable(new MatchTableModel(columnNames, data));
     }
@@ -531,45 +531,45 @@ public class MatchInformation
         }
         Object columnNames[] =
         {
-            ApplicationUtilities.getResourceString("ontology.match.statistics"),
-            ApplicationUtilities.getResourceString("ontology.match.value")
+            PropertiesHandler.getResourceString("ontology.match.statistics"),
+            PropertiesHandler.getResourceString("ontology.match.value")
         };
         NumberFormat nf = NumberFormat.getInstance();
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.match.target"),
+                PropertiesHandler.getResourceString("ontology.match.target"),
                 targetOntology.getName()
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.candidate"),
+                PropertiesHandler.getResourceString("ontology.match.candidate"),
                 candidateOntology.getName()
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.algorithm"),
+                PropertiesHandler.getResourceString("ontology.match.algorithm"),
                 algorithm != null ? algorithm.getName() : metaAlgorithm.getAlgorithmName()
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.totalTarget"),
+                PropertiesHandler.getResourceString("ontology.match.totalTarget"),
                 new Integer(totalTargetTerms)
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.totalCandidate"),
+                PropertiesHandler.getResourceString("ontology.match.totalCandidate"),
                 new Integer(totalCandidateTerms)
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.totalMatches"),
+                PropertiesHandler.getResourceString("ontology.match.totalMatches"),
                 new Integer(matches.size())
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.recall"),
+                PropertiesHandler.getResourceString("ontology.match.recall"),
                 (recall != -1 ? nf.format(recall * 100) + "%" : "N/A")
             },
             {
-                ApplicationUtilities.getResourceString("ontology.match.precision"),
+                PropertiesHandler.getResourceString("ontology.match.precision"),
                 (precision != -1 ? nf.format(precision * 100) + "%" : "N/A")
             },
-        // {ApplicationUtilities.getResourceString("ontology.match.overall"),nf.format(getOverallMatchConfidence()*100)+"%"}
+        // {PropertiesHandler.getResourceString("ontology.match.overall"),nf.format(getOverallMatchConfidence()*100)+"%"}
         };
         return new JTable(new MatchTableModel(columnNames, data));
     }
@@ -584,41 +584,41 @@ public class MatchInformation
     {
         NumberFormat nf = NumberFormat.getInstance();
         StringBuffer sb = new StringBuffer("");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.target")).append(": ")
+        sb.append(PropertiesHandler.getResourceString("ontology.match.target")).append(": ")
             .append(targetOntology.getName()).append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.candidate")).append(": ")
+        sb.append(PropertiesHandler.getResourceString("ontology.match.candidate")).append(": ")
             .append(candidateOntology.getName()).append("\n");
         sb.append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.algorithm")).append(": ")
+        sb.append(PropertiesHandler.getResourceString("ontology.match.algorithm")).append(": ")
             .append(algorithm.getName()).append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.threshold")).append(": ")
+        sb.append(PropertiesHandler.getResourceString("ontology.match.threshold")).append(": ")
             .append(nf.format(algorithm.getThreshold()) + "%").append("\n");
         sb.append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.totalTarget"))
+        sb.append(PropertiesHandler.getResourceString("ontology.match.totalTarget"))
             .append(": ").append(totalTargetTerms).append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.totalCandidate"))
+        sb.append(PropertiesHandler.getResourceString("ontology.match.totalCandidate"))
             .append(": ").append(totalCandidateTerms).append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.totalMatches"))
+        sb.append(PropertiesHandler.getResourceString("ontology.match.totalMatches"))
             .append(": ").append(matches.size()).append("\n");
-        sb.append(ApplicationUtilities.getResourceString("ontology.match.recall")).append(": ")
+        sb.append(PropertiesHandler.getResourceString("ontology.match.recall")).append(": ")
             .append(nf.format(matches.size() / (double) totalCandidateTerms * 100) + "%")
             .append("\n");
         sb.append("\n");
-        sb.append(ApplicationUtilities.getResourceString("mergewizard.matchInformation.matches"))
+        sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.matches"))
             .append("\n");
         sb.append(StringUtilities.getJTableStringRepresentation(getMatchTable()));
         sb.append("\n\n");
-        sb.append(ApplicationUtilities.getResourceString("mergewizard.matchInformation.mismatches"))
+        sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatches"))
             .append("\n");
         sb.append(StringUtilities.getJTableStringRepresentation(getMismatchTable()));
         sb.append("\n\n");
         sb.append(
-            ApplicationUtilities.getResourceString("mergewizard.matchInformation.mismatchesTarget"))
+            PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatchesTarget"))
             .append("\n");
         sb.append(StringUtilities.getJTableStringRepresentation(getMismatchTargetOntologyTable()));
         sb.append("\n\n");
         sb.append(
-            ApplicationUtilities
+            PropertiesHandler
                 .getResourceString("mergewizard.matchInformation.mismatchesCandidate"))
             .append("\n");
         sb.append(StringUtilities
@@ -727,8 +727,8 @@ public class MatchInformation
         GraphUtilities.alignHierarchy(graph, targetCell, SwingConstants.LEFT, 10, 10);
 
         // Calculate the offset for the graph right hierarchy
-        int width = ApplicationUtilities.getIntProperty("graph.cell.width");
-        int interspace = ApplicationUtilities.getIntProperty("graph.cell.hierarchyInterspace");
+        int width = PropertiesHandler.getIntProperty("graph.cell.width");
+        int interspace = PropertiesHandler.getIntProperty("graph.cell.hierarchyInterspace");
         int leftDepth = GraphUtilities.getDepth(targetCell) + 1;
         int rightDepth = GraphUtilities.getDepth(candidateCell) + 1;
         int off = (width / 2 + 10) * (leftDepth + rightDepth - 2) + width * 2 + interspace;
@@ -796,8 +796,8 @@ public class MatchInformation
     // GraphUtilities.alignHierarchy(graph,targetCell,SwingConstants.LEFT,10,10);
     //
     // // Calculate the offset for the graph right hierarchy
-    // int width=ApplicationUtilities.getIntProperty("graph.cell.width");
-    // int interspace=ApplicationUtilities.getIntProperty("graph.cell.hierarchyInterspace");
+    // int width=PropertiesHandler.getIntProperty("graph.cell.width");
+    // int interspace=PropertiesHandler.getIntProperty("graph.cell.hierarchyInterspace");
     // int leftDepth=GraphUtilities.getDepth(targetCell)+1;
     // int rightDepth=GraphUtilities.getDepth(candidateCell)+1;
     // int off=(width/2+10)*(leftDepth+rightDepth-2)+width*2+interspace;
@@ -1116,7 +1116,7 @@ public class MatchInformation
             break;
         default:
             throw new IOException(
-                ApplicationUtilities.getResourceString("error.matchInformation.fileFormat"));
+                PropertiesHandler.getResourceString("error.matchInformation.fileFormat"));
         }
     }
 

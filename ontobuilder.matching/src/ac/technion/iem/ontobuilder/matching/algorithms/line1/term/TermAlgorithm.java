@@ -17,6 +17,7 @@ import org.jdom.Element;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
@@ -24,7 +25,6 @@ import ac.technion.iem.ontobuilder.matching.match.MatchComparator;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontology.OntologyUtilities;
 
@@ -167,7 +167,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
      */
     public String getName()
     {
-        return ApplicationUtilities.getResourceString("algorithm.term");
+        return PropertiesHandler.getResourceString("algorithm.term");
     }
 
     /**
@@ -177,7 +177,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
      */
     public String getDescription()
     {
-        return ApplicationUtilities.getResourceString("algorithm.term.description");
+        return PropertiesHandler.getResourceString("algorithm.term.description");
     }
 
     /**
