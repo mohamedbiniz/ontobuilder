@@ -3,6 +3,7 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.misc;
 import java.util.Iterator;
 import java.util.Vector;
 
+import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmInitiationException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmRunningException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.tkm.TKM;

@@ -1,0 +1,491 @@
+package ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JTable;
+
+import org.jdom.Element;
+
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgorithm;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
+
+import com.modica.application.ApplicationUtilities;
+import com.modica.application.PropertiesTableModel;
+import com.modica.ontobuilder.ApplicationParameters;
+import com.modica.ontology.OntologyUtilities;
+import com.modica.ontology.domain.GuessedDomain;
+import com.modica.ontology.match.MatchInformation;
+import com.modica.util.StringUtilities;
+
+/**
+ * <p>Title: PrecedenceAlgorithm</p>
+ * Extends a {@link TermValueAlgorithm}
+ */
+public class PrecedenceAlgorithm extends TermValueAlgorithm
+{
+    protected double precedeWeight;
+    protected double succeedWeight;
+    protected double precedenceWeight;
+
+    protected boolean combine = true;
+    protected boolean enhance = true;
+
+    /**
+     * Make a copy of the algorithm instance
+     */
+    public Algorithm makeCopy()
+    {
+        PrecedenceAlgorithm algorithm = new PrecedenceAlgorithm();
+        algorithm.pluginName = pluginName;
+        algorithm.mode = mode;
+        algorithm.thesaurus = thesaurus;
+        algorithm.termPreprocessor = termPreprocessor;
+        algorithm.threshold = threshold;
+        algorithm.effectiveness = effectiveness;
+        algorithm.combine = combine;
+        algorithm.enhance = enhance;
+        algorithm.precedeWeight = precedeWeight;
+        algorithm.succeedWeight = succeedWeight;
+        algorithm.precedenceWeight = precedenceWeight;
+        return algorithm;
+    }
+
+    /**
+     * Constructs a default PrecedenceAlgorithm
+     */
+    public PrecedenceAlgorithm()
+    {
+        super();
+    }
+
+    /**
+     * Set the precede weight
+     * 
+     * @param precedeWeight the precede weight
+     */
+    public void setPrecedeWeight(double precedeWeight)
+    {
+        this.precedeWeight = precedeWeight;
+    }
+
+    /**
+     * Get the precede weight
+     * 
+     * @return the precede weight
+     */
+    public double getPrecedeWeight()
+    {
+        return precedeWeight;
+    }
+
+    /**
+     * Set the succeed weight
+     * 
+     * @param succeedWeight the succeed weight
+     */
+    public void setSucceedWeight(double succeedWeight)
+    {
+        this.succeedWeight = succeedWeight;
+    }
+
+    /**
+     * Get the succeed weight
+     * 
+     * @return the succeed weight
+     */
+    public double getSucceedWeight()
+    {
+        return succeedWeight;
+    }
+
+    /**
+     * Set to combine the matrices
+     * 
+     * @param b <code>true</code> if is combined
+     */
+    public void setCombine(boolean b)
+    {
+        combine = b;
+    }
+
+    /**
+     * Check whether is combined
+     * 
+     * @return <code>true</code> if is combined
+     */
+    public boolean isCombine()
+    {
+        return combine;
+    }
+
+    /**
+     * Set to enhance
+     * 
+     * @param b <code>true</code> if is enhanced
+     */
+    public void setEnhance(boolean b)
+    {
+        enhance = b;
+    }
+
+    /**
+     * Check whether is enhanced
+     * 
+     * @return <code>true</code> if is enhanced
+     */
+    public boolean isEnhance()
+    {
+        return enhance;
+    }
+
+    /**
+     * Get the name
+     * 
+     * @return the name
+     */
+    public String getName()
+    {
+        return ApplicationUtilities.getResourceString("algorithm.precedence");
+    }
+
+    /**
+     * Get the description
+     * 
+     * @return the description
+     */
+    public String getDescription()
+    {
+        return ApplicationUtilities.getResourceString("algorithm.precedence.description");
+    }
+
+    /**
+     * Configure the algorithm parameters
+     * 
+     * @param element the {@link Element} with the parameters to configure
+     */
+    public void configure(Element element)
+    {
+        super.configure(element);
+        Element parametersElement = element.getChild("parameters");
+        if (parametersElement == null)
+            return;
+        List<?> parametersList = parametersElement.getChildren("parameter");
+        for (Iterator<?> i = parametersList.iterator(); i.hasNext();)
+        {
+            Element parameterElement = (Element) i.next();
+            String name = parameterElement.getChild("name").getText();
+            if (name.equals("precedenceWeight") || name.equals("precedeWeight") ||
+                name.equals("succeedWeight"))
+            {
+                double value = Double.parseDouble(parameterElement.getChild("value").getText());
+                if (name.equals("precedeWeight"))
+                    precedeWeight = value;
+                else if (name.equals("succeedWeight"))
+                    succeedWeight = value;
+                else if (name.equals("precedenceWeight"))
+                    precedenceWeight = value;
+            }
+        }
+    }
+
+    public void updateProperties(HashMap<?, ?> properties)
+    {
+        super.updateProperties(properties);
+        precedeWeight = new Double(properties.get(
+            ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"))
+            .toString()).doubleValue();
+        succeedWeight = new Double(properties.get(
+            ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"))
+            .toString()).doubleValue();
+        precedenceWeight = new Double(properties.get(
+            ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"))
+            .toString()).doubleValue();
+    }
+
+    public JTable getProperties()
+    {
+        String columnNames[] =
+        {
+            ApplicationUtilities.getResourceString("properties.attribute"),
+            ApplicationUtilities.getResourceString("properties.value")
+        };
+        Object data[][] =
+        {
+            {
+                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
+                new Double(termWeight)
+            },
+            {
+                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
+                new Double(valueWeight)
+            },
+            {
+                ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"),
+                new Double(precedenceWeight)
+            },
+            {
+                ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"),
+                new Double(precedeWeight)
+            },
+            {
+                ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"),
+                new Double(succeedWeight)
+            }
+        };
+        JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
+        return properties;
+    }
+
+    /**
+     * Get the terms to match
+     * 
+     * @param targetOntology the target {@link Ontology}
+     * @param candidateOntology the candidate {@link Ontology}
+     */
+    protected void getTermsToMatch(Ontology targetOntology, Ontology candidateOntology)
+    {
+
+        if (!targetOntology.getModel().isLight())
+        {
+            originalTargetTerms = OntologyUtilities.getTermsOfClass(targetOntology, "input");
+            originalTargetTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
+                originalTargetTerms, "hidden");
+            originalTargetTerms.addAll(OntologyUtilities.getTermsOfClass(targetOntology,
+                "composition"));
+
+        }
+        else
+        {
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getModel().getTerms());
+        }
+
+        if (!candidateOntology.getModel().isLight())
+        {
+            originalCandidateTerms = OntologyUtilities.getTermsOfClass(candidateOntology, "input");
+            originalCandidateTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
+                originalCandidateTerms, "hidden");
+            originalCandidateTerms.addAll(OntologyUtilities.getTermsOfClass(candidateOntology,
+                "composition"));
+        }
+        else
+        {
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getModel().getTerms());
+        }
+    }
+
+    /**
+     * Performs a match between the target and candidate ontologies
+     * 
+     * @param targetOntology the target {@link Ontology}
+     * @param candidateOntology the candidate {@link Ontology}
+     */
+    public MatchInformation match(Ontology targetOntology, Ontology candidateOntology)
+    {
+        if (termAlgorithm == null)
+        {
+            termAlgorithm = (TermAlgorithm) AlgorithmUtilities.getAlgorithm(
+                ApplicationUtilities.getResourceString("algorithm.term")).makeCopy();
+            if (termAlgorithm == null)
+                return null;
+        }
+        if (valueAlgorithm == null)
+        {
+            valueAlgorithm = (ValueAlgorithm) AlgorithmUtilities.getAlgorithm(
+                ApplicationUtilities.getResourceString("algorithm.value")).makeCopy();
+            if (valueAlgorithm == null)
+                return null;
+        }
+
+        // Get Terms
+        getTermsToMatch(targetOntology, candidateOntology);
+
+        // Preprocess
+        preprocess();
+
+        // old version
+        // double
+        // termMatchMatrix[][]=OntologyUtilities.getMatchMatrix(originalTargetTerms,targetTerms,originalCandidateTerms,candidateTerms,termAlgorithm);
+        // double
+        // valueMatchMatrix[][]=OntologyUtilities.getMatchMatrix(originalTargetTerms,targetTerms,originalCandidateTerms,candidateTerms,valueAlgorithm);
+        // double termValueMatchMatrix[][]=combineMatrices(termMatchMatrix,valueMatchMatrix);
+        // added by haggai 6/12/03
+        MatchMatrix termMatchMM = OntologyUtilities.createMatchMatrix(originalTargetTerms,
+            targetTerms, originalCandidateTerms, candidateTerms, termAlgorithm);
+        MatchMatrix valueMatchMM = OntologyUtilities.createMatchMatrix(originalTargetTerms,
+            targetTerms, originalCandidateTerms, candidateTerms, valueAlgorithm);
+        // ***end haggai
+        // new version - haggai 6/12/03
+        double termMatchMatrix[][] = termMatchMM.transpose();/*
+                                                              * OntologyUtilities.getMatchMatrix(
+                                                              * originalTargetTerms
+                                                              * ,targetTerms,originalCandidateTerms
+                                                              * ,candidateTerms,termAlgorithm);
+                                                              */
+        double valueMatchMatrix[][] = valueMatchMM.transpose();/*
+                                                                * OntologyUtilities.getMatchMatrix(
+                                                                * originalTargetTerms
+                                                                * ,targetTerms,originalCandidateTerms
+                                                                * ,candidateTerms,valueAlgorithm);
+                                                                */
+        // end new version
+        double termValueMatchMatrix[][] = combineMatrices(termMatchMatrix, valueMatchMatrix);
+
+        PrecedenceMatch precedenceMatch = new PrecedenceMatch(termValueMatchMatrix,
+            originalTargetTerms, originalCandidateTerms);
+        precedenceMatch.setPrecedeWeight(precedeWeight);
+        precedenceMatch.setSucceedWeight(succeedWeight);
+        precedenceMatch.setThreshold(threshold);
+        double precedenceMatchMatrix[][] = precedenceMatch.match();
+
+        double matchMatrix[][];
+
+        if (combine)
+            matchMatrix = combineMatrices(termMatchMatrix, valueMatchMatrix, termValueMatchMatrix,
+                precedenceMatchMatrix);
+        else
+            matchMatrix = precedenceMatchMatrix;
+
+        // added by haggai 6/12/03
+        MatchMatrix precrdenceMM = new MatchMatrix(originalCandidateTerms.size(),
+            originalTargetTerms.size(), originalCandidateTerms, originalTargetTerms);
+        precrdenceMM.setMatchConfidenceMatrix(matchMatrix);
+        matchInformation = buildMatchInformation(matchMatrix);
+        matchInformation.setMatrix(precrdenceMM);
+        // /end haggai
+
+        matchInformation.setTargetOntologyTermsTotal(originalTargetTerms.size());
+        matchInformation.setTargetOntology(targetOntology);
+        matchInformation.setCandidateOntologyTermsTotal(originalCandidateTerms.size());
+        matchInformation.setCandidateOntology(candidateOntology);
+        matchInformation.setAlgorithm(this);
+        return matchInformation;
+    }
+
+    /**
+     * Combine the matrices
+     * 
+     * @param termMatchMatrix the term match matrix
+     * @param valueMatchMatrix the value match matrix
+     * @param termValueMatchMatrix the term value matrix
+     * @param precedenceMatchMatrix the precedence match matrix
+     * @return a combined matrix
+     */
+    protected double[][] combineMatrices(double termMatchMatrix[][], double valueMatchMatrix[][],
+        double termValueMatchMatrix[][], double precedenceMatchMatrix[][])
+    {
+        double matchMatrix[][] = new double[candidateTerms.size()][targetTerms.size()];
+
+        for (int j = 0; j < candidateTerms.size(); j++)
+        {
+            Term candidateTerm = (Term) candidateTerms.get(j);
+            for (int i = 0; i < targetTerms.size(); i++)
+            {
+                Term targetTerm = (Term) targetTerms.get(i);
+
+                double termEffectiveness = termMatchMatrix[j][i];
+                double valueEffectiveness = valueMatchMatrix[j][i];
+                double precedenceEffectiveness = precedenceMatchMatrix[j][i];
+
+                boolean print = false;// ((String)targetTerm.getAttributeValue("name")).equalsIgnoreCase("putime")
+                                      // &&
+                                      // ((String)candidateTerm.getAttributeValue("name")).equalsIgnoreCase("pkday");
+
+                if (print)
+                    System.out.println("****************************************************");
+                if (print)
+                    System.out.println("Comparing " + targetTerm + " vs. " + candidateTerm);
+
+                double termWeightAux = termWeight;
+                double valueWeightAux = valueWeight;
+                double precedenceWeightAux = precedenceWeight;
+
+                if (targetTerm.getDomain().getEntriesCount() == 0 &&
+                    candidateTerm.getDomain().getEntriesCount() == 0) // this means that the value
+                                                                      // for valueEffectiveness is
+                                                                      // just domain similarity
+                {
+                    if (valueEffectiveness > 0)
+                        termEffectiveness = valueEffectiveness + (1 - valueEffectiveness) *
+                            termEffectiveness;
+                    else if (termEffectiveness > 0)
+                        termEffectiveness -= GuessedDomain.DOMAIN_PENALTY;
+                    valueWeightAux = 0;
+                }
+
+                if (termEffectiveness < threshold)
+                    termWeightAux = 0;
+                if (valueEffectiveness < threshold)
+                    valueWeightAux = 0;
+                if (precedenceEffectiveness < threshold)
+                    precedenceWeightAux = 0;
+
+                /*
+                 * if((termWeightAux+valueWeightAux+precedenceWeightAux)==0) matchMatrix[j][i]=0;
+                 * else matchMatrix[j][i]=(termEffectiveness*termWeightAux +
+                 * valueEffectiveness*valueWeightAux +
+                 * precedenceEffectiveness*precedenceWeightAux)/(
+                 * termWeightAux+valueWeightAux+precedenceWeightAux);
+                 */
+
+                if ((termWeight + valueWeightAux + precedenceWeight) == 0)
+                    matchMatrix[j][i] = 0;
+                else
+                    matchMatrix[j][i] = (termEffectiveness * termWeightAux + valueEffectiveness *
+                        valueWeightAux + precedenceEffectiveness * precedenceWeightAux) /
+                        (termWeight + valueWeightAux + precedenceWeight);
+
+                // Enhancing
+                if (enhance && matchMatrix[j][i] < threshold &&
+                    matchMatrix[j][i] < termValueMatchMatrix[j][i])
+                    matchMatrix[j][i] = termValueMatchMatrix[j][i];
+
+                if (print)
+                {
+                    System.out.println("\tTerm effectivity: " + termEffectiveness);
+                    System.out.println("\tValue effectivity: " + valueEffectiveness);
+                    System.out.println("\tPrecedence effectivity: " + precedenceEffectiveness);
+                    System.out.println("\tOverall effectivity: " + matchMatrix[j][i]);
+                    System.out.println("****************************************************");
+                }
+            }
+        }
+
+        if (ApplicationParameters.verbose)
+        {
+            String columnNames[] =
+            {
+                ApplicationUtilities.getResourceString("ontology.match.candidate"),
+                ApplicationUtilities.getResourceString("ontology.match.target"),
+                ApplicationUtilities.getResourceString("ontology.match.effectiveness")
+            };
+            Object matchTable[][] = new Object[targetTerms.size() * candidateTerms.size()][3];
+
+            for (int j = 0; j < candidateTerms.size(); j++)
+            {
+                Term candidateTerm = (Term) candidateTerms.get(j);
+                for (int i = 0; i < targetTerms.size(); i++)
+                {
+                    Term targetTerm = (Term) targetTerms.get(i);
+                    int index = j * targetTerms.size() + i;
+                    matchTable[index][0] = candidateTerm;
+                    matchTable[index][1] = targetTerm;
+                    matchTable[index][2] = new Double(matchMatrix[j][i]);
+                }
+            }
+
+            System.out.println(ApplicationUtilities.getResourceString("algorithm.term") + " + " +
+                ApplicationUtilities.getResourceString("algorithm.value") + " + " +
+                ApplicationUtilities.getResourceString("algorithm.precedence"));
+            System.out.println();
+            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
+                new PropertiesTableModel(columnNames, 5, matchTable))));
+        }
+
+        return matchMatrix;
+    }
+}

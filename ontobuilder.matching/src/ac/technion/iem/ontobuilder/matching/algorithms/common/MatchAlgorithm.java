@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.matching.algorithms.line2.misc;
+package ac.technion.iem.ontobuilder.matching.algorithms.common;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMatchMatrix;
@@ -9,5 +9,5 @@ import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMatchMatrix;
  */
 public interface MatchAlgorithm
 {
-    public AbstractMatchMatrix match(Ontology s1, Ontology s2);
+    public AbstractMatchMatrix match(Ontology o1, Ontology o2);
 }

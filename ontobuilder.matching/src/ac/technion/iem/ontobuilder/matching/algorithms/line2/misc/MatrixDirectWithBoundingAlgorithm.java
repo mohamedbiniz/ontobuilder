@@ -1,6 +1,7 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line2.misc;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmInitiationException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmRunningException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.tkm.TKM;
