@@ -32,6 +32,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 
 /**
  * <p>Title: OntologyClass</p>
@@ -441,23 +442,23 @@ public class OntologyClass extends OntologyObject
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.class.name"), name
+                PropertiesHandler.getResourceString("ontology.class.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.class.superclass"),
+                PropertiesHandler.getResourceString("ontology.class.superclass"),
                 superClass != null ? superClass.getName() : null
             },
             {
-                ApplicationUtilities.getResourceString("ontology.domain"), domain.getName()
+                PropertiesHandler.getResourceString("ontology.domain"), domain.getName()
             },
             {
-                ApplicationUtilities.getResourceString("ontology"), ontology
+                PropertiesHandler.getResourceString("ontology"), ontology
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data));
@@ -471,19 +472,19 @@ public class OntologyClass extends OntologyObject
         root.add(domain.getTreeBranch());
 
         DefaultMutableTreeNode attributesNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.attributes"));
+            PropertiesHandler.getResourceString("ontology.attributes"));
         root.add(attributesNode);
         for (Iterator<Attribute> i = attributes.iterator(); i.hasNext();)
             attributesNode.add(((Attribute) i.next()).getTreeBranch());
 
         DefaultMutableTreeNode axiomsNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.axioms"));
+            PropertiesHandler.getResourceString("ontology.axioms"));
         root.add(axiomsNode);
         for (Iterator<Axiom> i = axioms.iterator(); i.hasNext();)
             axiomsNode.add(((Axiom) i.next()).getTreeBranch());
 
         DefaultMutableTreeNode subClassesNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.class.subclasses"));
+            PropertiesHandler.getResourceString("ontology.class.subclasses"));
         root.add(subClassesNode);
         for (Iterator<OntologyClass> i = instances.iterator(); i.hasNext();)
         {
@@ -503,21 +504,21 @@ public class OntologyClass extends OntologyObject
             root.add(domain.getHyperTreeNode());
 
             NodeHyperTree attributesNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.attributes"),
+                PropertiesHandler.getResourceString("ontology.attributes"),
                 NodeHyperTree.PROPERTY);
             root.add(attributesNode);
             for (Iterator<Attribute> i = attributes.iterator(); i.hasNext();)
                 attributesNode.add(((Attribute) i.next()).getHyperTreeNode());
 
             NodeHyperTree axiomsNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.axioms"), NodeHyperTree.PROPERTY);
+                PropertiesHandler.getResourceString("ontology.axioms"), NodeHyperTree.PROPERTY);
             root.add(axiomsNode);
             for (Iterator<Axiom> i = axioms.iterator(); i.hasNext();)
                 axiomsNode.add(((Axiom) i.next()).getHyperTreeNode());
         }
 
         NodeHyperTree subClassesNode = new NodeHyperTree(
-            ApplicationUtilities.getResourceString("ontology.class.subclasses"),
+            PropertiesHandler.getResourceString("ontology.class.subclasses"),
             NodeHyperTree.CLASS);
         root.add(subClassesNode);
         for (Iterator<OntologyClass> i = instances.iterator(); i.hasNext();)
@@ -615,18 +616,18 @@ public class OntologyClass extends OntologyObject
                 boolean isSelected, boolean cellHasFocus)
             {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                setIcon(ApplicationUtilities.getImage("domain.gif"));
+                setIcon(PropertiesHandler.getImage("domain.gif"));
                 return this;
             }
         });
 
         final JDialog dialog = new JDialog((JFrame) null,
-            ApplicationUtilities.getResourceString("ontology.class.dialog.windowTitle"), true);
+            PropertiesHandler.getResourceString("ontology.class.dialog.windowTitle"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        dialog.setSize(new Dimension(ApplicationUtilities
-            .getIntProperty("ontology.class.dialog.width"), ApplicationUtilities
+        dialog.setSize(new Dimension(PropertiesHandler
+            .getIntProperty("ontology.class.dialog.width"), PropertiesHandler
             .getIntProperty("ontology.class.dialog.height")));
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -634,7 +635,7 @@ public class OntologyClass extends OntologyObject
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
         final JButton okButton;
-        south.add(okButton = new JButton(ApplicationUtilities
+        south.add(okButton = new JButton(PropertiesHandler
             .getResourceString("ontology.class.dialog.button.ok")));
         dialog.getRootPane().setDefaultButton(okButton);
         okButton.setEnabled(txtClassName.getText().trim().length() > 0);
@@ -653,7 +654,7 @@ public class OntologyClass extends OntologyObject
             }
         });
         JButton cancelButton;
-        south.add(cancelButton = new JButton(ApplicationUtilities
+        south.add(cancelButton = new JButton(PropertiesHandler
             .getResourceString("ontology.class.dialog.button.cancel")));
         cancelButton.addActionListener(new ActionListener()
         {
@@ -670,8 +671,8 @@ public class OntologyClass extends OntologyObject
         center.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         {// Title
-            JLabel title = new JLabel(ApplicationUtilities.getResourceString("ontology.class"),
-                ApplicationUtilities.getImage("class.gif"), SwingConstants.LEFT);
+            JLabel title = new JLabel(PropertiesHandler.getResourceString("ontology.class"),
+                PropertiesHandler.getImage("class.gif"), SwingConstants.LEFT);
             title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
                 .getSize() + 6));
             GridBagConstraints gbcl = new GridBagConstraints();
@@ -692,7 +693,7 @@ public class OntologyClass extends OntologyObject
             gbcl.insets = new Insets(0, 0, 20, 0);
             gbcl.anchor = GridBagConstraints.WEST;
             center.add(
-                new MultilineLabel(ApplicationUtilities
+                new MultilineLabel(PropertiesHandler
                     .getResourceString("ontology.class.dialog.explanation")), gbcl);
         }
 
@@ -701,7 +702,7 @@ public class OntologyClass extends OntologyObject
             gbcl.gridy = 2;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel name = new JLabel(ApplicationUtilities.getResourceString("ontology.class.name") +
+            JLabel name = new JLabel(PropertiesHandler.getResourceString("ontology.class.name") +
                 ":");
             name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
             center.add(name, gbcl);
@@ -732,7 +733,7 @@ public class OntologyClass extends OntologyObject
             gbcl.gridy = 3;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel domain = new JLabel(ApplicationUtilities.getResourceString("ontology.domain") +
+            JLabel domain = new JLabel(PropertiesHandler.getResourceString("ontology.domain") +
                 ":");
             center.add(domain, gbcl);
 

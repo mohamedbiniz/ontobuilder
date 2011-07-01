@@ -21,13 +21,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.jgraph.JGraph;
 import com.jgraph.graph.ConnectionSet;
 import com.jgraph.graph.DefaultGraphCell;
 import com.jgraph.graph.DefaultGraphModel;
 import com.jgraph.graph.DefaultPort;
 import com.jgraph.graph.GraphConstants;
-import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesCellEditor;
 import com.modica.application.PropertiesTableModel;
 import com.modica.graph.GraphUtilities;
@@ -488,23 +489,23 @@ public class Ontology extends OntologyObject
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.name"), name
+                PropertiesHandler.getResourceString("ontology.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.title"), title
+                PropertiesHandler.getResourceString("ontology.title"), title
             },
             {
-                ApplicationUtilities.getResourceString("ontology.site"),
+                PropertiesHandler.getResourceString("ontology.site"),
                 siteURL != null ? siteURL.toExternalForm() : null
             },
             {
-                ApplicationUtilities.getResourceString("ontology.terms"), new Integer(terms.size())
+                PropertiesHandler.getResourceString("ontology.terms"), new Integer(terms.size())
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data)
@@ -553,14 +554,14 @@ public class Ontology extends OntologyObject
         if (!isLight)
         {
             DefaultMutableTreeNode classesNode = new DefaultMutableTreeNode(
-                ApplicationUtilities.getResourceString("ontology.classes"));
+                PropertiesHandler.getResourceString("ontology.classes"));
             root.add(classesNode);
             for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
                 classesNode.add(((OntologyClass) i.next()).getTreeBranch());
         }
 
         DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.terms"));
+            PropertiesHandler.getResourceString("ontology.terms"));
         root.add(termsNode);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
             termsNode.add(((Term) i.next()).getTreeBranch());
@@ -576,14 +577,14 @@ public class Ontology extends OntologyObject
         if (showClasses && !isLight)
         {
             NodeHyperTree classesNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.classes"), NodeHyperTree.CLASS);
+                PropertiesHandler.getResourceString("ontology.classes"), NodeHyperTree.CLASS);
             root.add(classesNode);
             for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
                 classesNode.add(((OntologyClass) i.next()).getHyperTreeNode(showProperties));
         }
 
         NodeHyperTree termsNode = new NodeHyperTree(
-            ApplicationUtilities.getResourceString("ontology.terms"), NodeHyperTree.TERM);
+            PropertiesHandler.getResourceString("ontology.terms"), NodeHyperTree.TERM);
         root.add(termsNode);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
             termsNode.add(((Term) i.next()).getHyperTreeNode(showRelations, showClasses,
@@ -605,7 +606,7 @@ public class Ontology extends OntologyObject
         DefaultGraphCell vertex = new DefaultGraphCell(name);
         cells.add(vertex);
         Map<?, ?> map = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
+        GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
         attributes.put(vertex, map);
 
         if (!terms.isEmpty())
@@ -639,7 +640,7 @@ public class Ontology extends OntologyObject
         DefaultGraphCell vertex = new DefaultGraphCell(name);
         cells.add(vertex);
         Map<?, ?> map = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
+        GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
         attributes.put(vertex, map);
 
         if (!terms.isEmpty())
@@ -669,7 +670,7 @@ public class Ontology extends OntologyObject
     // DefaultGraphCell vertex=new DefaultGraphCell(name);
     // cells.add(vertex);
     // Map map=GraphUtilities.createDefaultAttributes();
-    // GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
+    // GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
     // attributes.put(vertex,map);
     //
     // if(!terms.isEmpty())
@@ -891,7 +892,7 @@ public class Ontology extends OntologyObject
     public JTree getClassesHierarchy()
     {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.classes"));
+            PropertiesHandler.getResourceString("ontology.classes"));
         for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
         {
             OntologyClass c = (OntologyClass) i.next();
@@ -1010,7 +1011,7 @@ public class Ontology extends OntologyObject
     public JTree getTermsHierarchy()
     {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.terms"));
+            PropertiesHandler.getResourceString("ontology.terms"));
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
         {
             Term t = (Term) i.next();

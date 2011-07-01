@@ -185,7 +185,7 @@ public class Thesaurus extends ThesaurusModelAdapter
             // FIXME Use a bundle to get the error string
             throw new ThesaurusException(String.format("Failed to load the '%s' thesaurus file", (Object[])params));
 //            	StringUtilities.getReplacedString(
-//                ApplicationUtilities.getResourceString("error.thesaurus.file"), params));
+//                PropertiesHandler.getResourceString("error.thesaurus.file"), params));
         }
         try
         {

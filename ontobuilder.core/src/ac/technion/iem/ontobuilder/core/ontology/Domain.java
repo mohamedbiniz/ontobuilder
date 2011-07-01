@@ -11,7 +11,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdom.Element;
 
-import com.modica.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.modica.application.PropertiesTableModel;
 import com.modica.hypertree.NodeHyperTree;
 import com.modica.ontology.domain.GuessedDomain;
@@ -118,7 +119,7 @@ public class Domain extends OntologyObject
             for (int i = 0; i < predefinedDomains.length; i++)
             {
                 String d = predefinedDomains[i];
-                if (name.equalsIgnoreCase(ApplicationUtilities.getResourceString(d)))
+                if (name.equalsIgnoreCase(PropertiesHandler.getResourceString(d)))
                     return d.substring(d.lastIndexOf(".") + 1);
             }
             return type;
@@ -257,7 +258,7 @@ public class Domain extends OntologyObject
 
     public String toString()
     {
-        return ApplicationUtilities.getResourceString("ontology.domain") +
+        return PropertiesHandler.getResourceString("ontology.domain") +
             (name != null && name.length() > 0 ? " (" + name + ")" : "");
     }
 
@@ -283,16 +284,16 @@ public class Domain extends OntologyObject
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.domain.name"), name
+                PropertiesHandler.getResourceString("ontology.domain.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.domain.type"), getType()
+                PropertiesHandler.getResourceString("ontology.domain.type"), getType()
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 2, data));
@@ -354,7 +355,7 @@ public class Domain extends OntologyObject
     {
         Vector<String> v = new Vector<String>();
         for (int i = 0; i < predefinedDomains.length; i++)
-            v.add(ApplicationUtilities.getResourceString(predefinedDomains[i]));
+            v.add(PropertiesHandler.getResourceString(predefinedDomains[i]));
         return v;
     }
 
@@ -448,7 +449,7 @@ public class Domain extends OntologyObject
 
         if (guessedDomain != null)
         {
-            name = ApplicationUtilities.getResourceString("ontology.domain." + guessedDomain);
+            name = PropertiesHandler.getResourceString("ontology.domain." + guessedDomain);
             type = guessedDomain;
             return guessedDomain;
         }

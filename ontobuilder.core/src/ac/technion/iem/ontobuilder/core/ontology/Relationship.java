@@ -31,7 +31,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdom.Element;
 
-import com.modica.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.modica.application.PropertiesTableModel;
 import com.modica.gui.MultilineLabel;
 import com.modica.hypertree.NodeHyperTree;
@@ -158,19 +159,19 @@ public class Relationship extends OntologyObject
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.relationship.name"), name
+                PropertiesHandler.getResourceString("ontology.relationship.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.relationship.source"), source
+                PropertiesHandler.getResourceString("ontology.relationship.source"), source
             },
             {
-                ApplicationUtilities.getResourceString("ontology.relationship.target"), target
+                PropertiesHandler.getResourceString("ontology.relationship.target"), target
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 3, data));
@@ -181,11 +182,11 @@ public class Relationship extends OntologyObject
     {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
         DefaultMutableTreeNode sources = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.relationship.source"));
+            PropertiesHandler.getResourceString("ontology.relationship.source"));
         sources.add(new DefaultMutableTreeNode(source));
         root.add(sources);
         DefaultMutableTreeNode targets = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.relationship.targets"));
+            PropertiesHandler.getResourceString("ontology.relationship.targets"));
         targets.add(new DefaultMutableTreeNode(target));
         root.add(targets);
         return root;
@@ -195,12 +196,12 @@ public class Relationship extends OntologyObject
     {
         NodeHyperTree root = new NodeHyperTree(this, NodeHyperTree.RELATIONSHIP);
         NodeHyperTree sources = new NodeHyperTree(
-            ApplicationUtilities.getResourceString("ontology.relationship.source"),
+            PropertiesHandler.getResourceString("ontology.relationship.source"),
             NodeHyperTree.TERM);
         sources.add(new NodeHyperTree(source, NodeHyperTree.TERM));
         root.add(sources);
         NodeHyperTree targets = new NodeHyperTree(
-            ApplicationUtilities.getResourceString("ontology.relationship.targets"),
+            PropertiesHandler.getResourceString("ontology.relationship.targets"),
             NodeHyperTree.TERM);
         targets.add(new NodeHyperTree(target, NodeHyperTree.TERM));
         root.add(targets);
@@ -248,13 +249,13 @@ public class Relationship extends OntologyObject
         final com.modica.gui.TextField txtRelationshipName = new com.modica.gui.TextField(15);
 
         final JDialog dialog = new JDialog((JFrame) null,
-            ApplicationUtilities.getResourceString("ontology.relationship.dialog.windowTitle"),
+            PropertiesHandler.getResourceString("ontology.relationship.dialog.windowTitle"),
             true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        dialog.setSize(new Dimension(ApplicationUtilities
-            .getIntProperty("ontology.relationship.dialog.width"), ApplicationUtilities
+        dialog.setSize(new Dimension(PropertiesHandler
+            .getIntProperty("ontology.relationship.dialog.width"), PropertiesHandler
             .getIntProperty("ontology.relationship.dialog.height")));
         dialog.setLocationRelativeTo(null);
         // dialog.setResizable(false);
@@ -262,7 +263,7 @@ public class Relationship extends OntologyObject
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
         final JButton okButton;
-        south.add(okButton = new JButton(ApplicationUtilities
+        south.add(okButton = new JButton(PropertiesHandler
             .getResourceString("ontology.relationship.dialog.button.ok")));
         dialog.getRootPane().setDefaultButton(okButton);
         okButton.setEnabled(false);
@@ -275,7 +276,7 @@ public class Relationship extends OntologyObject
             }
         });
         JButton cancelButton;
-        south.add(cancelButton = new JButton(ApplicationUtilities
+        south.add(cancelButton = new JButton(PropertiesHandler
             .getResourceString("ontology.relationship.dialog.button.cancel")));
         cancelButton.addActionListener(new ActionListener()
         {
@@ -294,8 +295,8 @@ public class Relationship extends OntologyObject
 
         {// Title
             JLabel title = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.relationship"),
-                ApplicationUtilities.getImage("relationship.gif"), SwingConstants.LEFT);
+                PropertiesHandler.getResourceString("ontology.relationship"),
+                PropertiesHandler.getImage("relationship.gif"), SwingConstants.LEFT);
             title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
                 .getSize() + 6));
             GridBagConstraints gbcl = new GridBagConstraints();
@@ -316,7 +317,7 @@ public class Relationship extends OntologyObject
             gbcl.insets = new Insets(0, 0, 20, 0);
             gbcl.anchor = GridBagConstraints.WEST;
             center.add(
-                new MultilineLabel(ApplicationUtilities
+                new MultilineLabel(PropertiesHandler
                     .getResourceString("ontology.relationship.dialog.explanation")), gbcl);
         }
 
@@ -326,7 +327,7 @@ public class Relationship extends OntologyObject
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
             JLabel name = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.relationship.name") + ":");
+                PropertiesHandler.getResourceString("ontology.relationship.name") + ":");
             name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
             center.add(name, gbcl);
 
@@ -358,14 +359,14 @@ public class Relationship extends OntologyObject
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
             JLabel sourceLabel = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.relationship.source") + ":");
+                PropertiesHandler.getResourceString("ontology.relationship.source") + ":");
             sourceLabel.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont()
                 .getSize()));
             center.add(sourceLabel, gbcl);
 
             gbcl.gridx = 1;
             gbcl.anchor = GridBagConstraints.WEST;
-            center.add(new JLabel(source.getName(), ApplicationUtilities.getImage("term.gif"),
+            center.add(new JLabel(source.getName(), PropertiesHandler.getImage("term.gif"),
                 SwingConstants.LEFT), gbcl);
         }
 
@@ -375,7 +376,7 @@ public class Relationship extends OntologyObject
             gbcl.insets = new Insets(0, 0, 0, 5);
             gbcl.anchor = GridBagConstraints.NORTHEAST;
             JLabel targetLabel = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.relationship.target") + ":");
+                PropertiesHandler.getResourceString("ontology.relationship.target") + ":");
             targetLabel.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont()
                 .getSize()));
             center.add(targetLabel, gbcl);
