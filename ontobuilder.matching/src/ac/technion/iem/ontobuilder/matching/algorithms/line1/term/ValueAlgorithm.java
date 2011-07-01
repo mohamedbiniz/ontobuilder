@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 
 import com.modica.application.ApplicationUtilities;
 import com.modica.ontology.OntologyUtilities;
@@ -87,20 +86,15 @@ public class ValueAlgorithm extends TermAlgorithm
                 boolean value = Boolean.valueOf(parameterElement.getChild("value").getText())
                     .booleanValue();
                 if (name.equals("symmetric") && value)
-                    mode += SYMMETRIC_FLAG;
+                    mode += TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue();
                 else if (name.equals("useThesaurus") && value)
-                    mode += USE_THESAURUS_FLAG;
+                    mode += TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue();
                 else if (name.equals("useSoundex") && value)
-                    mode += USE_SOUNDEX_FLAG;
+                    mode += TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue();
             }
         }
 
         super.configure(element);
-    }
-
-    public JTable getProperties()
-    {
-        return super.getProperties();
     }
 
     /**
@@ -165,7 +159,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double dayEffectiveness = 0;
             if (tday != null && cday != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     dayEffectiveness = OntologyUtilities.compareSymmetricTermContents(tday, cday,
                         threshold, null, false);
                 else
@@ -178,7 +172,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double monthEffectiveness = 0;
             if (tmonth != null && cmonth != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     monthEffectiveness = OntologyUtilities.compareSymmetricTermContents(tmonth,
                         cmonth, threshold, null, false);
                 else
@@ -191,7 +185,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double yearEffectiveness = 0;
             if (tyear != null && cyear != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     yearEffectiveness = OntologyUtilities.compareSymmetricTermContents(tyear,
                         cyear, threshold, null, false);
                 else
@@ -216,7 +210,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double hourEffectiveness = 0;
             if (thour != null && chour != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     hourEffectiveness = OntologyUtilities.compareSymmetricTermContents(thour,
                         chour, threshold, null, false);
                 else
@@ -229,7 +223,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double minuteEffectiveness = 0;
             if (tminute != null && cminute != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     minuteEffectiveness = OntologyUtilities.compareSymmetricTermContents(tminute,
                         cminute, threshold, null, false);
                 else
@@ -242,7 +236,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double secondEffectiveness = 0;
             if (tsecond != null && csecond != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     secondEffectiveness = OntologyUtilities.compareSymmetricTermContents(tsecond,
                         csecond, threshold, null, false);
                 else
@@ -255,7 +249,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double ampmEffectiveness = 0;
             if (tampm != null && campm != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     ampmEffectiveness = OntologyUtilities.compareSymmetricTermContents(tampm,
                         campm, threshold, null, false);
                 else
@@ -281,7 +275,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double protocolEffectiveness = 0;
             if (tprotocol != null && cprotocol != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     protocolEffectiveness = OntologyUtilities.compareSymmetricTermContents(
                         tprotocol, cprotocol, threshold, null, false);
                 else
@@ -294,7 +288,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double portEffectiveness = 0;
             if (tport != null && cport != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     portEffectiveness = OntologyUtilities.compareSymmetricTermContents(tport,
                         cport, threshold, null, false);
                 else
@@ -307,7 +301,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double hostEffectiveness = 0;
             if (thost != null && chost != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue())) != 0)
                     hostEffectiveness = OntologyUtilities.compareSymmetricTermContents(thost,
                         chost, threshold, null, false);
                 else
@@ -320,7 +314,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double fileEffectiveness = 0;
             if (tfile != null && cfile != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     fileEffectiveness = OntologyUtilities.compareSymmetricTermContents(tfile,
                         cfile, threshold, null, false);
                 else
@@ -346,7 +340,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double userEffectiveness = 0;
             if (tuser != null && cuser != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     userEffectiveness = OntologyUtilities.compareSymmetricTermContents(tuser,
                         cuser, threshold, null, false);
                 else
@@ -359,7 +353,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double domainEffectiveness = 0;
             if (tdomain != null && cdomain != null)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     domainEffectiveness = OntologyUtilities.compareSymmetricTermContents(tdomain,
                         cdomain, threshold, null, false);
                 else
@@ -377,14 +371,14 @@ public class ValueAlgorithm extends TermAlgorithm
         }
         else
         {
-            if ((mode & SYMMETRIC_FLAG) != 0)
+            if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                 effectiveness = OntologyUtilities.compareSymmetricTermContents(targetTerm,
-                    candidateTerm, threshold, (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                    (mode & USE_SOUNDEX_FLAG) != 0);
+                    candidateTerm, threshold, (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                    (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
             else
                 effectiveness = OntologyUtilities.compareTermContents(targetTerm, candidateTerm,
-                    (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                    (mode & USE_SOUNDEX_FLAG) != 0);
+                    (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                    (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
         }
 
         if (domainSimilarity > 0)

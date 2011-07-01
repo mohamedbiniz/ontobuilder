@@ -6,13 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
-
-import com.modica.ontology.algorithm.AbstractAlgorithm;
-import com.modica.ontology.algorithm.Algorithm;
-import com.modica.ontology.algorithm.AlgorithmException;
-import com.modica.ontology.algorithm.AlgorithmUtilities;
-import com.modica.ontology.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 
 /**
  * <p>Title: OntoBuilderWrapper</p>

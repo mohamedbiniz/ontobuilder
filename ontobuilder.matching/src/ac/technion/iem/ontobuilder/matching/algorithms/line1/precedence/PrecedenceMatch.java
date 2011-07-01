@@ -6,11 +6,11 @@ import java.util.Iterator;
 import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 
 import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: PrecedenceMatch</p>

@@ -3,30 +3,27 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.misc;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermPreprocessor;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMatchMatrix;
 
-import com.modica.application.ObjectWithProperties;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.ontology.match.Mismatch;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>
  * Title: AbstractAlgorithm
  * </p>
- * Implements {@link Algorithm}, {@link MatchAlgorithm} and {@link ObjectWithProperties}
+ * Implements {@link Algorithm} and {@link MatchAlgorithm}
  */
-abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm, ObjectWithProperties
+abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm
 {
     public static final int NO_MODE = 0;
 
@@ -80,7 +77,7 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm, Ob
     abstract public String getDescription();
 
     /**
-     * Match two ontoligies
+     * Match two ontologies
      * 
      * @param targetOntology the target {@link Ontology}
      * @param candidateOntology the candidate {@link Ontology}
@@ -147,10 +144,6 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm, Ob
     }
 
     abstract public void configure(Element element);
-
-    abstract public void updateProperties(HashMap<?, ?> properties);
-
-    abstract public JTable getProperties();
 
     /**
      * Gets whether to use the Thesaurus

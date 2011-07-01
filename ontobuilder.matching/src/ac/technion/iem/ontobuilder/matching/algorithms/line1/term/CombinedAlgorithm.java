@@ -5,22 +5,26 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
+//import javax.swing.JTable;
 
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceMatch;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: CombinedAlgorithm</p>
@@ -99,7 +103,47 @@ public class CombinedAlgorithm extends TermValueAlgorithm
     {
         return ApplicationUtilities.getResourceString("algorithm.combined.description");
     }
+    
+    /**
+     * Get the graph weight
+     * 
+     * @return the weight
+     */
+    public double getGraphWeight()
+    {
+        return graphWeight;
+    }
+    
+    /**
+     * Set the graph weight
+     * 
+     * @param the weight
+     */
+    public void setGraphWeight(double _graphWeight)
+    {
+        graphWeight = _graphWeight;
+    }
+    
+    /**
+     * Get the precedence weight
+     * 
+     * @return the weight
+     */
+    public double getPrecedenceWeight()
+    {
+        return precedenceWeight;
+    }
 
+    /**
+     * Set the precedence weight
+     * 
+     * @param the weight
+     */
+    public void setPrecedenceWeight(double _precedenceWeight)
+    {
+        precedenceWeight = _precedenceWeight;
+    }
+    
     /**
      * Configure the algorithm parameters
      * 
@@ -133,46 +177,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
         }
     }
 
-    public void updateProperties(HashMap<?, ?> properties)
-    {
-        super.updateProperties(properties);
-        graphWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.graphWeight")).toString())
-            .doubleValue();
-        precedenceWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"))
-            .toString()).doubleValue();
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.graphWeight"),
-                new Double(graphWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"),
-                new Double(precedenceWeight)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data));
-        return properties;
-    }
+ 
 
     /**
      * Get the terms to match

@@ -1,16 +1,11 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.misc;
 
-import java.util.HashMap;
-
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermPreprocessor;
-
-import com.modica.ontology.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 
 /**
  * <p>Title: interface Algorithm</p>
@@ -34,10 +29,6 @@ public interface Algorithm
     public String getDescription();
 
     public void configure(Element element);
-
-    public void updateProperties(HashMap<?, ?> properties);
-
-    public JTable getProperties();
 
     public void setThreshold(double threshold);
 

@@ -5,22 +5,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgorithm;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
-import com.modica.application.ApplicationUtilities;
-import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: PrecedenceAlgorithm</p>
@@ -63,6 +60,16 @@ public class PrecedenceAlgorithm extends TermValueAlgorithm
         super();
     }
 
+    /**
+     * Set the precede weight
+     * 
+     * @param precedeWeight the precede weight
+     */
+    public void setPrecedenceWeight(double precedenceWeight)
+    {
+        this.precedenceWeight = precedenceWeight;
+    }
+    
     /**
      * Set the precede weight
      * 
@@ -122,6 +129,26 @@ public class PrecedenceAlgorithm extends TermValueAlgorithm
     {
         return combine;
     }
+    
+    /**
+     * Get the name
+     * 
+     * @return the name
+     */
+    public String getName()
+    {
+        return ApplicationUtilities.getResourceString("algorithm.precedence");
+    }
+
+    /**
+     * Get the description
+     * 
+     * @return the description
+     */
+    public String getDescription()
+    {
+        return ApplicationUtilities.getResourceString("algorithm.precedence.description");
+    }
 
     /**
      * Set to enhance
@@ -141,26 +168,6 @@ public class PrecedenceAlgorithm extends TermValueAlgorithm
     public boolean isEnhance()
     {
         return enhance;
-    }
-
-    /**
-     * Get the name
-     * 
-     * @return the name
-     */
-    public String getName()
-    {
-        return ApplicationUtilities.getResourceString("algorithm.precedence");
-    }
-
-    /**
-     * Get the description
-     * 
-     * @return the description
-     */
-    public String getDescription()
-    {
-        return ApplicationUtilities.getResourceString("algorithm.precedence.description");
     }
 
     /**
@@ -192,55 +199,7 @@ public class PrecedenceAlgorithm extends TermValueAlgorithm
             }
         }
     }
-
-    public void updateProperties(HashMap<?, ?> properties)
-    {
-        super.updateProperties(properties);
-        precedeWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"))
-            .toString()).doubleValue();
-        succeedWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"))
-            .toString()).doubleValue();
-        precedenceWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"))
-            .toString()).doubleValue();
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"),
-                new Double(precedenceWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"),
-                new Double(precedeWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"),
-                new Double(succeedWeight)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
-        return properties;
-    }
-
+    
     /**
      * Get the terms to match
      * 

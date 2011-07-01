@@ -16,16 +16,17 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
+import ac.technion.iem.ontobuilder.matching.match.MatchComparator;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontology.OntologyUtilities;
-import com.modica.ontology.match.MatchComparator;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: TermAlgorithm</p>
@@ -34,10 +35,6 @@ import com.modica.util.StringUtilities;
  */
 public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
 {
-    public static final int SYMMETRIC_FLAG = 1;
-    public static final int USE_THESAURUS_FLAG = 2;
-    public static final int USE_SOUNDEX_FLAG = 4;
-
     protected double wordLabelWeight;
     protected double stringLabelWeight;
     protected double wordNameWeight;
@@ -204,11 +201,11 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
                 boolean value = Boolean.valueOf(parameterElement.getChild("value").getText())
                     .booleanValue();
                 if (name.equals("symmetric") && value)
-                    mode += SYMMETRIC_FLAG;
+                    mode += TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue();
                 else if (name.equals("useThesaurus") && value)
-                    mode += USE_THESAURUS_FLAG;
+                    mode += TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue();
                 else if (name.equals("useSoundex") && value)
-                    mode += USE_SOUNDEX_FLAG;
+                    mode += TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue();
             }
             else if (name.equals("wordLabelWeight") || name.equals("stringLabelWeight") ||
                 name.equals("wordNameWeight") || name.equals("stringNameWeight") ||
@@ -235,134 +232,6 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
                 if (name.equals("nGram"))
                     nGram = value;
             }
-        }
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.symmetric"),
-                new Boolean((mode & SYMMETRIC_FLAG) > 0)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.useThesaurus"),
-                new Boolean((mode & USE_THESAURUS_FLAG) > 0)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.useSoundex"),
-                new Boolean((mode & USE_SOUNDEX_FLAG) > 0)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.wordLabelWeight"),
-                new Double(wordLabelWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.stringLabelWeight"),
-                new Double(stringLabelWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.wordNameWeight"),
-                new Double(wordNameWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.stringNameWeight"),
-                new Double(stringNameWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.maxCommonSubStringWeight"),
-                new Double(maxCommonSubStringWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.nGramWeight"),
-                new Double(nGramWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.term.nGram"), new Integer(nGram)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 10, data));
-        TableColumn valueColumn = properties.getColumn(ApplicationUtilities
-            .getResourceString("properties.value"));
-        valueColumn.setCellRenderer(new PropertiesCellRenderer());
-        return properties;
-    }
-
-    public void updateProperties(HashMap<?, ?> properties)
-    {
-        boolean symmetric = new Boolean(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.symmetric")).toString())
-            .booleanValue();
-        boolean useThesaurus = new Boolean(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.useThesaurus")).toString())
-            .booleanValue();
-        boolean useSoundex = new Boolean(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.useSoundex")).toString())
-            .booleanValue();
-        if (symmetric)
-            mode += SYMMETRIC_FLAG;
-        if (useThesaurus)
-            mode += USE_THESAURUS_FLAG;
-        if (useSoundex)
-            mode += USE_SOUNDEX_FLAG;
-        wordLabelWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.wordLabelWeight")).toString())
-            .doubleValue();
-        stringLabelWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.stringLabelWeight")).toString())
-            .doubleValue();
-        wordNameWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.wordNameWeight")).toString())
-            .doubleValue();
-        stringNameWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.stringNameWeight")).toString())
-            .doubleValue();
-
-        maxCommonSubStringWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.maxCommonSubStringWeight"))
-            .toString()).doubleValue();
-        nGramWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.nGramWeight")).toString())
-            .doubleValue();
-        nGram = new Integer(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.term.nGram")).toString()).intValue();
-    }
-
-    protected class PropertiesCellRenderer extends DefaultTableCellRenderer
-    {
-        private static final long serialVersionUID = -8136182017228024130L;
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column)
-        {
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
-                row, column);
-            if (row >= 0 && row <= 2)
-            {
-                JCheckBox check = new JCheckBox();
-                check.setHorizontalAlignment(SwingConstants.CENTER);
-                if (isSelected)
-                {
-                    check.setForeground(table.getSelectionForeground());
-                    check.setBackground(table.getSelectionBackground());
-                }
-                else
-                {
-                    check.setForeground(table.getForeground());
-                    check.setBackground(table.getBackground());
-                }
-                check.setSelected(((value instanceof Boolean ? (Boolean) value : new Boolean(
-                    (String) value))).booleanValue());
-                return check;
-            }
-            else
-                return c;
         }
     }
 
@@ -405,14 +274,14 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
         // Word matching
         double wordEffectiveness_label;
         double nGramEffectiveness_label = 0;
-        if ((mode & SYMMETRIC_FLAG) != 0)
+        if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
             wordEffectiveness_label = StringUtilities.getSymmetricSubstringEffectivity(targetLabel,
-                candidateLabel, (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                (mode & USE_SOUNDEX_FLAG) != 0);
+                candidateLabel, (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
         else
             wordEffectiveness_label = StringUtilities.getSubstringEffectivity(targetLabel,
-                candidateLabel, (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                (mode & USE_SOUNDEX_FLAG) != 0);
+                candidateLabel, (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
 
         // n Gram matching
         nGramEffectiveness_label = StringUtilities.getNGramEffectivity(targetLabel, candidateLabel,
@@ -436,15 +305,15 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
             // Word matching
             if (targetName.length() > 0 && candidateName.length() > 0)
             {
-                if ((mode & SYMMETRIC_FLAG) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     wordEffectiveness_name = StringUtilities.getSymmetricSubstringEffectivity(
                         targetName, candidateName,
-                        (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                        (mode & USE_SOUNDEX_FLAG) != 0);
+                        (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                        (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
                 else
                     wordEffectiveness_name = StringUtilities.getSubstringEffectivity(targetName,
-                        candidateName, (mode & USE_THESAURUS_FLAG) != 0 ? thesaurus : null,
-                        (mode & USE_SOUNDEX_FLAG) != 0);
+                        candidateName, (mode & TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue()) != 0 ? thesaurus : null,
+                        (mode & TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue()) != 0);
             }
 
             // n Gram matching
