@@ -39,7 +39,7 @@ import com.modica.util.NetworkUtilities;
 import com.modica.util.StringUtilities;
 
 /**
- * <p>Title: OntologyModel</p>
+ * <p>Title: Ontology</p>
  * Extends {@link OntologyObject}
  */
 public class Ontology extends OntologyObject
