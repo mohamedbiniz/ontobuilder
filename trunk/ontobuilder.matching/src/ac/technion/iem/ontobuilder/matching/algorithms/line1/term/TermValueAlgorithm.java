@@ -12,10 +12,12 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.ApplicationUtilities;
@@ -23,8 +25,6 @@ import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: TermValueAlgorithm</p>
@@ -84,6 +84,46 @@ public class TermValueAlgorithm extends AbstractAlgorithm
     }
 
     /**
+     * Get the term weight
+     * 
+     * @return the weight
+     */
+    public double getTermWeight()
+    {
+        return termWeight;
+    }
+
+    /**
+     * Set the term weight
+     * 
+     * @param the weight
+     */
+    public void setTermWeight(double _termWeight)
+    {
+        termWeight = _termWeight;
+    }
+    
+    /**
+     * Get the value weight
+     * 
+     * @return the weight
+     */
+    public double getValueWeight()
+    {
+        return valueWeight;
+    }
+
+    /**
+     * Set the term weight
+     * 
+     * @param the weight
+     */
+    public void setValueWeight(double _valueWeight)
+    {
+        valueWeight = _valueWeight;
+    }
+    
+    /**
      * Configure the algorithm parameters when user changes one of the values of the JTable
      * 
      * @param element the {@link Element} with the parameters to configure
@@ -107,38 +147,6 @@ public class TermValueAlgorithm extends AbstractAlgorithm
                     valueWeight = value;
             }
         }
-    }
-
-    public void updateProperties(HashMap<?, ?> properties)
-    {
-        termWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.termWeight")).toString())
-            .doubleValue();
-        valueWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.valueWeight")).toString())
-            .doubleValue();
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 2, data));
-        return properties;
     }
 
     /**

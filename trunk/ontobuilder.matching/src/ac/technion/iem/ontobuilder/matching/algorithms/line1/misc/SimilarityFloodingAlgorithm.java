@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JTable;
+//import javax.swing.JTable;
 
 import org.jdom.Element;
 
@@ -14,16 +14,15 @@ import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 
 import com.modica.application.ApplicationUtilities;
-import com.modica.application.PropertiesTableModel;
 import com.modica.graph.LabeledEdge;
 import com.modica.graph.LabeledVertex;
 import com.modica.ontology.OntologyUtilities;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.ontology.match.Mismatch;
 
 /**
  * <p>
@@ -48,12 +47,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
     protected double epsilon = 0.05;
 
     // selected type of fixpoint formula
-    protected double fixpointType = FIX_BASIC;
-
-    // available types of fixpoint formulas
-    public static final int FIX_BASIC = 1;
-    public static final int FIX_A = 2;
-    public static final int MAX_ITERATIONS = 10;
+    protected double fixpointType = SimilarityFloodingAlgorithmFixpointFormulasTypes.FIX_BASIC.getValue();
 
     /**
      * Constructs a default SimilarityFloodingAlgorithm
@@ -108,29 +102,6 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
         newAlgo.pluginName = pluginName;
         newAlgo.mode = mode;
         return newAlgo;
-    }
-
-    // creates the JTable for user to view and change values.
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                "Epsilon Value", new Double(epsilon)
-            },
-            {
-                "FixPoint Type", new Double(fixpointType)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 2, data));
-        properties.setEditingRow(0);
-        properties.setEditingRow(1);
-        return properties;
     }
 
     /**
@@ -289,7 +260,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
             // print("epsilon is " + ((float)epsilon1) +" continue? " +(epsilon1>epsilon)
             // +"\n\n\n");
         }
-        while (epsilon1 > epsilon && iterations < MAX_ITERATIONS);
+        while (epsilon1 > epsilon && iterations < SimilarityFloodingAlgorithmFixpointFormulasTypes.MAX_ITERATIONS.getValue());
 
         /** Create match matrix */
         MatchMatrix matrix = new MatchMatrix(candTerms.size(), targTerms.size(), candTerms,
@@ -484,18 +455,20 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
      */
     private float fixpoint(LabeledVertex vert)
     {
+        double fixBasic = SimilarityFloodingAlgorithmFixpointFormulasTypes.FIX_BASIC.getValue();
+        double fixA = SimilarityFloodingAlgorithmFixpointFormulasTypes.FIX_A.getValue();
         float phi = 0;
         for (int i = 0; i < vert.getIncomingEdges().size(); i++)
         {
             LabeledEdge incoming = (LabeledEdge) vert.getIncomingEdges().get(i);
-            if (fixpointType == FIX_BASIC || fixpointType == FIX_A)
+            if (fixpointType == fixBasic || fixpointType == fixA)
                 phi += (incoming.getWeight() * incoming.getSource().getWeight());
             // if adding a new fixpoint, here a new formula for phi should be added
         }
         float sigmaNext = vert.getWeight();
-        if (fixpointType == FIX_BASIC)
+        if (fixpointType == fixBasic)
             sigmaNext = vert.getWeight() + phi;
-        if (fixpointType == FIX_A)
+        if (fixpointType == fixA)
             sigmaNext = sigma0(vert) + phi;
         vert.setWeightNext(sigmaNext);
         return sigmaNext;

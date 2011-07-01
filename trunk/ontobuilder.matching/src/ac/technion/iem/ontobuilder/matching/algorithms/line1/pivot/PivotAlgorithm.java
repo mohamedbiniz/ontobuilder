@@ -3,22 +3,23 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.pivot;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
+//import javax.swing.JTable;
 
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.ValueAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.ApplicationUtilities;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
 
 /**
  * <p>Title: PivotAlgorithm</p>
@@ -58,6 +59,26 @@ public abstract class PivotAlgorithm extends TermValueAlgorithm
      * @return the description
      */
     public abstract String getDescription();
+    
+    /**
+     * Get the pivot weight
+     * 
+     * @return the weight
+     */
+    public double getPivotWeight()
+    {
+        return pivotWeight;
+    }
+    
+    /**
+     * Checks if is one-to-one match
+     * 
+     * @return <code>true</code> if is one-to-one match
+     */
+    public boolean isOneToOneMatch()
+    {
+        return oneToOneMatch;
+    }
 
     /**
      * Performs a match between the target and candidate ontologies
@@ -232,8 +253,6 @@ public abstract class PivotAlgorithm extends TermValueAlgorithm
     {
         return weights;
     }
-
-    public abstract JTable getProperties();
 
     public abstract Algorithm makeCopy();
 

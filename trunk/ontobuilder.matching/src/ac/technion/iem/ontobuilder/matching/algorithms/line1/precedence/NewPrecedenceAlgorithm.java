@@ -4,16 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.pivot.PivotAlgorithm;
 
-import com.modica.application.ApplicationUtilities;
-import com.modica.application.PropertiesTableModel;
 import com.modica.ontology.OntologyUtilities;
 
 /**
@@ -114,43 +110,6 @@ public class NewPrecedenceAlgorithm extends PivotAlgorithm
 
     }
 
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"),
-                new Double(pivotWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"),
-                new Double(weights[0])
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"),
-                new Double(weights[1])
-            },
-            {
-                "use one to one match", new Boolean(oneToOneMatch)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
-        return properties;
-    }
-
     /**
      * Make a copy of the algorithm instance
      */
@@ -170,5 +129,4 @@ public class NewPrecedenceAlgorithm extends PivotAlgorithm
         algorithm.pivotWeight = pivotWeight;
         return algorithm;
     }
-
 }

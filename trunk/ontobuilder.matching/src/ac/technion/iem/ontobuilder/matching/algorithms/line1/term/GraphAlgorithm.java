@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.ApplicationUtilities;
@@ -19,8 +19,6 @@ import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: GraphAlgorithm</p>
@@ -81,6 +79,26 @@ public class GraphAlgorithm extends TermValueAlgorithm
     public double getSiblingsWeight()
     {
         return siblingsWeight;
+    }
+    
+    /**
+     * Set the graph weight
+     * 
+     * @param graphWeight the weight
+     */
+    public void setGraphWeight(double graphWeight)
+    {
+        this.graphWeight = graphWeight;
+    }
+
+    /**
+     * Get the graph weight
+     * 
+     * @return the graph weight
+     */
+    public double getGraphWeight()
+    {
+        return graphWeight;
     }
 
     /**
@@ -191,54 +209,6 @@ public class GraphAlgorithm extends TermValueAlgorithm
                     graphWeight = value;
             }
         }
-    }
-
-    public void updateProperties(HashMap<?, ?> properties)
-    {
-        super.updateProperties(properties);
-        graphWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.combined.graphWeight")).toString())
-            .doubleValue();
-        siblingsWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.graph.siblingsWeight")).toString())
-            .doubleValue();
-        parentsWeight = new Double(properties.get(
-            ApplicationUtilities.getResourceString("algorithm.graph.parentsWeight")).toString())
-            .doubleValue();
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.combined.graphWeight"),
-                new Double(graphWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.graph.parentsWeight"),
-                new Double(parentsWeight)
-            },
-            {
-                ApplicationUtilities.getResourceString("algorithm.graph.siblingsWeight"),
-                new Double(siblingsWeight)
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
-        return properties;
     }
 
     /**

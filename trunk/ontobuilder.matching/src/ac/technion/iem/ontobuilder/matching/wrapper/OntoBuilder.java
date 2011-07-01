@@ -6,16 +6,17 @@ import java.util.Locale;
 import java.util.Vector;
 
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
+import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 
 import com.modica.application.Application;
 import com.modica.application.ApplicationOptions;
 import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertyException;
 import com.modica.application.ResourceException;
-import com.modica.ontology.algorithm.AbstractAlgorithm;
-import com.modica.ontology.algorithm.Algorithm;
-import com.modica.ontology.algorithm.AlgorithmException;
-import com.modica.ontology.algorithm.AlgorithmUtilities;
 import com.modica.ontology.domain.DomainSimilarity;
 import com.modica.util.NetworkUtilities;
 
