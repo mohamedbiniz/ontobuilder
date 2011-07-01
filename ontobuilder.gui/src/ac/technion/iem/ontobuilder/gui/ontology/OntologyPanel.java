@@ -72,9 +72,15 @@ import org.w3c.dom.NodeList;
 
 import schemamatchings.meta.algorithms.Schema;
 
+import ac.technion.iem.ontobuilder.core.ontology.Attribute;
+import ac.technion.iem.ontobuilder.core.ontology.Axiom;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
+import ac.technion.iem.ontobuilder.core.ontology.Relationship;
+import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+
 import com.jgraph.JGraph;
 import com.modica.application.Actions;
-import com.modica.application.ApplicationUtilities;
 import com.modica.dom.DOMUtilities;
 import com.modica.dom.NetworkEntityResolver;
 import com.modica.gui.MultilineLabel;

@@ -6,6 +6,9 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
+import ac.technion.iem.ontobuilder.gui.tools.topk.TopKFileFilter;
+import ac.technion.iem.ontobuilder.gui.tools.topk.TopKFileView;
+
 /**
  * <p>Title: FileChoosingUtilities</p>
  * <p>Description: Handles choosing of files</p>
