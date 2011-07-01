@@ -44,7 +44,6 @@ import com.jgraph.graph.DefaultEdge;
 import com.jgraph.graph.DefaultGraphCell;
 import com.jgraph.graph.DefaultPort;
 import com.jgraph.graph.GraphConstants;
-import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.biztalk.BizTalkUtilities;
 import com.modica.graph.GraphUtilities;
@@ -287,8 +286,8 @@ public class Term extends OntologyClass
             term.setParent(this);
             term.setOntology(ontology);
             addRelationship(new Relationship(this,
-                ApplicationUtilities.getResourceString("ontology.relationships.parent"), term));
-            term.addRelationship(new Relationship(term, ApplicationUtilities
+                PropertiesHandler.getResourceString("ontology.relationships.parent"), term));
+            term.addRelationship(new Relationship(term, PropertiesHandler
                 .getResourceString("ontology.relationships.child"), this));
             if (fixPrecedence)
             {
@@ -588,7 +587,7 @@ public class Term extends OntologyClass
                 Term tday = new Term(subTermsClass, name + " day");
                 tday.isDecomposition = true;
                 tday.setAttributeValue("name", termName + "day");
-                tday.domain.setName(ApplicationUtilities
+                tday.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, tday.domain,
                     OntologyUtilities.DOMAIN_DATE_DAY_PART);
@@ -596,7 +595,7 @@ public class Term extends OntologyClass
                 Term tmonth = new Term(subTermsClass, name + " month");
                 tmonth.isDecomposition = true;
                 tmonth.setAttributeValue("name", termName + "month");
-                tmonth.domain.setName(ApplicationUtilities
+                tmonth.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tmonth.domain,
                     OntologyUtilities.DOMAIN_DATE_MONTH_PART);
@@ -604,7 +603,7 @@ public class Term extends OntologyClass
                 Term tyear = new Term(subTermsClass, name + " year");
                 tyear.isDecomposition = true;
                 tyear.setAttributeValue("name", termName + "year");
-                tyear.domain.setName(ApplicationUtilities
+                tyear.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, tyear.domain,
                     OntologyUtilities.DOMAIN_DATE_YEAR_PART);
@@ -627,7 +626,7 @@ public class Term extends OntologyClass
                 Term thour = new Term(subTermsClass, name + " hour");
                 thour.isDecomposition = true;
                 thour.setAttributeValue("name", termName + "hour");
-                thour.domain.setName(ApplicationUtilities
+                thour.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, thour.domain,
                     OntologyUtilities.DOMAIN_TIME_HOUR_PART);
@@ -635,7 +634,7 @@ public class Term extends OntologyClass
                 Term tminute = new Term(subTermsClass, name + " minute");
                 tminute.isDecomposition = true;
                 tminute.setAttributeValue("name", termName + "minute");
-                tminute.domain.setName(ApplicationUtilities
+                tminute.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, tminute.domain,
                     OntologyUtilities.DOMAIN_TIME_MINUTE_PART);
@@ -643,7 +642,7 @@ public class Term extends OntologyClass
                 Term tsecond = new Term(subTermsClass, name + " second");
                 tsecond.isDecomposition = true;
                 tsecond.setAttributeValue("name", termName + "second");
-                tsecond.domain.setName(ApplicationUtilities
+                tsecond.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, tsecond.domain,
                     OntologyUtilities.DOMAIN_TIME_SECOND_PART);
@@ -652,7 +651,7 @@ public class Term extends OntologyClass
                 tampm.isDecomposition = true;
                 tampm.setAttributeValue("name", termName + "ampm");
                 tampm.domain
-                    .setName(ApplicationUtilities.getResourceString("ontology.domain.text"));
+                    .setName(PropertiesHandler.getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tampm.domain,
                     OntologyUtilities.DOMAIN_TIME_AMPM_PART);
                 addTerm(tampm);
@@ -675,7 +674,7 @@ public class Term extends OntologyClass
                 Term tprotocol = new Term(subTermsClass, name + " protocol");
                 tprotocol.isDecomposition = true;
                 tprotocol.setAttributeValue("name", termName + "protocol");
-                tprotocol.domain.setName(ApplicationUtilities
+                tprotocol.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tprotocol.domain,
                     OntologyUtilities.DOMAIN_URL_PROTOCOL_PART);
@@ -683,7 +682,7 @@ public class Term extends OntologyClass
                 Term tport = new Term(subTermsClass, name + " port");
                 tport.isDecomposition = true;
                 tport.setAttributeValue("name", termName + "port");
-                tport.domain.setName(ApplicationUtilities
+                tport.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.pinteger"));
                 OntologyUtilities.fillDomain(domain, tport.domain,
                     OntologyUtilities.DOMAIN_URL_PORT_PART);
@@ -692,7 +691,7 @@ public class Term extends OntologyClass
                 thost.isDecomposition = true;
                 thost.setAttributeValue("name", termName + "host");
                 thost.domain
-                    .setName(ApplicationUtilities.getResourceString("ontology.domain.text"));
+                    .setName(PropertiesHandler.getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, thost.domain,
                     OntologyUtilities.DOMAIN_URL_HOST_PART);
                 addTerm(thost);
@@ -700,7 +699,7 @@ public class Term extends OntologyClass
                 tfile.isDecomposition = true;
                 tfile.setAttributeValue("name", termName + "file");
                 tfile.domain
-                    .setName(ApplicationUtilities.getResourceString("ontology.domain.text"));
+                    .setName(PropertiesHandler.getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tfile.domain,
                     OntologyUtilities.DOMAIN_URL_FILE_PART);
                 addTerm(tfile);
@@ -722,14 +721,14 @@ public class Term extends OntologyClass
                 tuser.isDecomposition = true;
                 tuser.setAttributeValue("name", termName + "user");
                 tuser.domain
-                    .setName(ApplicationUtilities.getResourceString("ontology.domain.text"));
+                    .setName(PropertiesHandler.getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tuser.domain,
                     OntologyUtilities.DOMAIN_EMAIL_USER_PART);
                 addTerm(tuser);
                 Term tdomain = new Term(subTermsClass, name + " domain");
                 tdomain.isDecomposition = true;
                 tdomain.setAttributeValue("name", termName + "domain");
-                tdomain.domain.setName(ApplicationUtilities
+                tdomain.domain.setName(PropertiesHandler
                     .getResourceString("ontology.domain.text"));
                 OntologyUtilities.fillDomain(domain, tdomain.domain,
                     OntologyUtilities.DOMAIN_EMAIL_DOMAIN_PART);
@@ -814,9 +813,9 @@ public class Term extends OntologyClass
                 }
 
                 addRelationship(new Relationship(this,
-                    ApplicationUtilities.getResourceString("ontology.relationships.parent"),
+                    PropertiesHandler.getResourceString("ontology.relationships.parent"),
                     baseTerm));
-                baseTerm.addRelationship(new Relationship(baseTerm, ApplicationUtilities
+                baseTerm.addRelationship(new Relationship(baseTerm, PropertiesHandler
                     .getResourceString("ontology.relationships.child"), this));
                 if (ontology != null)
                     ontology.fireTermAddedEvent(this, baseTerm, firstTermIndex);
@@ -850,26 +849,26 @@ public class Term extends OntologyClass
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.term.name"), name
+                PropertiesHandler.getResourceString("ontology.term.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.term.value"), value
+                PropertiesHandler.getResourceString("ontology.term.value"), value
             },
             {
-                ApplicationUtilities.getResourceString("ontology.domain"), domain.getName()
+                PropertiesHandler.getResourceString("ontology.domain"), domain.getName()
             },
             {
-                ApplicationUtilities.getResourceString("ontology.class"),
+                PropertiesHandler.getResourceString("ontology.class"),
                 superClass != null ? superClass.getName() : null
             },
             {
-                ApplicationUtilities.getResourceString("ontology"),
+                PropertiesHandler.getResourceString("ontology"),
                 ontology != null ? ontology.getName() : null
             }
         };
@@ -884,25 +883,25 @@ public class Term extends OntologyClass
         root.add(domain.getTreeBranch());
 
         DefaultMutableTreeNode attributesNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.attributes"));
+            PropertiesHandler.getResourceString("ontology.attributes"));
         root.add(attributesNode);
         for (Iterator<?> i = attributes.iterator(); i.hasNext();)
             attributesNode.add(((Attribute) i.next()).getTreeBranch());
 
         DefaultMutableTreeNode axiomsNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.axioms"));
+            PropertiesHandler.getResourceString("ontology.axioms"));
         root.add(axiomsNode);
         for (Iterator<?> i = axioms.iterator(); i.hasNext();)
             axiomsNode.add(((Axiom) i.next()).getTreeBranch());
 
         DefaultMutableTreeNode relationshipsNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.relationships"));
+            PropertiesHandler.getResourceString("ontology.relationships"));
         root.add(relationshipsNode);
         for (Iterator<Relationship> i = relationships.iterator(); i.hasNext();)
             relationshipsNode.add(((Relationship) i.next()).getTreeBranch());
 
         DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
-            ApplicationUtilities.getResourceString("ontology.subterms"));
+            PropertiesHandler.getResourceString("ontology.subterms"));
         root.add(termsNode);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
             termsNode.add(((Term) i.next()).getTreeBranch());
@@ -919,14 +918,14 @@ public class Term extends OntologyClass
         {
             root.add(domain.getHyperTreeNode());
             NodeHyperTree attributesNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.attributes"),
+                PropertiesHandler.getResourceString("ontology.attributes"),
                 NodeHyperTree.PROPERTY);
             root.add(attributesNode);
             for (Iterator<?> i = attributes.iterator(); i.hasNext();)
                 attributesNode.add(((Attribute) i.next()).getHyperTreeNode());
 
             NodeHyperTree axiomsNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.axioms"), NodeHyperTree.PROPERTY);
+                PropertiesHandler.getResourceString("ontology.axioms"), NodeHyperTree.PROPERTY);
             root.add(axiomsNode);
             for (Iterator<?> i = axioms.iterator(); i.hasNext();)
                 axiomsNode.add(((Axiom) i.next()).getHyperTreeNode());
@@ -935,7 +934,7 @@ public class Term extends OntologyClass
         if (showRelations)
         {
             NodeHyperTree relationshipsNode = new NodeHyperTree(
-                ApplicationUtilities.getResourceString("ontology.relationships"),
+                PropertiesHandler.getResourceString("ontology.relationships"),
                 NodeHyperTree.RELATIONSHIP);
             root.add(relationshipsNode);
             for (Iterator<Relationship> i = relationships.iterator(); i.hasNext();)
@@ -943,7 +942,7 @@ public class Term extends OntologyClass
         }
 
         // NodeHyperTree termsNode=new
-        // NodeHyperTree(ApplicationUtilities.getResourceString("ontology.subterms"));
+        // NodeHyperTree(PropertiesHandler.getResourceString("ontology.subterms"));
         // root.add(termsNode);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
             root.add(((Term) i.next()).getHyperTreeNode(showRelations, showClasses, showProperties));
@@ -1195,7 +1194,7 @@ public class Term extends OntologyClass
                 boolean isSelected, boolean cellHasFocus)
             {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                setIcon(ApplicationUtilities.getImage("domain.gif"));
+                setIcon(PropertiesHandler.getImage("domain.gif"));
                 return this;
             }
         });
@@ -1213,18 +1212,18 @@ public class Term extends OntologyClass
             {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof OntologyClass)
-                    setIcon(ApplicationUtilities.getImage("class.gif"));
+                    setIcon(PropertiesHandler.getImage("class.gif"));
                 return this;
             }
         });
 
         final JDialog dialog = new JDialog((JFrame) null,
-            ApplicationUtilities.getResourceString("ontology.term.dialog.windowTitle"), true);
+            PropertiesHandler.getResourceString("ontology.term.dialog.windowTitle"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        dialog.setSize(new Dimension(ApplicationUtilities
-            .getIntProperty("ontology.term.dialog.width"), ApplicationUtilities
+        dialog.setSize(new Dimension(PropertiesHandler
+            .getIntProperty("ontology.term.dialog.width"), PropertiesHandler
             .getIntProperty("ontology.term.dialog.height")));
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -1232,7 +1231,7 @@ public class Term extends OntologyClass
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
         final JButton okButton;
-        south.add(okButton = new JButton(ApplicationUtilities
+        south.add(okButton = new JButton(PropertiesHandler
             .getResourceString("ontology.term.dialog.button.ok")));
         dialog.getRootPane().setDefaultButton(okButton);
         okButton.setEnabled(txtTermName.getText().trim().length() > 0);
@@ -1253,7 +1252,7 @@ public class Term extends OntologyClass
             }
         });
         JButton cancelButton;
-        south.add(cancelButton = new JButton(ApplicationUtilities
+        south.add(cancelButton = new JButton(PropertiesHandler
             .getResourceString("ontology.term.dialog.button.cancel")));
         cancelButton.addActionListener(new ActionListener()
         {
@@ -1270,8 +1269,8 @@ public class Term extends OntologyClass
         center.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         {// Title
-            JLabel title = new JLabel(ApplicationUtilities.getResourceString("ontology.term"),
-                ApplicationUtilities.getImage("term.gif"), JLabel.LEFT);
+            JLabel title = new JLabel(PropertiesHandler.getResourceString("ontology.term"),
+                PropertiesHandler.getImage("term.gif"), JLabel.LEFT);
             title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
                 .getSize() + 6));
             GridBagConstraints gbcl = new GridBagConstraints();
@@ -1292,7 +1291,7 @@ public class Term extends OntologyClass
             gbcl.insets = new Insets(0, 0, 20, 0);
             gbcl.anchor = GridBagConstraints.WEST;
             center.add(
-                new MultilineLabel(ApplicationUtilities
+                new MultilineLabel(PropertiesHandler
                     .getResourceString("ontology.term.dialog.explanation")), gbcl);
         }
 
@@ -1301,7 +1300,7 @@ public class Term extends OntologyClass
             gbcl.gridy = 2;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel name = new JLabel(ApplicationUtilities.getResourceString("ontology.term.name") +
+            JLabel name = new JLabel(PropertiesHandler.getResourceString("ontology.term.name") +
                 ":");
             name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
             center.add(name, gbcl);
@@ -1333,7 +1332,7 @@ public class Term extends OntologyClass
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
             JLabel value = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.term.value") + ":");
+                PropertiesHandler.getResourceString("ontology.term.value") + ":");
             center.add(value, gbcl);
 
             gbcl.gridx = 1;
@@ -1346,7 +1345,7 @@ public class Term extends OntologyClass
             gbcl.gridy = 4;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel domain = new JLabel(ApplicationUtilities.getResourceString("ontology.domain") +
+            JLabel domain = new JLabel(PropertiesHandler.getResourceString("ontology.domain") +
                 ":");
             center.add(domain, gbcl);
 
@@ -1360,7 +1359,7 @@ public class Term extends OntologyClass
             gbcl.gridy = 5;
             gbcl.insets = new Insets(0, 0, 0, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel clazz = new JLabel(ApplicationUtilities.getResourceString("ontology.class") +
+            JLabel clazz = new JLabel(PropertiesHandler.getResourceString("ontology.class") +
                 ":");
             center.add(clazz, gbcl);
 
@@ -1412,7 +1411,7 @@ public class Term extends OntologyClass
     // DefaultGraphCell termVertex=new DefaultGraphCell(this);
     // cells.add(termVertex);
     // Map termMap=GraphUtilities.createDefaultAttributes();
-    // GraphConstants.setIcon(termMap, ApplicationUtilities.getImage("term.gif"));
+    // GraphConstants.setIcon(termMap, PropertiesHandler.getImage("term.gif"));
     // attributes.put(termVertex,termMap);
     //
     // if(parentPort!=null) // Connect parent with this child
@@ -1445,7 +1444,7 @@ public class Term extends OntologyClass
         DefaultGraphCell termVertex = new DefaultGraphCell(this);
         cells.add(termVertex);
         Map<?, ?> termMap = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(termMap, ApplicationUtilities.getImage("term.gif"));
+        GraphConstants.setIcon(termMap, PropertiesHandler.getImage("term.gif"));
         attributes.put(termVertex, termMap);
 
         if (parentPort != null) // Connect parent with this child

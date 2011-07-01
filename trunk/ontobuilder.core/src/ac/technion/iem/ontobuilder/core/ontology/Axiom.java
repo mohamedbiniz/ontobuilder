@@ -27,7 +27,8 @@ import javax.swing.SwingUtilities;
 
 import org.jdom.Element;
 
-import com.modica.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.modica.application.PropertiesTableModel;
 import com.modica.gui.MultilineLabel;
 import com.modica.ontology.operator.StringOperator;
@@ -146,16 +147,16 @@ public class Axiom extends OntologyObject
     {
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.axiom.name"), name
+                PropertiesHandler.getResourceString("ontology.axiom.name"), name
             },
             {
-                ApplicationUtilities.getResourceString("ontology.axiom.axiom"), axiom
+                PropertiesHandler.getResourceString("ontology.axiom.axiom"), axiom
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 2, data));
@@ -210,12 +211,12 @@ public class Axiom extends OntologyObject
         final com.modica.gui.TextArea txtAxiom = new com.modica.gui.TextArea(1, 4);
 
         final JDialog dialog = new JDialog((JFrame) null,
-            ApplicationUtilities.getResourceString("ontology.axiom.dialog.windowTitle"), true);
+            PropertiesHandler.getResourceString("ontology.axiom.dialog.windowTitle"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        dialog.setSize(new Dimension(ApplicationUtilities
-            .getIntProperty("ontology.axiom.dialog.width"), ApplicationUtilities
+        dialog.setSize(new Dimension(PropertiesHandler
+            .getIntProperty("ontology.axiom.dialog.width"), PropertiesHandler
             .getIntProperty("ontology.axiom.dialog.height")));
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -223,7 +224,7 @@ public class Axiom extends OntologyObject
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
         final JButton okButton;
-        south.add(okButton = new JButton(ApplicationUtilities
+        south.add(okButton = new JButton(PropertiesHandler
             .getResourceString("ontology.axiom.dialog.button.ok")));
         dialog.getRootPane().setDefaultButton(okButton);
         okButton.setEnabled(false);
@@ -236,7 +237,7 @@ public class Axiom extends OntologyObject
             }
         });
         JButton cancelButton;
-        south.add(cancelButton = new JButton(ApplicationUtilities
+        south.add(cancelButton = new JButton(PropertiesHandler
             .getResourceString("ontology.axiom.dialog.button.cancel")));
         cancelButton.addActionListener(new ActionListener()
         {
@@ -253,8 +254,8 @@ public class Axiom extends OntologyObject
         center.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         {// Title
-            JLabel title = new JLabel(ApplicationUtilities.getResourceString("ontology.axiom"),
-                ApplicationUtilities.getImage("axiom.gif"), SwingConstants.LEFT);
+            JLabel title = new JLabel(PropertiesHandler.getResourceString("ontology.axiom"),
+                PropertiesHandler.getImage("axiom.gif"), SwingConstants.LEFT);
             title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
                 .getSize() + 6));
             GridBagConstraints gbcl = new GridBagConstraints();
@@ -275,7 +276,7 @@ public class Axiom extends OntologyObject
             gbcl.insets = new Insets(0, 0, 20, 0);
             gbcl.anchor = GridBagConstraints.WEST;
             center.add(
-                new MultilineLabel(ApplicationUtilities
+                new MultilineLabel(PropertiesHandler
                     .getResourceString("ontology.axiom.dialog.explanation")), gbcl);
         }
 
@@ -284,7 +285,7 @@ public class Axiom extends OntologyObject
             gbcl.gridy = 2;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel name = new JLabel(ApplicationUtilities.getResourceString("ontology.axiom.name") +
+            JLabel name = new JLabel(PropertiesHandler.getResourceString("ontology.axiom.name") +
                 ":");
             name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
             center.add(name, gbcl);
@@ -316,7 +317,7 @@ public class Axiom extends OntologyObject
             gbcl.gridy = 3;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.NORTHEAST;
-            JLabel axiom = new JLabel(ApplicationUtilities.getResourceString("ontology.axiom") +
+            JLabel axiom = new JLabel(PropertiesHandler.getResourceString("ontology.axiom") +
                 ":");
             axiom.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont()
                 .getSize()));

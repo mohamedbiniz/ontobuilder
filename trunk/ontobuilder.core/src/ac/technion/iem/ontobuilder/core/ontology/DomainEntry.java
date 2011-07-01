@@ -34,10 +34,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdom.Element;
 
-import com.modica.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.modica.application.PropertiesTableModel;
 import com.modica.gui.MultilineLabel;
-import com.modica.hypertree.NodeHyperTree;
 import com.modica.ontology.operator.StringOperator;
 
 /**
@@ -155,13 +155,13 @@ public class DomainEntry extends OntologyObject
             return ((Term) entry).getProperties();
         String columnNames[] =
         {
-            ApplicationUtilities.getResourceString("properties.attribute"),
-            ApplicationUtilities.getResourceString("properties.value")
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
         };
         Object data[][] =
         {
             {
-                ApplicationUtilities.getResourceString("ontology.domain.entry"), entry
+                PropertiesHandler.getResourceString("ontology.domain.entry"), entry
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 1, data));
@@ -186,7 +186,7 @@ public class DomainEntry extends OntologyObject
         if (entry instanceof Term)
         {
             NodeHyperTree termNode = ((Term) entry).getHyperTreeNode();
-            root.add(termNode.getChild(ApplicationUtilities
+            root.add(termNode.getChild(PropertiesHandler
                 .getResourceString("ontology.attributes")));
         }
         return root;
@@ -260,7 +260,7 @@ public class DomainEntry extends OntologyObject
                 boolean isSelected, boolean cellHasFocus)
             {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                setIcon(ApplicationUtilities.getImage("domain.gif"));
+                setIcon(PropertiesHandler.getImage("domain.gif"));
                 return this;
             }
         });
@@ -279,31 +279,31 @@ public class DomainEntry extends OntologyObject
             {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof OntologyClass)
-                    setIcon(ApplicationUtilities.getImage("class.gif"));
+                    setIcon(PropertiesHandler.getImage("class.gif"));
                 return this;
             }
         });
 
         final JDialog dialog = new JDialog((JFrame) null,
-            ApplicationUtilities.getResourceString("ontology.domainEntry.dialog.windowTitle"), true);
+            PropertiesHandler.getResourceString("ontology.domainEntry.dialog.windowTitle"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        dialog.setSize(new Dimension(ApplicationUtilities
-            .getIntProperty("ontology.domainEntry.dialog.width"), ApplicationUtilities
+        dialog.setSize(new Dimension(PropertiesHandler
+            .getIntProperty("ontology.domainEntry.dialog.width"), PropertiesHandler
             .getIntProperty("ontology.domainEntry.dialog.height")));
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
 
         final JRadioButton entryRadio = new JRadioButton(
-            ApplicationUtilities.getResourceString("ontology.domainEntry.dialog.radio.entry"));
+            PropertiesHandler.getResourceString("ontology.domainEntry.dialog.radio.entry"));
         final JRadioButton termRadio = new JRadioButton(
-            ApplicationUtilities.getResourceString("ontology.domainEntry.dialog.radio.term"));
+            PropertiesHandler.getResourceString("ontology.domainEntry.dialog.radio.term"));
 
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
         final JButton okButton;
-        south.add(okButton = new JButton(ApplicationUtilities
+        south.add(okButton = new JButton(PropertiesHandler
             .getResourceString("ontology.domainEntry.dialog.button.ok")));
         dialog.getRootPane().setDefaultButton(okButton);
         okButton.setEnabled(txtTermName.getText().trim().length() > 0);
@@ -334,7 +334,7 @@ public class DomainEntry extends OntologyObject
             }
         });
         JButton cancelButton;
-        south.add(cancelButton = new JButton(ApplicationUtilities
+        south.add(cancelButton = new JButton(PropertiesHandler
             .getResourceString("ontology.domainEntry.dialog.button.cancel")));
         cancelButton.addActionListener(new ActionListener()
         {
@@ -387,8 +387,8 @@ public class DomainEntry extends OntologyObject
 
         {// Title
             JLabel title = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.domain.entry"),
-                ApplicationUtilities.getImage("domainentry.gif"), SwingConstants.LEFT);
+                PropertiesHandler.getResourceString("ontology.domain.entry"),
+                PropertiesHandler.getImage("domainentry.gif"), SwingConstants.LEFT);
             title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
                 .getSize() + 6));
             GridBagConstraints gbcl = new GridBagConstraints();
@@ -409,7 +409,7 @@ public class DomainEntry extends OntologyObject
             gbcl.insets = new Insets(0, 0, 20, 0);
             gbcl.anchor = GridBagConstraints.WEST;
             center.add(
-                new MultilineLabel(ApplicationUtilities
+                new MultilineLabel(PropertiesHandler
                     .getResourceString("ontology.domainEntry.dialog.explanation")), gbcl);
         }
 
@@ -430,7 +430,7 @@ public class DomainEntry extends OntologyObject
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
             JLabel entry = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.domain.entry") + ":");
+                PropertiesHandler.getResourceString("ontology.domain.entry") + ":");
             entry.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont()
                 .getSize()));
             center.add(entry, gbcl);
@@ -472,7 +472,7 @@ public class DomainEntry extends OntologyObject
             gbcl.gridy = 5;
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
-            JLabel name = new JLabel(ApplicationUtilities.getResourceString("ontology.term.name") +
+            JLabel name = new JLabel(PropertiesHandler.getResourceString("ontology.term.name") +
                 ":");
             name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
             center.add(name, gbcl);
@@ -504,7 +504,7 @@ public class DomainEntry extends OntologyObject
             gbcl.insets = new Insets(0, 0, 5, 5);
             gbcl.anchor = GridBagConstraints.EAST;
             JLabel value = new JLabel(
-                ApplicationUtilities.getResourceString("ontology.term.value") + ":");
+                PropertiesHandler.getResourceString("ontology.term.value") + ":");
             center.add(value, gbcl);
 
             gbcl.gridx = 1;
@@ -515,12 +515,12 @@ public class DomainEntry extends OntologyObject
         /*
          * {// Domain GridBagConstraints gbcl=new GridBagConstraints(); gbcl.gridy=7;
          * gbcl.insets=new Insets(0,0,5,5); gbcl.anchor=GridBagConstraints.EAST; JLabel domain=new
-         * JLabel(ApplicationUtilities.getResourceString("ontology.domain") + ":");
+         * JLabel(PropertiesHandler.getResourceString("ontology.domain") + ":");
          * center.add(domain,gbcl); gbcl.gridx=1; gbcl.anchor=GridBagConstraints.WEST;
          * center.add(cmbTermDomain,gbcl); } {// Class GridBagConstraints gbcl=new
          * GridBagConstraints(); gbcl.gridy=8; gbcl.insets=new Insets(0,0,0,5);
          * gbcl.anchor=GridBagConstraints.EAST; JLabel clazz=new
-         * JLabel(ApplicationUtilities.getResourceString("ontology.class") + ":");
+         * JLabel(PropertiesHandler.getResourceString("ontology.class") + ":");
          * center.add(clazz,gbcl); gbcl.gridx=1; gbcl.anchor=GridBagConstraints.WEST;
          * center.add(cmbTermClass,gbcl); }
          */
