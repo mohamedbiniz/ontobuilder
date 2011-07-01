@@ -1,8 +1,10 @@
-package ac.technion.iem.ontobuilder.gui.tools.utils;
+package ac.technion.iem.ontobuilder.gui.tools.topk;
 
 import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
+
+import ac.technion.iem.ontobuilder.gui.tools.utils.FileExtentionUtils;
 
 /**
  * <p>Title: TopKFileFilter</p>

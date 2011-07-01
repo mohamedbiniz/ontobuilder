@@ -1,20 +1,20 @@
 package ac.technion.iem.ontobuilder.gui.application;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.MissingResourceException;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertyException;
+import ac.technion.iem.ontobuilder.core.util.properties.ResourceException;
 
 /**
  * <p>Title: ApplicationUtilities</p>
@@ -22,40 +22,18 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class ApplicationUtilities
 {
-    private static Properties properties = null;
-
-    // Resource bundle for internationalized and accessible text
-    // private static ResourceBundle bundle = null;
-    private static Properties resources = null;
-
-    private static String currentDirectory = getApplicationDirectory();
-
-    // System Properties Methods
-
-    /**
-     * Initialises the properties according to a properties file
-     * 
-     * @param propertiesFile the name of the properties file
-     */
     public static void initializeProperties(String propertiesFile) throws PropertyException
     {
-        try
-        {
-            InputStream propertiesStream = ApplicationUtilities.class
-                .getResourceAsStream(propertiesFile);
-            if (propertiesStream == null)
-                throw new PropertyException("The property file '" + propertiesFile +
-                    "' doesn't exists.");
-            properties = new java.util.Properties();
-            properties.load(propertiesStream);
-        }
-        catch (IOException e)
-        {
-            throw new PropertyException("There was an error trying to read properties from '" +
-                propertiesFile + "'.");
-        }
+        PropertiesHandler.initializeProperties(propertiesFile);
+    }
+    
+    public static void initializeResources(String resourceFile, Locale locale)
+    {
+        PropertiesHandler.initializeResources(resourceFile, locale);
     }
 
+    // System Properties Methods
+    
     /**
      * Get a string property
      * 
@@ -65,13 +43,7 @@ public class ApplicationUtilities
      */
     public static String getStringProperty(String key) throws PropertyException
     {
-        if (properties == null)
-            throw new PropertyException("The property file has not been specified");
-        String property = properties.getProperty(key);
-        if (property == null)
-            throw new PropertyException("The property '" + key +
-                "' was not found in the current property file.");
-        return property;
+        return PropertiesHandler.getStringProperty(key);
     }
 
     /**
@@ -83,17 +55,7 @@ public class ApplicationUtilities
      */
     public static int getIntProperty(String key) throws PropertyException
     {
-        String property = getStringProperty(key);
-        try
-        {
-            int value = Integer.parseInt(property);
-            return value;
-        }
-        catch (NumberFormatException e)
-        {
-            throw new PropertyException("The property '" + key + "' is not an int value (" + key +
-                "=" + property + ")");
-        }
+        return PropertiesHandler.getIntProperty(key);
     }
 
     /**
@@ -105,17 +67,7 @@ public class ApplicationUtilities
      */
     public static float getFloatProperty(String key) throws PropertyException
     {
-        String property = getStringProperty(key);
-        try
-        {
-            float value = Float.parseFloat(property);
-            return value;
-        }
-        catch (NumberFormatException e)
-        {
-            throw new PropertyException("The property '" + key + "' is not a float value (" + key +
-                "=" + property + ")");
-        }
+        return PropertiesHandler.getFloatProperty(key);
     }
 
     /**
@@ -127,51 +79,9 @@ public class ApplicationUtilities
      */
     public static Date getDateProperty(String key) throws PropertyException
     {
-        String property = getStringProperty(key);
-        try
-        {
-            Date value = new SimpleDateFormat().parse(property);
-            return value;
-        }
-        catch (ParseException e)
-        {
-            throw new PropertyException("The property '" + key + "' is not a date value (" + key +
-                "=" + property + ")");
-        }
+        return PropertiesHandler.getDateProperty(key);
     }
-
-    // Resource Bundle Methods
-
-    /**
-     * Initialises the resources according to the resource file
-     * 
-     * @param resourceFile the resource file
-     */
-    public static void initializeResources(String resourceFile, Locale locale)
-        throws ResourceException
-    {
-        // try
-        // {
-        // bundle = ResourceBundle.getBundle(resourceFile,locale);
-        // }
-        // catch(MissingResourceException e)
-        // {
-        // throw new ResourceException("The resource '" + resourceFile + "' cannot be found.");
-        // }
-        try
-        {
-            InputStream propertiesStream;// =ApplicationUtilities.class.getResourceAsStream(propertiesFile);
-            propertiesStream = new FileInputStream(resourceFile);
-
-            resources = new java.util.Properties();
-            resources.load(propertiesStream);
-        }
-        catch (IOException e)
-        {
-            throw new ResourceException("The resource '" + resourceFile + "' cannot be found.");
-        }
-    }
-
+    
     /**
      * Get the resource string according to a property key
      * 
@@ -182,33 +92,10 @@ public class ApplicationUtilities
      */
     public static String getResourceString(String key) throws ResourceException
     {
-        // if(bundle==null)
-        // throw new ResourceException("The resource bundle file has not been specified.");
-        // try
-        // {
-        // String value=bundle.getString(key);
-        // return value;
-        // }
-        // catch(MissingResourceException e)
-        // {
-        // throw new ResourceException("The key '" + key +
-        // "' was not found in the current resource bundle.");
-        // }
-        if (resources == null)
-            throw new ResourceException("The resource bundle file has not been specified.");
-        try
-        {
-            String value = resources.getProperty(key);
-            return value;
-        }
-        catch (MissingResourceException e)
-        {
-            throw new ResourceException("The key '" + key +
-                "' was not found in the current resource bundle.");
-        }
+        return PropertiesHandler.getResourceString(key);
 
     }
-
+    
     // Look & Feel
     /**
      * Initialise the look and feel
@@ -262,8 +149,10 @@ public class ApplicationUtilities
      */
     public static ImageIcon getImage(String icon) throws ResourceException
     {
+        String imagesDirectory = PropertiesHandler.getStringProperty("application.imagesDirectory");
+        
         URL url = ApplicationUtilities.class.getResource("\\" +
-            getStringProperty("application.imagesDirectory") + icon);
+            imagesDirectory + icon);
         if (url == null)
         {
             try
@@ -278,34 +167,5 @@ public class ApplicationUtilities
         return new ImageIcon(url);
     }
 
-    /**
-     * Get the application directory
-     * 
-     * @return the directory
-     */
-    public static String getApplicationDirectory()
-    {
-        return System.getProperty("user.dir", ".") + System.getProperty("file.separator", "/");
-    }
-
-    /**
-     * Set the current directory
-     * 
-     * @param dir the directory to set
-     */
-    public static void setCurrentDirectory(String dir)
-    {
-        currentDirectory = dir;
-    }
-
-    /**
-     * Get the current directory
-     * 
-     * @return the current directory
-     */
-    public static String getCurrentDirectory()
-    {
-        return currentDirectory;
-    }
 
 }
