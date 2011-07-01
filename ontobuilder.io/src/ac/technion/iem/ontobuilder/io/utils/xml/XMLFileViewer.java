@@ -5,7 +5,6 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileView;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.util.FileUtilities;
 
 /**
@@ -18,7 +17,7 @@ public class XMLFileViewer extends FileView
     {
         String extension = FileUtilities.getFileExtension(f);
         if (extension != null && extension.equals("xml"))
-            return ApplicationUtilities.getImage("xmlfile.gif");
+            return PropertiesHandler.getImage("xmlfile.gif");
         return null;
     }
 }
