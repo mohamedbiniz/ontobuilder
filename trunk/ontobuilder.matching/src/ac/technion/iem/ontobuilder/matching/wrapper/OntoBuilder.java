@@ -7,6 +7,9 @@ import java.util.Vector;
 
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertyException;
+import ac.technion.iem.ontobuilder.core.util.properties.ResourceException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
@@ -14,9 +17,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtili
 
 import com.modica.application.Application;
 import com.modica.application.ApplicationOptions;
-import com.modica.application.ApplicationUtilities;
-import com.modica.application.PropertyException;
-import com.modica.application.ResourceException;
 import com.modica.ontology.domain.DomainSimilarity;
 import com.modica.util.NetworkUtilities;
 
@@ -61,7 +61,7 @@ class OntoBuilder
         initializeOptions();
         buildThesaurus();
         initializeAlgorithms();
-        DomainSimilarity.buildDomainMatrix(ApplicationUtilities
+        DomainSimilarity.buildDomainMatrix(PropertiesHandler
             .getStringProperty("domain.domainMatrix"));
         if (!light)
         {
@@ -121,13 +121,13 @@ class OntoBuilder
     {
         try
         {
-            File thesaurusFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                File.separator + ApplicationUtilities.getStringProperty("thesaurus.file"));
+            File thesaurusFile = new File(PropertiesHandler.getCurrentDirectory() +
+                File.separator + PropertiesHandler.getStringProperty("thesaurus.file"));
             if (thesaurusFile.exists())
                 thesaurus = new Thesaurus(thesaurusFile);
             else
                 thesaurus = new Thesaurus("/" +
-                    ApplicationUtilities.getStringProperty("thesaurus.file"));
+                    PropertiesHandler.getStringProperty("thesaurus.file"));
         }
         catch (ThesaurusException e)
         {
@@ -151,13 +151,13 @@ class OntoBuilder
     private void initializeOptions()
     {
         options = new ApplicationOptions();
-        File optionFile = new File(ApplicationUtilities.getCurrentDirectory() + File.separator +
-            ApplicationUtilities.getStringProperty("application.configurationFile"));
+        File optionFile = new File(PropertiesHandler.getCurrentDirectory() + File.separator +
+            PropertiesHandler.getStringProperty("application.configurationFile"));
         if (optionFile.exists())
             options.loadOptions(optionFile);
         else
             options.loadOptions("/" +
-                ApplicationUtilities.getStringProperty("application.configurationFile"));
+                PropertiesHandler.getStringProperty("application.configurationFile"));
     }
 
     /**
@@ -167,13 +167,13 @@ class OntoBuilder
     {
         try
         {
-            File algorithmsFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("algorithms.file"));
+            File algorithmsFile = new File(PropertiesHandler.getCurrentDirectory() +
+                PropertiesHandler.getStringProperty("algorithms.file"));
             if (algorithmsFile.exists())
                 algorithms = AlgorithmUtilities.getAlgorithmsInstances(algorithmsFile);
             else
                 algorithms = AlgorithmUtilities.getAlgorithmsInstances("/" +
-                    ApplicationUtilities.getStringProperty("algorithms.file"));
+                    PropertiesHandler.getStringProperty("algorithms.file"));
             if (algorithms == null)
                 return;
             double threshold = Double.parseDouble((String) options
@@ -200,7 +200,7 @@ class OntoBuilder
         // Initialise the properties
         try
         {
-            ApplicationUtilities.initializeProperties(Application.PROPERTIES_FILE);
+            PropertiesHandler.initializeProperties(Application.PROPERTIES_FILE);
         }
         catch (PropertyException e)
         {
@@ -211,9 +211,9 @@ class OntoBuilder
         // Initialise the resource bundle
         try
         {
-            ApplicationUtilities.initializeResources(
-                ApplicationUtilities.getCurrentDirectory() + File.separator +
-                    ApplicationUtilities.getStringProperty("application.resourceBundle"), locale);
+            PropertiesHandler.initializeResources(
+                PropertiesHandler.getCurrentDirectory() + File.separator +
+                    PropertiesHandler.getStringProperty("application.resourceBundle"), locale);
         }
         catch (ResourceException e)
         {

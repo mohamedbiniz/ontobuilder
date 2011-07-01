@@ -9,6 +9,7 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgorithm;
@@ -17,7 +18,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.GuessedDomain;
 
@@ -92,14 +92,14 @@ public abstract class PivotAlgorithm extends TermValueAlgorithm
         if (termAlgorithm == null)
         {
             termAlgorithm = (TermAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.term")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.term")).makeCopy();
             if (termAlgorithm == null)
                 return null;
         }
         if (valueAlgorithm == null)
         {
             valueAlgorithm = (ValueAlgorithm) AlgorithmUtilities.getAlgorithm(
-                ApplicationUtilities.getResourceString("algorithm.value")).makeCopy();
+                PropertiesHandler.getResourceString("algorithm.value")).makeCopy();
             if (valueAlgorithm == null)
                 return null;
         }
@@ -347,7 +347,7 @@ public abstract class PivotAlgorithm extends TermValueAlgorithm
         // if(ApplicationParameters.verbose)
         // {
         // String
-        // columnNames[]={ApplicationUtilities.getResourceString("ontology.match.candidate"),ApplicationUtilities.getResourceString("ontology.match.target"),ApplicationUtilities.getResourceString("ontology.match.effectiveness")};
+        // columnNames[]={PropertiesHandler.getResourceString("ontology.match.candidate"),PropertiesHandler.getResourceString("ontology.match.target"),PropertiesHandler.getResourceString("ontology.match.effectiveness")};
         // Object matchTable[][]=new Object[targetTerms.size()*candidateTerms.size()][3];
         //
         // for(int j=0;j<candidateTerms.size();j++)
@@ -363,9 +363,9 @@ public abstract class PivotAlgorithm extends TermValueAlgorithm
         // }
         // }
         //
-        // System.out.println(ApplicationUtilities.getResourceString("algorithm.term") + " + " +
-        // ApplicationUtilities.getResourceString("algorithm.value") + " + " +
-        // ApplicationUtilities.getResourceString("algorithm.graph"));
+        // System.out.println(PropertiesHandler.getResourceString("algorithm.term") + " + " +
+        // PropertiesHandler.getResourceString("algorithm.value") + " + " +
+        // PropertiesHandler.getResourceString("algorithm.graph"));
         // System.out.println();
         // System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(new
         // PropertiesTableModel(columnNames,matchTable))));

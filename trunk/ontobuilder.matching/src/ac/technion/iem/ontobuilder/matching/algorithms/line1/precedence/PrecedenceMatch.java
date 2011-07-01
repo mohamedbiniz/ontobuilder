@@ -7,8 +7,8 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
 
@@ -131,9 +131,9 @@ public class PrecedenceMatch
         {
             String columnNames[] =
             {
-                ApplicationUtilities.getResourceString("ontology.match.candidate"),
-                ApplicationUtilities.getResourceString("ontology.match.target"),
-                ApplicationUtilities.getResourceString("ontology.match.effectiveness")
+                PropertiesHandler.getResourceString("ontology.match.candidate"),
+                PropertiesHandler.getResourceString("ontology.match.target"),
+                PropertiesHandler.getResourceString("ontology.match.effectiveness")
             };
             Object matchTable[][] = new Object[targetTerms.size() * candidateTerms.size()][3];
 
@@ -150,7 +150,7 @@ public class PrecedenceMatch
                 }
             }
 
-            System.out.println(ApplicationUtilities.getResourceString("algorithm.precedence"));
+            System.out.println(PropertiesHandler.getResourceString("algorithm.precedence"));
             System.out.println();
             System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
                 new PropertiesTableModel(columnNames, 0, matchTable))));

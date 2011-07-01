@@ -11,6 +11,7 @@ import java.util.Vector;
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.Relationship;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
@@ -19,7 +20,6 @@ import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.graph.LabeledEdge;
 import com.modica.graph.LabeledVertex;
 import com.modica.ontology.OntologyUtilities;

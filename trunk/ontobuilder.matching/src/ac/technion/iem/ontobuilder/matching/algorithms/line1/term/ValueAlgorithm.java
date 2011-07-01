@@ -8,9 +8,9 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 
-import com.modica.application.ApplicationUtilities;
 import com.modica.ontology.OntologyUtilities;
 import com.modica.ontology.domain.DomainSimilarity;
 
@@ -52,7 +52,7 @@ public class ValueAlgorithm extends TermAlgorithm
      */
     public String getName()
     {
-        return ApplicationUtilities.getResourceString("algorithm.value");
+        return PropertiesHandler.getResourceString("algorithm.value");
     }
 
     /**
@@ -62,7 +62,7 @@ public class ValueAlgorithm extends TermAlgorithm
      */
     public String getDescription()
     {
-        return ApplicationUtilities.getResourceString("algorithm.value.description");
+        return PropertiesHandler.getResourceString("algorithm.value.description");
     }
 
     /**
