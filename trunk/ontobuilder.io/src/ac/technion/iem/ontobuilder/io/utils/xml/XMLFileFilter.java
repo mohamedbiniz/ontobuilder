@@ -1,6 +1,7 @@
 package ac.technion.iem.ontobuilder.io.utils.xml;
 
-import com.modica.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+
 import com.modica.util.ExtensionFileFilter;
 
 /**
@@ -16,6 +17,6 @@ public class XMLFileFilter extends ExtensionFileFilter
 
     public String getDescription()
     {
-        return ApplicationUtilities.getResourceString("file.xmlFilter.description");
+        return PropertiesHandler.getResourceString("file.xmlFilter.description");
     }
 }

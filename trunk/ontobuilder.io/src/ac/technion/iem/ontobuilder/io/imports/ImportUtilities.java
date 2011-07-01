@@ -42,7 +42,7 @@ public class ImportUtilities
             // {
             // String params[]={file.getAbsolutePath()};
             // throw new
-            // ImportException(StringUtilities.getReplacedString(ApplicationUtilities.getResourceString("error.algorithm.file"),params));
+            // ImportException(StringUtilities.getReplacedString(PropertiesHandler.getResourceString("error.algorithm.file"),params));
             // }
             SAXBuilder builder = new SAXBuilder(true);
             builder.setEntityResolver(new NetworkEntityResolver());

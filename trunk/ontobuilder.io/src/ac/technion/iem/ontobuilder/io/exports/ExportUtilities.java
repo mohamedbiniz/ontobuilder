@@ -44,7 +44,7 @@ public class ExportUtilities
             // {
             // String params[]={file.getAbsolutePath()};
             // throw new
-            // ExportException(StringUtilities.getReplacedString(ApplicationUtilities.getResourceString("error.algorithm.file"),params));
+            // ExportException(StringUtilities.getReplacedString(PropertiesHandler.getResourceString("error.algorithm.file"),params));
             // }
             SAXBuilder builder = new SAXBuilder(true);
             builder.setEntityResolver(new NetworkEntityResolver());
