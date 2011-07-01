@@ -4,13 +4,13 @@ import java.io.File;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XMLSchema;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XSDComplexElement;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XSDElement;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XSDElementsIterator;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XSDReader;
+import ac.technion.iem.ontobuilder.io.utils.xml.schema.XSDReaderFactory;
 
-import com.modica.xml.schema.XMLSchema;
-import com.modica.xml.schema.XSDComplexElement;
-import com.modica.xml.schema.XSDElement;
-import com.modica.xml.schema.XSDElementsIterator;
-import com.modica.xml.schema.XSDReader;
-import com.modica.xml.schema.XSDReaderFactory;
 
 //Code documented by Nimrod Busany 10/04/2011
 /**
