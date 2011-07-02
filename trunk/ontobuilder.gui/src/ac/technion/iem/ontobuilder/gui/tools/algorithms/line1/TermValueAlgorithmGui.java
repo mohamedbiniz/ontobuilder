@@ -17,7 +17,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgor
  */
 public class TermValueAlgorithmGui
 {
-    TermValueAlgorithm _termValueAlgorithm;
+    private TermValueAlgorithm _termValueAlgorithm;
     
     public TermValueAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {

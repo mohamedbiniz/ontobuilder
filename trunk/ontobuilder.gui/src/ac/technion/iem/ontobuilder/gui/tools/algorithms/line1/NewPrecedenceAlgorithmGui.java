@@ -17,7 +17,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.CombinedAlgori
  */
 public class NewPrecedenceAlgorithmGui
 {
-    NewPrecedenceAlgorithm _newPrecedenceAlgorithm;
+    private NewPrecedenceAlgorithm _newPrecedenceAlgorithm;
     
     public NewPrecedenceAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {

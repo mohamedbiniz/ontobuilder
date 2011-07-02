@@ -17,11 +17,13 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithmF
 
 public class TermAlgorithmGui
 {
-    TermAlgorithm _termAlgorithm;
+    private TermAlgorithm _termAlgorithm;
+    private int mode;
     
     public TermAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {
         _termAlgorithm = (TermAlgorithm)abstractAlgorithm;
+        mode = abstractAlgorithm.getMode();
     }
     
     protected TermAlgorithmGui()
@@ -52,30 +54,30 @@ public class TermAlgorithmGui
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.wordLabelWeight"),
-                new Double(wordLabelWeight)
+                new Double(_termAlgorithm.getWordLabelWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.stringLabelWeight"),
-                new Double(stringLabelWeight)
+                new Double(_termAlgorithm.getStringLabelWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.wordNameWeight"),
-                new Double(wordNameWeight)
+                new Double(_termAlgorithm.getWordNameWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.stringNameWeight"),
-                new Double(stringNameWeight)
+                new Double(_termAlgorithm.getStringNameWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.maxCommonSubStringWeight"),
-                new Double(maxCommonSubStringWeight)
+                new Double(_termAlgorithm.getMaxCommonSubStringWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.term.nGramWeight"),
-                new Double(nGramWeight)
+                new Double(_termAlgorithm.getNGramWeight())
             },
             {
-                ApplicationUtilities.getResourceString("algorithm.term.nGram"), new Integer(nGram)
+                ApplicationUtilities.getResourceString("algorithm.term.nGram"), new Integer(_termAlgorithm.getNGram())
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 10, data));
@@ -97,32 +99,38 @@ public class TermAlgorithmGui
             ApplicationUtilities.getResourceString("algorithm.term.useSoundex")).toString())
             .booleanValue();
         if (symmetric)
-            mode += SYMMETRIC_FLAG;
+            mode += TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue();
         if (useThesaurus)
-            mode += USE_THESAURUS_FLAG;
+            mode += TermAlgorithmFlagsEnum.USE_THESAURUS_FLAG.getValue();
         if (useSoundex)
-            mode += USE_SOUNDEX_FLAG;
-        wordLabelWeight = new Double(properties.get(
+            mode += TermAlgorithmFlagsEnum.USE_SOUNDEX_FLAG.getValue();
+        double wordLabelWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.wordLabelWeight")).toString())
             .doubleValue();
-        stringLabelWeight = new Double(properties.get(
+        _termAlgorithm.setWordLabelWeight(wordLabelWeight);
+        double stringLabelWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.stringLabelWeight")).toString())
             .doubleValue();
-        wordNameWeight = new Double(properties.get(
+        _termAlgorithm.setStringLabelWeight(stringLabelWeight);
+        double wordNameWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.wordNameWeight")).toString())
             .doubleValue();
-        stringNameWeight = new Double(properties.get(
+        _termAlgorithm.setWordNameWeight(wordNameWeight);
+        double stringNameWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.stringNameWeight")).toString())
             .doubleValue();
-
-        maxCommonSubStringWeight = new Double(properties.get(
+        _termAlgorithm.setStringNameWeight(stringNameWeight);
+        double maxCommonSubStringWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.maxCommonSubStringWeight"))
             .toString()).doubleValue();
-        nGramWeight = new Double(properties.get(
+        _termAlgorithm.setMaxCommonSubStringWeight(maxCommonSubStringWeight);
+        double nGramWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.nGramWeight")).toString())
             .doubleValue();
-        nGram = new Integer(properties.get(
+        _termAlgorithm.setNGramWeight(nGramWeight);
+        int nGram = new Integer(properties.get(
             ApplicationUtilities.getResourceString("algorithm.term.nGram")).toString()).intValue();
+        _termAlgorithm.setNGram(nGram);
     }
     
     protected class PropertiesCellRenderer extends DefaultTableCellRenderer

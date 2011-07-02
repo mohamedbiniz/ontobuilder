@@ -17,7 +17,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.CombinedAlgori
  */
 public class CombinedAlgorithmGui extends TermValueAlgorithmGui
 {
-    CombinedAlgorithm _combinedAlgorithm;
+    private CombinedAlgorithm _combinedAlgorithm;
     
     public CombinedAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {
