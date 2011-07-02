@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.extraction.webform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.io"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.matching"/>
+	<classpathentry kind="lib" path="lib/jgraph.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
