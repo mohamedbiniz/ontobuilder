@@ -12,9 +12,6 @@ import ac.technion.iem.ontobuilder.core.ontology.operator.StopWordsRemovalOperat
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
 import ac.technion.iem.ontobuilder.core.ontology.operator.WordSeparatorOperator;
 
-import com.modica.ontology.operator.*;
-import com.modica.ontology.*;
-
 /**
  * <p>Title: TermPreprocessor</p>
  */

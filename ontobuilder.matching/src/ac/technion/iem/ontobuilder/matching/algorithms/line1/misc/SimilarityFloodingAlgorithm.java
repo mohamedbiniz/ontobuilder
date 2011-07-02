@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-//import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;

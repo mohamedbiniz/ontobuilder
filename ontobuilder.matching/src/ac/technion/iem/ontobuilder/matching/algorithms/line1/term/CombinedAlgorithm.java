@@ -21,9 +21,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.Preceden
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
-import com.modica.application.PropertiesTableModel;
-import com.modica.ontobuilder.ApplicationParameters;
-
 /**
  * <p>Title: CombinedAlgorithm</p>
  * Extends a {@link TermValueAlgorithm}

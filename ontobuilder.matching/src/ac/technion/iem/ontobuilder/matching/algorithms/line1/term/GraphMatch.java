@@ -7,13 +7,13 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 
 import com.jgraph.JGraph;
 import com.jgraph.graph.DefaultGraphCell;
 import com.modica.application.PropertiesTableModel;
 import com.modica.graph.GraphUtilities;
-import com.modica.ontobuilder.ApplicationParameters;
 
 /**
  * <p>Title: GraphMatch</p>

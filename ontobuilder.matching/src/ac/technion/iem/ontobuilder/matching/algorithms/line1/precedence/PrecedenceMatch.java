@@ -3,14 +3,10 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JTable;
-
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-
-import com.modica.application.PropertiesTableModel;
-import com.modica.ontobuilder.ApplicationParameters;
 
 /**
  * <p>Title: PrecedenceMatch</p>

@@ -68,6 +68,16 @@ public class NewPrecedenceAlgorithm extends PivotAlgorithm
     {
         return "New Precedence Algorithm";
     }
+    
+    /**
+     * Get the weights array
+     * 
+     * @return the weights array
+     */
+    public double[] getWeights()
+    {
+        return weights;
+    }
 
     /**
      * Configure the algorithm parameters
