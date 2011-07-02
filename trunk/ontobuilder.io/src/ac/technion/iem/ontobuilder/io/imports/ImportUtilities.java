@@ -15,7 +15,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import ac.technion.iem.ontobuilder.core.util.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 
 /**
  * <p>Title: ImportUtilities</p>
