@@ -15,8 +15,8 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import ac.technion.iem.ontobuilder.core.util.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermPreprocessor;
 

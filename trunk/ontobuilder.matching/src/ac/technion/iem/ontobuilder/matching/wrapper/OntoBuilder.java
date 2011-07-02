@@ -8,6 +8,10 @@ import java.util.Vector;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilitiesPropertiesEnum;
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertyException;
 import ac.technion.iem.ontobuilder.core.util.properties.ResourceException;
@@ -15,10 +19,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgori
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
-
-import com.modica.application.Application;
-import com.modica.application.ApplicationOptions;
-import com.modica.util.NetworkUtilities;
 
 /**
  * <p>Title: OntoBuilder</p>
@@ -77,11 +77,11 @@ class OntoBuilder
     protected void setProxy()
     {
         boolean proxy = Boolean.valueOf(
-            (String) options.getOptionValue(NetworkUtilities.USE_PROXY_PROPERTY)).booleanValue();
+            (String) options.getOptionValue(NetworkUtilitiesPropertiesEnum.USE_PROXY_PROPERTY.getValue())).booleanValue();
         if (proxy)
             NetworkUtilities.setProxy(
-                (String) options.getOptionValue(NetworkUtilities.PROXY_HOST_PROPERTY),
-                (String) options.getOptionValue(NetworkUtilities.PROXY_PORT_PROPERTY));
+                (String) options.getOptionValue(NetworkUtilitiesPropertiesEnum.PROXY_HOST_PROPERTY.getValue()),
+                (String) options.getOptionValue(NetworkUtilitiesPropertiesEnum.PROXY_PORT_PROPERTY.getValue()));
         else
             NetworkUtilities.disableProxy();
     }
@@ -105,7 +105,7 @@ class OntoBuilder
         try
         {
             long millis = Long.parseLong((String) options
-                .getOptionValue(NetworkUtilities.CONNECTION_TIMEOUT_PROPERTY));
+                .getOptionValue(NetworkUtilitiesPropertiesEnum.CONNECTION_TIMEOUT_PROPERTY.getValue()));
             NetworkUtilities.setConnectionTimeout(millis > 0 ? millis * 1000 : -1);
         }
         catch (NumberFormatException e)
@@ -200,7 +200,7 @@ class OntoBuilder
         // Initialise the properties
         try
         {
-            PropertiesHandler.initializeProperties(Application.PROPERTIES_FILE);
+            PropertiesHandler.initializeProperties(ApplicationParameters.PROPERTIES_FILE);
         }
         catch (PropertyException e)
         {
