@@ -179,6 +179,145 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
     {
         return PropertiesHandler.getResourceString("algorithm.term.description");
     }
+    
+    /**
+     * Get the wordLabelWeight
+     * 
+     * @return the wordLabelWeight
+     */
+    public double getWordLabelWeight()
+    {
+        return wordLabelWeight;
+    }
+    
+    /**
+     * Set the wordLabelWeight
+     * 
+     * @param wordLabelWeight the weight
+     */
+    public void setWordLabelWeight(double wordLabelWeight)
+    {
+        this.wordLabelWeight = wordLabelWeight;
+    }
+    /**
+     * Get the stringLabelWeight
+     * 
+     * @return the stringLabelWeight
+     */
+    public double getStringLabelWeight()
+    {
+        return stringLabelWeight;
+    }
+    
+    /**
+     * Set the stringLabelWeight
+     * 
+     * @param stringLabelWeight the weight
+     */
+    public void setStringLabelWeight(double stringLabelWeight)
+    {
+        this.stringLabelWeight = stringLabelWeight;
+    }
+
+    /**
+     * Get the wordNameWeight
+     * 
+     * @return the wordNameWeight
+     */
+    public double getWordNameWeight()
+    {
+        return wordNameWeight;
+    }
+    
+    /**
+     * Set the wordNameWeight
+     * 
+     * @param wordNameWeight the weight
+     */
+    public void setWordNameWeight(double wordNameWeight)
+    {
+        this.wordNameWeight = wordNameWeight;
+    }
+    
+    /**
+     * Get the stringNameWeight
+     * 
+     * @return the stringNameWeight
+     */
+    public double getStringNameWeight()
+    {
+        return stringNameWeight;
+    }
+    
+    /**
+     * Set the stringNameWeight
+     * 
+     * @param stringNameWeight the weight
+     */
+    public void setStringNameWeight(double stringNameWeight)
+    {
+        this.stringNameWeight = stringNameWeight;
+    }
+
+    /**
+     * Get the maxCommonSubStringWeight
+     * 
+     * @return the maxCommonSubStringWeight
+     */
+    public double getMaxCommonSubStringWeight()
+    {
+        return maxCommonSubStringWeight;
+    }
+    
+    /**
+     * Set the maxCommonSubStringWeight
+     * 
+     * @param maxCommonSubStringWeight the weight
+     */
+    public void setMaxCommonSubStringWeight(double maxCommonSubStringWeight)
+    {
+        this.maxCommonSubStringWeight = maxCommonSubStringWeight;
+    }
+    
+    /**
+     * Get the nGramWeight
+     * 
+     * @return the nGramWeight
+     */
+    public double getNGramWeight()
+    {
+        return nGramWeight;
+    }
+    
+    /**
+     * Set the nGramWeight
+     * 
+     * @param nGramWeight the weight
+     */
+    public void setNGramWeight(double nGramWeight)
+    {
+        this.nGramWeight = nGramWeight;
+    }
+
+    /**
+     * Get the nGram
+     * 
+     * @return the nGram
+     */
+    public int getNGram()
+    {
+        return nGram;
+    }
+    
+    /**
+     * Set the nGram
+     * 
+     * @param nGram the nGram
+     */
+    public void setNGram(int nGram)
+    {
+        this.nGram = nGram;
+    }
 
     /**
      * Configure the algorithm parameters when user changes one of the values of the JTable
