@@ -3,7 +3,7 @@ package ac.technion.iem.ontobuilder.io.exports;
 import java.io.File;
 import java.util.HashMap;
 
-import schemamatchings.util.SchemaTranslator;
+import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
 
 /**
  * <p>Title: BestMatchingExporter</p>

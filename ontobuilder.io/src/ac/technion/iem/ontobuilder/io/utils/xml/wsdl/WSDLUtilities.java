@@ -21,17 +21,15 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import schemamatchings.ontobuilder.MatchingAlgorithms;
-import schemamatchings.ontobuilder.OntoBuilderWrapper;
-import schemamatchings.topk.wrapper.SchemaMatchingsWrapper;
-
+import ac.technion.iem.ontobuilder.core.ontology.Domain;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.NetworkEntityResolver;
-
-import com.modica.ontology.Domain;
-import com.modica.ontology.algorithm.TermAlgorithm;
-import com.modica.ontology.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.wrapper.OntoBuilderWrapper;
 
 /**
  * <p>Title: WSDLUtilities</p>
@@ -158,7 +156,7 @@ public final class WSDLUtilities
     public static void discover(EEE05Challenge challenge, Vector<Ontology> inputOntologies,
         Vector<Ontology> outputOntologies) throws Exception
     {
-        TermAlgorithm matcher = (TermAlgorithm) obw.loadMatchAlgorithm(MatchingAlgorithms.TERM);
+        TermAlgorithm matcher = (TermAlgorithm) obw.loadMatchAlgorithm(MatchingAlgorithmsNamesEnum.TERM.getName());
         MatchInformation match;
         SchemaMatchingsWrapper smw;
         double score;
