@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.ontology.file;
+package ac.technion.iem.ontobuilder.core.util.files;
 
 import java.io.File;
 import java.io.IOException;
