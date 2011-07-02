@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
 
+import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
@@ -17,7 +18,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtili
 
 import com.modica.application.Application;
 import com.modica.application.ApplicationOptions;
-import com.modica.ontology.domain.DomainSimilarity;
 import com.modica.util.NetworkUtilities;
 
 /**

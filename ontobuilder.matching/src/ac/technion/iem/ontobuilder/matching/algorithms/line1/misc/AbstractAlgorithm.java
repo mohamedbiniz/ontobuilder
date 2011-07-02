@@ -7,6 +7,7 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
@@ -15,7 +16,6 @@ import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMatchMatrix;
 
-import com.modica.ontology.domain.GuessedDomain;
 
 /**
  * <p>

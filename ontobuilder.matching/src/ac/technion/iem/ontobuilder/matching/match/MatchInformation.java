@@ -30,11 +30,14 @@ import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithm;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
+import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaMatchingsUtilities;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
 
@@ -47,8 +50,6 @@ import com.jgraph.graph.DefaultPort;
 
 import com.modica.graph.GraphUtilities;
 import com.modica.io.StringOutputStream;
-import com.modica.ontology.OntologyUtilities;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: MatchInformation</p>

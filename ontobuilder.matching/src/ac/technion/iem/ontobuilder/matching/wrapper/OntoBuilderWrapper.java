@@ -261,34 +261,6 @@ public final class OntoBuilderWrapper extends OntoBuilder
     }
 
     /**
-     * Extracts and Normalized Ontology from an .xml
-     * 
-     * @param filepath the file path to the desired xml.file
-     * @return Ontology - an ontology object which is built from the .xml file
-     * @throws IOException
-     */
-    public Ontology readOntologyXMLFile(String filepath) throws IOException
-    {
-        return readOntologyXMLFile(filepath, true);
-    }
-
-    /**
-     * Extracts and Normalized Ontology from an .xml
-     * 
-     * @param filepath the file path to the desired xml.file
-     * @param normalize <code>true</code> to normalize ontology
-     * @return Ontology - an ontology object which is built from the .xml file
-     * @throws IOException
-     */
-    public Ontology readOntologyXMLFile(String filepath, boolean normalize) throws IOException
-    {
-        Ontology ontology = Ontology.openFromXML(new File(filepath));
-        if (normalize)
-            ontology.normalize();
-        return ontology;
-    }
-
-    /**
      * Extracts and ontology from an .xml
      * 
      * @param siteURL provide a URL to create an Ontology from
@@ -306,32 +278,6 @@ public final class OntoBuilderWrapper extends OntoBuilder
                 return null;
             if (normalize)
                 toReturn.normalize();
-            return toReturn;
-        }
-        catch (Exception e)
-        {
-            throw new OntoBuilderWrapperException(e.getMessage());
-        }
-    }
-
-    /**
-     * Extract an ontology
-     * 
-     * @param siteURL provide a URL to create an Ontology from
-     * @param normalize <code>true</code> to normalize ontology
-     * @param outputFilepath the folder to write the ontology to (.xml file)
-     * @return Ontology - an ontology object built from the URL provided
-     * @throws OntoBuilderWrapperException
-     */
-    public Ontology generateOntology(String siteURL, boolean normalize, String outputFilepath)
-        throws OntoBuilderWrapperException
-    {
-        try
-        {
-            Ontology toReturn = generateOntology(siteURL, normalize);
-            if (toReturn == null)
-                return null;
-            toReturn.saveToXML(new File(outputFilepath));
             return toReturn;
         }
         catch (Exception e)

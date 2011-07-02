@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.AbstractMetaAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithm;
 
-import schemamatchings.meta.experiments.Point;
-import schemamatchings.meta.experiments.TopKPlot;
+//import schemamatchings.meta.experiments.Point;
+//import schemamatchings.meta.experiments.TopKPlot;
 
 /**
  * <p>Title: AbstractMapping</p>
@@ -17,11 +18,6 @@ import schemamatchings.meta.experiments.TopKPlot;
  */
 public class MetaAlgorithmStatistics
 {
-//    public static final byte TA_STATISTICS = 0;
-//    public static final byte MD_STATISTICS = 1;
-//    public static final byte MDB_STATISTICS = 2;
-//    public static final byte HYBRID_STATISTICS = 3;
-
     private int iterations = 0;
     private int mappings = 0;
     private int k = 0;

@@ -3,6 +3,7 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line2.misc;
 import java.util.Iterator;
 import java.util.Vector;
 
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmInitiationException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithmRunningException;
@@ -33,7 +34,7 @@ public class CrossThresholdAlgorithm extends MatrixDirectWithBoundingAlgorithm i
      * @param hLocalArg H {@link AbstractLocalAggregator}
      * @param combinedMatrix the combined match matrix {@link AbstractMatchMatrix}
      */
-    protected CrossThresholdAlgorithm(int k, AbstractGlobalAggregator fGlobalArg,
+    public CrossThresholdAlgorithm(int k, AbstractGlobalAggregator fGlobalArg,
         AbstractLocalAggregator fLocalArg, AbstractGlobalAggregator hGlobalArg,
         AbstractLocalAggregator hLocalArg, AbstractMatchMatrix combinedMatrix)
     {
@@ -78,23 +79,23 @@ public class CrossThresholdAlgorithm extends MatrixDirectWithBoundingAlgorithm i
 
     /**
      * Initialise the algorithm
-     * @param s1 the first {@link Schema}
-     * @param s2 the second {@link Schema}
+     * @param o1 the first {@link Schema}
+     * @param o2 the second {@link Schema}
      * @param numOfMatchingAlgorithms the number of matching algorithms
      * @param algorithms an array of {@link MatchAlgorithm}
      * @param tkm the {@link TKM} matrix
      * @throws MetaAlgorithmInitiationException
      */
-    public void init(Schema s1, Schema s2, int numOfMatchingAlgorithms,
+    public void init(Ontology o1, Ontology o2, int numOfMatchingAlgorithms,
         MatchAlgorithm[] algorithms, TKM tkm) throws MetaAlgorithmInitiationException
     {
-        if (s1 == null || s2 == null || numOfMatchingAlgorithms < 1 || algorithms == null ||
+        if (o1 == null || o2 == null || numOfMatchingAlgorithms < 1 || algorithms == null ||
             algorithms.length != numOfMatchingAlgorithms || tkm == null)
             throw new IllegalArgumentException("Meta Algorithm initiation got illigal arguments");
         try
         {
-            this.s1 = s1;
-            this.s2 = s2;
+            this.o1 = o1;
+            this.o2 = o2;
             this.numOfMatchingAlgorithms = numOfMatchingAlgorithms;
             this.lastMappings = new AbstractMapping[numOfMatchingAlgorithms + 1];
             this.algorithms = algorithms;
@@ -336,7 +337,7 @@ public class CrossThresholdAlgorithm extends MatrixDirectWithBoundingAlgorithm i
      */
     public void useStatistics()
     {
-        statistics = new TAStatistics(this, s1.getName(), s2.getName());
+        statistics = new TAStatistics(this, o1.getName(), o2.getName());
     }
 
     /**

@@ -30,7 +30,7 @@ public class MatrixDirectAlgorithm extends AbstractMetaAlgorithm
     }
 
     // remark: need to check here if matrix double[][] is allocated
-    protected MatrixDirectAlgorithm(int k, AbstractGlobalAggregator globalArg,
+    public MatrixDirectAlgorithm(int k, AbstractGlobalAggregator globalArg,
         AbstractLocalAggregator localArg, AbstractMatchMatrix combinedMatrix)
     {
         this();

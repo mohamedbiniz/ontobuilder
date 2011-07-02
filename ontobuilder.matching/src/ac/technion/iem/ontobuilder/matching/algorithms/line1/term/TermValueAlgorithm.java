@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
+//import javax.swing.JTable;
 
 import org.jdom.Element;
 
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
@@ -23,8 +25,6 @@ import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 import com.modica.application.PropertiesTableModel;
 import com.modica.ontobuilder.ApplicationParameters;
-import com.modica.ontology.OntologyUtilities;
-import com.modica.ontology.domain.GuessedDomain;
 
 /**
  * <p>Title: TermValueAlgorithm</p>

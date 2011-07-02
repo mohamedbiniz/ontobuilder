@@ -35,7 +35,7 @@ public class SMThersholdAlgorithm extends AbstractMetaAlgorithm implements Thres
      * @param globalArg the {@link AbstractGlobalAggregator}
      * @param localArg the {@link AbstractLocalAggregator}
      */
-    protected SMThersholdAlgorithm(int k, AbstractGlobalAggregator globalArg,
+    public SMThersholdAlgorithm(int k, AbstractGlobalAggregator globalArg,
         AbstractLocalAggregator localArg)
     {
         this();

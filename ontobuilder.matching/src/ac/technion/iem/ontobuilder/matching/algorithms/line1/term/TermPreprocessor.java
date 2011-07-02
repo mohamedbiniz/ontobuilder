@@ -3,7 +3,14 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 import java.util.*;
 import org.jdom.*;
 
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.ontology.operator.HyphenRemovalOperator;
+import ac.technion.iem.ontobuilder.core.ontology.operator.IgnorableCharacterRemovalOperator;
+import ac.technion.iem.ontobuilder.core.ontology.operator.LowerCaseOperator;
+import ac.technion.iem.ontobuilder.core.ontology.operator.StopWordsRemovalOperator;
+import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
+import ac.technion.iem.ontobuilder.core.ontology.operator.WordSeparatorOperator;
 
 import com.modica.ontology.operator.*;
 import com.modica.ontology.*;
