@@ -17,7 +17,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.GraphAlgorithm
  */
 public class GraphAlgorithmGui extends TermValueAlgorithmGui
 {
-    GraphAlgorithm _graphAlgorithm;
+    private GraphAlgorithm _graphAlgorithm;
     
     public GraphAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {

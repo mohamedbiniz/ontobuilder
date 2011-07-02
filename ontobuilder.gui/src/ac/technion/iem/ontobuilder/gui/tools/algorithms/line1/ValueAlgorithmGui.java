@@ -13,7 +13,8 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.ValueAlgorithm
  */
 public class ValueAlgorithmGui extends TermAlgorithmGui
 {
-    ValueAlgorithm _valueAlgorithm;
+    @SuppressWarnings("unused")
+    private ValueAlgorithm _valueAlgorithm;
     
     public ValueAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {

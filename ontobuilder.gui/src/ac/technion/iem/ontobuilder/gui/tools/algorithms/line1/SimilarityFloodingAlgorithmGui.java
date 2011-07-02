@@ -16,7 +16,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.SimilarityFloo
  */
 public class SimilarityFloodingAlgorithmGui
 {
-    SimilarityFloodingAlgorithm _similarityFloodingAlgorithm;
+    private SimilarityFloodingAlgorithm _similarityFloodingAlgorithm;
     
     public SimilarityFloodingAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {

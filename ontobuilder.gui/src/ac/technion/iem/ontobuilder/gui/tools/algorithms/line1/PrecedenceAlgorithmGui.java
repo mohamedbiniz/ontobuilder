@@ -19,7 +19,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.Preceden
  */
 public class PrecedenceAlgorithmGui
 {
-    PrecedenceAlgorithm _precedenceAlgorithm;
+    private PrecedenceAlgorithm _precedenceAlgorithm;
     
     public PrecedenceAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {
