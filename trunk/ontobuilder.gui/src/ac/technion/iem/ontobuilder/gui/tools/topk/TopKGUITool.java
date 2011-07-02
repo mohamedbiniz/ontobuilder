@@ -16,16 +16,18 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.file.XmlFileHandler;
 import ac.technion.iem.ontobuilder.gui.tools.utils.ExceptionsHandler;
 import ac.technion.iem.ontobuilder.gui.tools.utils.FileChoosingUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 import ac.technion.iem.ontobuilder.matching.utils.DoublePrecision;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
+import ac.technion.iem.ontobuilder.matching.wrapper.OntoBuilderWrapper;
 
-import com.modica.ontology.match.MatchInformation;
 
 /**
  * <p>Title: TopKGUITool</p>
@@ -522,9 +524,9 @@ public class TopKGUITool extends JFrame
                     lastCandidateURL = (String) cadidateXMLFile.getSelectedItem();
                     lastTargetURL = (String) targetXMLFile.getSelectedItem();
                     lastAlgorithm = (String) algorithmComboBox.getSelectedItem();
-                    Ontology oTarget = ob.readOntologyXMLFile(((File) targetXMLFiles
+                    Ontology oTarget = fileHandler.readOntologyXMLFile(((File) targetXMLFiles
                         .get(lastTargetURL)).getPath());
-                    Ontology oCandidate = ob.readOntologyXMLFile(((File) candidateXMLFiles
+                    Ontology oCandidate = fileHandler.readOntologyXMLFile(((File) candidateXMLFiles
                         .get(lastCandidateURL)).getPath());
                     MatchInformation match = ob.matchOntologies(oCandidate, oTarget,
                         (String) algorithmComboBox.getSelectedItem());
@@ -829,6 +831,7 @@ public class TopKGUITool extends JFrame
     private javax.swing.JLabel matchIndexLabel;
     private ExceptionsHandler eHandler = new ExceptionsHandler();
     private OntoBuilderWrapper ob = new OntoBuilderWrapper();
+    private XmlFileHandler fileHandler = new XmlFileHandler();
     private SchemaMatchingsWrapper smw;
     private String lastCandidateURL = "";
     private String lastTargetURL = "";

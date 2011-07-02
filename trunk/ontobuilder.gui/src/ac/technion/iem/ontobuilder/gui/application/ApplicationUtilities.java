@@ -2,11 +2,8 @@ package ac.technion.iem.ontobuilder.gui.application;
 
 import java.io.File;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.MissingResourceException;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
