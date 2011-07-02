@@ -17,7 +17,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.Preceden
  * </p>
   * <p>Description: Implements the methods of the PrecedenceAlgorithm used by the GUI</p>
  */
-public class PrecedenceAlgorithmGui
+public class PrecedenceAlgorithmGui extends TermValueAlgorithmGui
 {
     private PrecedenceAlgorithm _precedenceAlgorithm;
     
@@ -33,17 +33,17 @@ public class PrecedenceAlgorithmGui
         double precedeWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"))
             .toString()).doubleValue();
-        precedenceAlgorithm.setPrecedeWeight(precedeWeight);
+        _precedenceAlgorithm.setPrecedeWeight(precedeWeight);
         
         double succeedWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"))
             .toString()).doubleValue();
-        precedenceAlgorithm.setSucceedWeight(succeedWeight);
+        _precedenceAlgorithm.setSucceedWeight(succeedWeight);
         
         double precedenceWeight = new Double(properties.get(
             ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"))
             .toString()).doubleValue();
-        precedenceAlgorithm.setPrecedenceWeight(precedenceWeight);
+        _precedenceAlgorithm.setPrecedenceWeight(precedenceWeight);
     }
     
     public JTable getProperties()
@@ -57,23 +57,23 @@ public class PrecedenceAlgorithmGui
         {
             {
                 ApplicationUtilities.getResourceString("algorithm.combined.termWeight"),
-                new Double(termWeight)
+                new Double(_precedenceAlgorithm.getTermWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.combined.valueWeight"),
-                new Double(valueWeight)
+                new Double(_precedenceAlgorithm.getValueWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.combined.precedenceWeight"),
-                new Double(precedenceWeight)
+                new Double(_precedenceAlgorithm.getPrecedenceWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"),
-                new Double(precedeWeight)
+                new Double(_precedenceAlgorithm.getPrecedeWeight())
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"),
-                new Double(succeedWeight)
+                new Double(_precedenceAlgorithm.getSucceedWeight())
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));

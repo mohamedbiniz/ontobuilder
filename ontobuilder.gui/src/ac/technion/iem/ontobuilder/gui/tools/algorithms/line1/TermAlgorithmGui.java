@@ -15,7 +15,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgori
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithmFlagsEnum;
 
-public class TermAlgorithmGui
+public class TermAlgorithmGui extends AbstractAlgorithmGui
 {
     private TermAlgorithm _termAlgorithm;
     private int mode;

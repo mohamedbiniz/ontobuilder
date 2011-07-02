@@ -1,5 +1,7 @@
 package ac.technion.iem.ontobuilder.gui.tools.algorithms.line1;
 
+import java.util.HashMap;
+
 import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
@@ -14,8 +16,9 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.SimilarityFloo
  * </p>
   * <p>Description: Implements the methods of the SimilarityFloodingAlgorithm used by the GUI</p>
  */
-public class SimilarityFloodingAlgorithmGui
+public class SimilarityFloodingAlgorithmGui extends AbstractAlgorithmGui
 {
+    @SuppressWarnings("unused")
     private SimilarityFloodingAlgorithm _similarityFloodingAlgorithm;
     
     public SimilarityFloodingAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
@@ -56,5 +59,9 @@ public class SimilarityFloodingAlgorithmGui
         properties.setEditingRow(0);
         properties.setEditingRow(1);
         return properties;
+    }
+
+    public void updateProperties(HashMap<?, ?> properties)
+    {
     }
 }

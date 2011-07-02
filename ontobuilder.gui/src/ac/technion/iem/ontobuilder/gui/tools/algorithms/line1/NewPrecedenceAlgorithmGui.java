@@ -1,13 +1,13 @@
 package ac.technion.iem.ontobuilder.gui.tools.algorithms.line1;
 
+import java.util.HashMap;
+
 import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.NewPrecedenceAlgorithm;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceAlgorithm;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.CombinedAlgorithm;
 
 /**
  * <p>
@@ -15,12 +15,13 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.CombinedAlgori
  * </p>
   * <p>Description: Implements the methods of the NewPrecedenceAlgorithm used by the GUI</p>
  */
-public class NewPrecedenceAlgorithmGui
+public class NewPrecedenceAlgorithmGui extends AbstractAlgorithmGui
 {
     private NewPrecedenceAlgorithm _newPrecedenceAlgorithm;
     
     public NewPrecedenceAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
     {
+        super(abstractAlgorithm);
         _newPrecedenceAlgorithm = (NewPrecedenceAlgorithm)abstractAlgorithm;
     }
     
@@ -47,11 +48,11 @@ public class NewPrecedenceAlgorithmGui
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.precedence.precedeWeight"),
-                new Double(precedeWeight)
+                new Double(_newPrecedenceAlgorithm.getWeights()[0])
             },
             {
                 ApplicationUtilities.getResourceString("algorithm.precedence.succeedWeight"),
-                new Double(succeedWeight)
+                new Double(_newPrecedenceAlgorithm.getWeights()[1])
             },
             {
                 "use one to one match", new Boolean(_newPrecedenceAlgorithm.isOneToOneMatch())
@@ -59,5 +60,10 @@ public class NewPrecedenceAlgorithmGui
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
         return properties;
+    }
+
+    @Override
+    public void updateProperties(HashMap<?, ?> properties)
+    {
     }
 }
