@@ -182,7 +182,7 @@ public abstract class AbstractMetaAlgorithm implements MetaAlgorithm
     {
         for (int i = 0; i < numOfMatchingAlgorithms; i++)
         {
-            matrixs[i] = algorithms[i].match(o1, o2);
+            matrixs[i] = algorithms[i].match(o1, o2).getMatrix();
         }
 
         if (needToPreprocess())

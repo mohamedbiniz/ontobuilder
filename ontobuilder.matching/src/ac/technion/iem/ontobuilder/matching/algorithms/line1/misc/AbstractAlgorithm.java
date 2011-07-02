@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.misc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.jdom.Element;
 
@@ -14,7 +13,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.common.MatchAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermPreprocessor;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.Mismatch;
-import ac.technion.iem.ontobuilder.matching.meta.match.AbstractMatchMatrix;
 
 
 /**
@@ -248,19 +246,19 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm
         return matchInformation;
     }
 
-    // added by haggai 13/12/03 - for meta matching use
-    /**
-     * Matched two schemas
-     * 
-     * @param s1 the first {@link Schema}
-     * @param s2 the second {@link Schema}
-     * @return {@link AbstractMatchMatrix}
-     */
-    public AbstractMatchMatrix match(Ontology s1, Ontology s2)
-    {
-        MatchInformation matchInfo = match(s1, s2);
-        return matchInfo.getMatrix();
-    }
+//    // added by haggai 13/12/03 - for meta matching use
+//    /**
+//     * Matched two schemas
+//     * 
+//     * @param s1 the first {@link Schema}
+//     * @param s2 the second {@link Schema}
+//     * @return {@link AbstractMatchMatrix}
+//     */
+//    public AbstractMatchMatrix match(Ontology s1, Ontology s2)
+//    {
+//        MatchInformation matchInfo = match(s1, s2);
+//        return matchInfo.getMatrix();
+//    }
 
     abstract public Algorithm makeCopy();
 }
