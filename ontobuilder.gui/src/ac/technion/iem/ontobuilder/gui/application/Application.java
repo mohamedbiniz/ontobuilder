@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
+
 import com.modica.gui.About;
 import com.modica.gui.MenuBar;
 import com.modica.gui.StatusBar;
@@ -33,8 +35,6 @@ import com.modica.gui.ToolBar;
 public abstract class Application extends JPanel
 {
     private static final long serialVersionUID = 1L;
-
-    public static final String PROPERTIES_FILE = "application.properties";
 
     private boolean parametersInitialized = false;
 
@@ -170,7 +170,7 @@ public abstract class Application extends JPanel
             try
             {
 
-                ApplicationUtilities.initializeProperties(PROPERTIES_FILE);
+                ApplicationUtilities.initializeProperties(ApplicationParameters.PROPERTIES_FILE);
             }
             catch (PropertyException e)
             {
