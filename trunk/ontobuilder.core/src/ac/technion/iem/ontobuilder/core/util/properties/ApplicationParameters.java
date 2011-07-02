@@ -10,6 +10,8 @@ import java.text.ParseException;
  */
 public class ApplicationParameters
 {
+    public static final String PROPERTIES_FILE = "application.properties";
+    
     public static boolean verbose = false;
     public static boolean result = false;
 
