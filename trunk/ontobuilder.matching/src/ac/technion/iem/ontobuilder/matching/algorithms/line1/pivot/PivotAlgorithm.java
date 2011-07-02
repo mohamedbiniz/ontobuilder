@@ -3,8 +3,6 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.pivot;
 import java.util.Iterator;
 import java.util.List;
 
-//import javax.swing.JTable;
-
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
