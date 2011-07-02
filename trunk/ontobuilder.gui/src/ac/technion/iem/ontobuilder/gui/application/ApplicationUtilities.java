@@ -93,6 +93,36 @@ public class ApplicationUtilities
 
     }
     
+    /**
+     * Get the application directory
+     * 
+     * @return the directory
+     */
+    public static String getApplicationDirectory()
+    {
+        return PropertiesHandler.getApplicationDirectory();
+    }
+
+    /**
+     * Set the current directory
+     * 
+     * @param dir the directory to set
+     */
+    public static void setCurrentDirectory(String dir)
+    {
+        PropertiesHandler.setCurrentDirectory(dir);
+    }
+    
+    /**
+     * Get the current directory
+     * 
+     * @return the current directory
+     */
+    public static String getCurrentDirectory()
+    {
+        return PropertiesHandler.getCurrentDirectory();
+    }
+    
     // Look & Feel
     /**
      * Initialise the look and feel
