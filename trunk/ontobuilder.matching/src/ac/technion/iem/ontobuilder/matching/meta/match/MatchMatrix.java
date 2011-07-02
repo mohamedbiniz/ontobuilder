@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import ac.technion.iem.ontobuilder.core.ontology.DummyTerm;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 
 /**

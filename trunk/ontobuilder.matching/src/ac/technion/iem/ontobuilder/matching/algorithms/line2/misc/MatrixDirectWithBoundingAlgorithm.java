@@ -31,7 +31,7 @@ public class MatrixDirectWithBoundingAlgorithm extends MatrixDirectAlgorithm
      * @param hLocalArg H {@link AbstractLocalAggregator}
      * @param combinedMatrix the combined match matrix {@link AbstractMatchMatrix}
      */
-    protected MatrixDirectWithBoundingAlgorithm(int k, AbstractGlobalAggregator fGlobalArg,
+    public MatrixDirectWithBoundingAlgorithm(int k, AbstractGlobalAggregator fGlobalArg,
         AbstractLocalAggregator fLocalArg, AbstractGlobalAggregator hGlobalArg,
         AbstractLocalAggregator hLocalArg, AbstractMatchMatrix combinedMatrix)
     {

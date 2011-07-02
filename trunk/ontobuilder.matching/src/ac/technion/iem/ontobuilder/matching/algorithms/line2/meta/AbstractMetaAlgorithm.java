@@ -808,7 +808,7 @@ public abstract class AbstractMetaAlgorithm implements MetaAlgorithm
      * <p>Title: MetaAlgorithmThread</p>
      * Extends {@link Thread}
      */
-    class MetaAlgorithmThread extends Thread
+    protected class MetaAlgorithmThread extends Thread
     {
         private long TIME_TO_SLEEP = 100;
         private AbstractMetaAlgorithm metaAlgorithm;

@@ -7,12 +7,11 @@ import java.util.List;
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
-
-import com.modica.ontology.OntologyUtilities;
-import com.modica.ontology.domain.DomainSimilarity;
 
 /**
  * <p>
@@ -301,7 +300,7 @@ public class ValueAlgorithm extends TermAlgorithm
             double hostEffectiveness = 0;
             if (thost != null && chost != null)
             {
-                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue())) != 0)
+                if ((mode & TermAlgorithmFlagsEnum.SYMMETRIC_FLAG.getValue()) != 0)
                     hostEffectiveness = OntologyUtilities.compareSymmetricTermContents(thost,
                         chost, threshold, null, false);
                 else

@@ -7,10 +7,9 @@ import java.util.List;
 import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.pivot.PivotAlgorithm;
-
-import com.modica.ontology.OntologyUtilities;
 
 /**
  * <p>Title: NewPrecedenceAlgorithm</p>

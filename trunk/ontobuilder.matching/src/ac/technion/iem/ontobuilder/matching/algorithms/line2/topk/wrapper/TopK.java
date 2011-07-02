@@ -7,12 +7,12 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.file.XmlFileHandler;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
 import ac.technion.iem.ontobuilder.matching.wrapper.OntoBuilderWrapper;
-
-import com.modica.ontology.match.MatchInformation;
 
 /**
  * <p>
@@ -27,6 +27,7 @@ public class TopK
 
     private SchemaMatchingsWrapper smw;
     private OntoBuilderWrapper obw;
+    private XmlFileHandler fileHandler;
     private boolean userWantNextBestMatch = true;
     private boolean debugMode = false;
     private boolean directErrorsToFile = false;
@@ -56,9 +57,10 @@ public class TopK
             {
                 System.out.println("Top K framework version 1.0\n\n");
                 obw = new OntoBuilderWrapper();
-                Ontology candidateOntology = obw.readOntologyXMLFile(topKpUtils
+                fileHandler = new XmlFileHandler();
+                Ontology candidateOntology = fileHandler.readOntologyXMLFile(topKpUtils
                     .getCandidateOntologyXMLFilePath());
-                Ontology targetOntology = obw.readOntologyXMLFile(topKpUtils
+                Ontology targetOntology = fileHandler.readOntologyXMLFile(topKpUtils
                     .getTargetOntologyXMLFilePath());
                 MatchInformation match = obw.loadMatchAlgorithm(
                     MatchingAlgorithmsNamesEnum.getAllNames()[topKpUtils.getMatchAlgorithm()]).match(

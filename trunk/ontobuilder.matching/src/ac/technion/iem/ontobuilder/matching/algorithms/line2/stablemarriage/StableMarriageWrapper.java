@@ -4,6 +4,7 @@ import java.util.*;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
@@ -163,9 +164,6 @@ public class StableMarriageWrapper
         }
         try
         {
-
-            // m_MatchInformation = m_OntoBuilderWrapper.matchOntologies(m_TargetOntology,
-            // m_CandidateOntology, m_sAlgorithmName);
             m_MatchInformation = m_OntoBuilderWrapper.loadMatchAlgorithm(m_sAlgorithmName).match(
                 m_TargetOntology, m_CandidateOntology);
             m_MatchMatrix = m_MatchInformation.getMatrix();
