@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
-import ac.technion.iem.ontobuilder.core.ontology.file.XmlFileHandler;
+import ac.technion.iem.ontobuilder.core.util.files.XmlFileHandler;
 
 /**
  * @author Nimrod Busany This class is designed to scan a list of ontologies and save them into a
