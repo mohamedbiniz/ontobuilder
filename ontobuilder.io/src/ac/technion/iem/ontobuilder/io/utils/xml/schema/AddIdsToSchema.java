@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
-
-import schemamatchings.ontobuilder.OntoBuilderWrapper;
+import ac.technion.iem.ontobuilder.core.ontology.file.XmlFileHandler;
 
 /**
  * @author Nimrod Busany This class is designed to scan a list of ontologies and save them into a
@@ -20,7 +19,8 @@ import schemamatchings.ontobuilder.OntoBuilderWrapper;
  */
 public class AddIdsToSchema
 {
-    private static OntoBuilderWrapper obw = new OntoBuilderWrapper();
+    //private static OntoBuilderWrapper obw = new OntoBuilderWrapper();
+    private static XmlFileHandler xmlFileHandler = new XmlFileHandler();
     private static String conceptFolder = "C:\\work\\schemas";
     private static String FixedFolder = "c:\\work\\fixedconcepts\\";
     private static File subDir = new File(conceptFolder);
@@ -70,7 +70,7 @@ public class AddIdsToSchema
                 else
                 {
                     String sXmlFileName = sXmlFile.getName();
-                    Ontology ontology = obw.readOntologyXMLFile(subFolder.getPath() + "\\" +
+                    Ontology ontology = xmlFileHandler.readOntologyXMLFile(subFolder.getPath() + "\\" +
                         sXmlFileName, true);
                     ontology.save(new File(destination + "\\" + sXmlFileName));
                 }
