@@ -1,69 +1,67 @@
-package ac.technion.iem.ontobuilder.gui.utils.elements;
+package ac.technion.iem.ontobuilder.gui.elements;
 
 import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.text.*;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
-import com.modica.application.Actions;
+import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 
 /**
- * <p>Title: TextArea</p>
- * Extends {@link JTextArea}
+ * <p>Title: TextField</p>
+ * Extends {@link JTextField}
  */
-public class TextArea extends JTextArea
+public class TextField extends JTextField
 {
     private static final long serialVersionUID = 1L;
 
     protected Actions actions;
 
     /**
-     * Constructs a default TextArea
+     * Constructs a default TextField
      */
-    public TextArea()
+    public TextField()
     {
         super();
         init();
     }
 
     /**
-     * Constructs a TextArea
+     * Constructs a TextField
      *
-     * @param text the text to display
+     * @param columns the number of columns
      */
-    public TextArea(String text)
+    public TextField(int columns)
+    {
+        super(columns);
+        init();
+    }
+
+    /**
+     * Constructs a TextField
+     *
+     * @param text the text
+     */
+    public TextField(String text)
     {
         super(text);
         init();
     }
 
     /**
-     * Constructs a TextArea
+     * Constructs a TextField
      *
-     * @param text the text to display
-     * @param rows the number of rows in the text area
-     * @param cols  the columns of rows in the text area
+     * @param text the text
+     * @param columns the number of columns
      */
-    public TextArea(String text, int rows, int cols)
+    public TextField(String text, int columns)
     {
-        super(text, rows, cols);
+        super(text, columns);
         init();
     }
 
     /**
-     * Constructs a TextArea
-     *
-     * @param rows the number of rows in the text area
-     * @param cols  the columns of rows in the text area
-     */
-    public TextArea(int rows, int cols)
-    {
-        super(rows, cols);
-        init();
-    }
-
-    /**
-     * Initializes the text area
+     * Initialize the TextField
      */
     protected void init()
     {
@@ -96,7 +94,7 @@ public class TextArea extends JTextArea
     }
 
     /**
-     * Load the actions that are available for the text area
+     * Load the relevant actions for the text field
      */
     protected void loadActions()
     {
@@ -113,7 +111,7 @@ public class TextArea extends JTextArea
     }
 
     /**
-     * Creates a popup menu in the text area
+     * Creates a popup menu in the text field
      */
     protected void createPopupMenu()
     {

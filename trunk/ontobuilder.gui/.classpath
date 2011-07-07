@@ -8,5 +8,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.matching"/>
 	<classpathentry kind="lib" path="lib/jgraph.jar"/>
 	<classpathentry kind="lib" path="lib/cbeans.jar"/>
+	<classpathentry kind="lib" path="lib/hypertree.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

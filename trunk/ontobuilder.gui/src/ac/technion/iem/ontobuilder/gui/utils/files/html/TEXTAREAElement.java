@@ -9,7 +9,7 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.gui.utils.elements.TextArea;
+import ac.technion.iem.ontobuilder.gui.elements.TextArea;
 
 /**
  * <p>Title: TEXTAREAElement</p>

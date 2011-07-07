@@ -7,7 +7,7 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.gui.utils.elements.TextField;
+import ac.technion.iem.ontobuilder.gui.elements.TextField;
 
 /**
  * <p>Title: HiddenINPUTElement</p>
