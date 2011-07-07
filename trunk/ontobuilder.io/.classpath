@@ -5,6 +5,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.core"/>
 	<classpathentry kind="lib" path="/ontobuilder.core/lib/jdom.jar"/>
 	<classpathentry kind="lib" path="/ontobuilder.core/lib/wsdl4j.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.matching"/>
+	<classpathentry kind="lib" path="lib/Tidy.jar"/>
+	<classpathentry kind="lib" path="lib/cm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
