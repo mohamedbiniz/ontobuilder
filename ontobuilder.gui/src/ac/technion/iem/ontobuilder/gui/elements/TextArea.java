@@ -1,67 +1,69 @@
-package ac.technion.iem.ontobuilder.gui.utils.elements;
+package ac.technion.iem.ontobuilder.gui.elements;
 
 import javax.swing.*;
-import javax.swing.text.*;
-import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.*;
 
-import com.modica.application.Actions;
+import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 
 /**
- * <p>Title: TextField</p>
- * Extends {@link JTextField}
+ * <p>Title: TextArea</p>
+ * Extends {@link JTextArea}
  */
-public class TextField extends JTextField
+public class TextArea extends JTextArea
 {
     private static final long serialVersionUID = 1L;
 
     protected Actions actions;
 
     /**
-     * Constructs a default TextField
+     * Constructs a default TextArea
      */
-    public TextField()
+    public TextArea()
     {
         super();
         init();
     }
 
     /**
-     * Constructs a TextField
+     * Constructs a TextArea
      *
-     * @param columns the number of columns
+     * @param text the text to display
      */
-    public TextField(int columns)
-    {
-        super(columns);
-        init();
-    }
-
-    /**
-     * Constructs a TextField
-     *
-     * @param text the text
-     */
-    public TextField(String text)
+    public TextArea(String text)
     {
         super(text);
         init();
     }
 
     /**
-     * Constructs a TextField
+     * Constructs a TextArea
      *
-     * @param text the text
-     * @param columns the number of columns
+     * @param text the text to display
+     * @param rows the number of rows in the text area
+     * @param cols  the columns of rows in the text area
      */
-    public TextField(String text, int columns)
+    public TextArea(String text, int rows, int cols)
     {
-        super(text, columns);
+        super(text, rows, cols);
         init();
     }
 
     /**
-     * Initialize the TextField
+     * Constructs a TextArea
+     *
+     * @param rows the number of rows in the text area
+     * @param cols  the columns of rows in the text area
+     */
+    public TextArea(int rows, int cols)
+    {
+        super(rows, cols);
+        init();
+    }
+
+    /**
+     * Initializes the text area
      */
     protected void init()
     {
@@ -94,7 +96,7 @@ public class TextField extends JTextField
     }
 
     /**
-     * Load the relevant actions for the text field
+     * Load the actions that are available for the text area
      */
     protected void loadActions()
     {
@@ -111,7 +113,7 @@ public class TextField extends JTextField
     }
 
     /**
-     * Creates a popup menu in the text field
+     * Creates a popup menu in the text area
      */
     protected void createPopupMenu()
     {
