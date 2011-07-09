@@ -21,12 +21,15 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
-
-import com.modica.gui.About;
-import com.modica.gui.MenuBar;
-import com.modica.gui.StatusBar;
-import com.modica.gui.ToolBar;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertyException;
+import ac.technion.iem.ontobuilder.core.util.properties.ResourceException;
+import ac.technion.iem.ontobuilder.gui.application.action.Actions;
+import ac.technion.iem.ontobuilder.gui.elements.About;
+import ac.technion.iem.ontobuilder.gui.elements.MenuBar;
+import ac.technion.iem.ontobuilder.gui.elements.StatusBar;
+import ac.technion.iem.ontobuilder.gui.elements.ToolBar;
 
 /**
  * <p>Title: Application</p>

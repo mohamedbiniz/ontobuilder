@@ -2,13 +2,11 @@ package ac.technion.iem.ontobuilder.gui.tools.algorithms.line1;
 
 import java.util.HashMap;
 
-import javax.annotation.PreDestroy;
 import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.NewPrecedenceAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceAlgorithm;
 
 /**
@@ -21,7 +19,7 @@ public class PrecedenceAlgorithmGui extends TermValueAlgorithmGui
 {
     private PrecedenceAlgorithm _precedenceAlgorithm;
     
-    public PrecedenceAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public PrecedenceAlgorithmGui(Algorithm abstractAlgorithm)
     {
         _precedenceAlgorithm = (PrecedenceAlgorithm)abstractAlgorithm;
     }

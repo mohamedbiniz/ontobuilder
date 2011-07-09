@@ -6,7 +6,7 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.SimilarityFloodingAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.SimilarityFloodingAlgorithmFixpointFormulasTypes;
 
@@ -21,7 +21,7 @@ public class SimilarityFloodingAlgorithmGui extends AbstractAlgorithmGui
     @SuppressWarnings("unused")
     private SimilarityFloodingAlgorithm _similarityFloodingAlgorithm;
     
-    public SimilarityFloodingAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public SimilarityFloodingAlgorithmGui(Algorithm abstractAlgorithm)
     {
         _similarityFloodingAlgorithm = (SimilarityFloodingAlgorithm)abstractAlgorithm;
     }

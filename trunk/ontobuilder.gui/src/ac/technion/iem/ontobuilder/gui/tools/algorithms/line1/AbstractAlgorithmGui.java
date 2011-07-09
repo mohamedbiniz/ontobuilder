@@ -5,7 +5,7 @@ import java.util.HashMap;
 import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ObjectWithProperties;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgori
  */
 public abstract class AbstractAlgorithmGui implements ObjectWithProperties
 {
-    public AbstractAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public AbstractAlgorithmGui(Algorithm abstractAlgorithm)
     {
     }
     
