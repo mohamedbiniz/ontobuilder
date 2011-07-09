@@ -26,6 +26,22 @@ public enum MetaAlgorithmNamesEnum
         return _id;
     }
     
+    public String getName()
+    {
+        switch (this)
+        {
+        case THERSHOLD_ALGORITHM:
+            return "Threshold Algorithm";
+        case MATRIX_DIRECT_ALGORITHM:
+            return "Matrix Direct Algorithm";
+        case MATRIX_DIRECT_WITH_BOUNDING_ALGORITHM:
+            return "Matrix Direct with Bounding Algorithm";
+        case HYBRID_ALGORITHM:
+            return "CrossThreshold Algorithm";
+        }
+        return "";
+    }
+    
     public String[] getAllNames()
     {
         String[] allNames = {"Threshold Algorithm", "Matrix Direct Algorithm", "Matrix Direct with Bounding Algorithm",

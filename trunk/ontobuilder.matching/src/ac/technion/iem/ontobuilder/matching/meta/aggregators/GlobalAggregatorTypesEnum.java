@@ -18,6 +18,20 @@ public enum GlobalAggregatorTypesEnum
         return _id;
     }
     
+    public String getName()
+    {
+        switch (this)
+        {
+        case SUM:
+            return "Sum";
+        case MIN:
+            return "Min";
+        case AVERAGE:
+            return "Average";
+        }
+        return "";
+    }
+    
     public String[] getAllNames()
     {
         String[] allNames = {"Sum", "Min", "Average"};
