@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/cbeans.jar"/>
 	<classpathentry kind="lib" path="lib/hypertree.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
+	<classpathentry kind="lib" path="/ontobuilder.core/lib/jdom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
