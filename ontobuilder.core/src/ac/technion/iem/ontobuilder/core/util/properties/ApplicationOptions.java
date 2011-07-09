@@ -136,7 +136,7 @@ public class ApplicationOptions
      * @param optionFile the name of the options file to save in
      * @throws OptionException when the option name was not found
      */
-    protected void saveOptions(String optionFile) throws OptionException
+    public void saveOptions(String optionFile) throws OptionException
     {
         try
         {

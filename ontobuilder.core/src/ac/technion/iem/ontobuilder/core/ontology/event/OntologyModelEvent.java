@@ -2,7 +2,14 @@ package ac.technion.iem.ontobuilder.core.ontology.event;
 
 import java.util.EventObject;
 
-import com.modica.ontology.*;
+import ac.technion.iem.ontobuilder.core.ontology.Attribute;
+import ac.technion.iem.ontobuilder.core.ontology.Axiom;
+import ac.technion.iem.ontobuilder.core.ontology.Domain;
+import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
+import ac.technion.iem.ontobuilder.core.ontology.Relationship;
+import ac.technion.iem.ontobuilder.core.ontology.Term;
 
 /**
  * <p>Title: OntologyModelEvent</p>
