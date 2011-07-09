@@ -5,7 +5,7 @@ import java.awt.Point;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-import com.modica.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 
 /**
  * <p>Title: HTMLTable</p>

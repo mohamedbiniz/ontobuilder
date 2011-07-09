@@ -6,7 +6,7 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.NewPrecedenceAlgorithm;
 
 /**
@@ -19,7 +19,7 @@ public class NewPrecedenceAlgorithmGui extends AbstractAlgorithmGui
 {
     private NewPrecedenceAlgorithm _newPrecedenceAlgorithm;
     
-    public NewPrecedenceAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public NewPrecedenceAlgorithmGui(Algorithm abstractAlgorithm)
     {
         super(abstractAlgorithm);
         _newPrecedenceAlgorithm = (NewPrecedenceAlgorithm)abstractAlgorithm;

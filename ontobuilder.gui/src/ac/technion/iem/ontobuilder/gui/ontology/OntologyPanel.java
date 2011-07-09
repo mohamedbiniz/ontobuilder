@@ -70,50 +70,50 @@ import org.jdom.output.XMLOutputter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import schemamatchings.meta.algorithms.Schema;
-
 import ac.technion.iem.ontobuilder.core.ontology.Attribute;
 import ac.technion.iem.ontobuilder.core.ontology.Axiom;
+import ac.technion.iem.ontobuilder.core.ontology.Domain;
+import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
+import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.gui.application.action.Actions;
+import ac.technion.iem.ontobuilder.gui.elements.MultilineLabel;
+import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
+import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
+import ac.technion.iem.ontobuilder.gui.elements.TextField;
+import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ButtonINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementOption;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FileINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HiddenINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.INPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ImageINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.OPTIONElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.PasswordINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementOption;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ResetINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
+import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
+import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 
 import com.jgraph.JGraph;
-import com.modica.application.Actions;
-import com.modica.dom.DOMUtilities;
-import com.modica.dom.NetworkEntityResolver;
-import com.modica.gui.MultilineLabel;
-import com.modica.gui.PopupTrigger;
-import com.modica.gui.event.PopupListener;
-import com.modica.html.ButtonINPUTElement;
-import com.modica.html.CheckboxINPUTElement;
-import com.modica.html.CheckboxINPUTElementOption;
-import com.modica.html.FORMElement;
-import com.modica.html.FileINPUTElement;
-import com.modica.html.HTMLUtilities;
-import com.modica.html.HiddenINPUTElement;
-import com.modica.html.INPUTElement;
-import com.modica.html.ImageINPUTElement;
-import com.modica.html.OPTIONElement;
-import com.modica.html.PasswordINPUTElement;
-import com.modica.html.RadioINPUTElement;
-import com.modica.html.RadioINPUTElementOption;
-import com.modica.html.ResetINPUTElement;
-import com.modica.html.SELECTElement;
-import com.modica.html.SubmitINPUTElement;
-import com.modica.html.TEXTAREAElement;
-import com.modica.html.TextINPUTElement;
-import com.modica.io.StringOutputStream;
-import com.modica.ontology.algorithm.Algorithm;
-import com.modica.ontology.event.OntologyModelEvent;
-import com.modica.ontology.event.OntologyModelListener;
-import com.modica.ontology.event.OntologySelectionEvent;
-import com.modica.ontology.event.OntologySelectionListener;
-import com.modica.ontology.match.MatchInformation;
-import com.modica.util.FileUtilities;
-import com.modica.util.NetworkUtilities;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: Ontology</p>
@@ -1430,9 +1430,9 @@ public class OntologyPanel extends JPanel
 
     public static OntologyPanel createOntologyDialog()
     {
-        final com.modica.gui.TextField txtOntologyName = new com.modica.gui.TextField(10);
-        final com.modica.gui.TextField txtOntologyTitle = new com.modica.gui.TextField(15);
-        final com.modica.gui.TextField txtOntologySite = new com.modica.gui.TextField(15);
+        final TextField txtOntologyName = new TextField(10);
+        final TextField txtOntologyTitle = new TextField(15);
+        final TextField txtOntologySite = new TextField(15);
 
         final JDialog dialog = new JDialog((JFrame) null,
             ApplicationUtilities.getResourceString("ontology.dialog.windowTitle"), true);

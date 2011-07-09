@@ -8,8 +8,8 @@ import javax.swing.JTable;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarityEntry;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-import ac.technion.iem.ontobuilder.gui.application.Application;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 
@@ -61,7 +61,7 @@ public class DomainSimilarityGui
         // Initialize the properties
         try
         {
-            PropertiesHandler.initializeProperties(Application.PROPERTIES_FILE);
+            PropertiesHandler.initializeProperties(ApplicationParameters.PROPERTIES_FILE);
         }
         catch (Exception e)
         {

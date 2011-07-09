@@ -11,7 +11,7 @@ import javax.swing.table.TableColumn;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithmFlagsEnum;
 
@@ -20,7 +20,7 @@ public class TermAlgorithmGui extends AbstractAlgorithmGui
     private TermAlgorithm _termAlgorithm;
     private int mode;
     
-    public TermAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public TermAlgorithmGui(Algorithm abstractAlgorithm)
     {
         _termAlgorithm = (TermAlgorithm)abstractAlgorithm;
         mode = abstractAlgorithm.getMode();

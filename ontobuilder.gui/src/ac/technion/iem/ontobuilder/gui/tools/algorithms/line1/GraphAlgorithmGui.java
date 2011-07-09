@@ -6,7 +6,7 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
+import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.GraphAlgorithm;
 
 /**
@@ -19,7 +19,7 @@ public class GraphAlgorithmGui extends TermValueAlgorithmGui
 {
     private GraphAlgorithm _graphAlgorithm;
     
-    public GraphAlgorithmGui(AbstractAlgorithm abstractAlgorithm)
+    public GraphAlgorithmGui(Algorithm abstractAlgorithm)
     {
         _graphAlgorithm = (GraphAlgorithm)abstractAlgorithm;
     }

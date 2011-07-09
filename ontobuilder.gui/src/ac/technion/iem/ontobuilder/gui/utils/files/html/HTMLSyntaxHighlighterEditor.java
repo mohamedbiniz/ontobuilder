@@ -9,8 +9,8 @@ import javax.swing.text.DefaultEditorKit;
 import org.comedia.text.CXmlHighlighter;
 import org.comedia.ui.CSyntaxEditor;
 
-import com.modica.application.Actions;
-import com.modica.gui.PopupTrigger;
+import ac.technion.iem.ontobuilder.gui.application.action.Actions;
+import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
 
 /**
  * <p>Title: HTMLSyntaxHighlighterEditor</p>
