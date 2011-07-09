@@ -6,9 +6,8 @@ import java.io.PrintWriter;
 
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.AbstractMetaAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithm;
-
-//import schemamatchings.meta.experiments.Point;
-//import schemamatchings.meta.experiments.TopKPlot;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.utils.Point;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.utils.TopKPlot;
 
 /**
  * <p>Title: AbstractMapping</p>
