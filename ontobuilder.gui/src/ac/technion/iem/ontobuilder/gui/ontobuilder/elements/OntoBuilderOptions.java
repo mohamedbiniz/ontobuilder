@@ -43,23 +43,6 @@ import ac.technion.iem.ontobuilder.io.imports.ImportUtilities;
 import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 
-//import com.modica.application.ApplicationOptions;
-//import com.modica.application.ApplicationUtilities;
-//import com.modica.application.Options;
-//import com.modica.biztalk.BizTalkUtilities;
-//import com.modica.browser.Browser;
-//import com.modica.dom.DOMUtilities;
-//import com.modica.graph.GraphUtilities;
-//import com.modica.gui.MultilineLabel;
-//import com.modica.gui.TextField;
-//import com.modica.html.HTMLUtilities;
-//import com.modica.ontobuilder.exports.ExportUtilities;
-//import com.modica.ontobuilder.imports.ImportUtilities;
-//import com.modica.ontology.algorithm.Algorithm;
-//import com.modica.sitemap.SiteMap;
-//import com.modica.util.FileUtilities;
-//import com.modica.util.NetworkUtilities;
-
 /**
  * <p>Title: OntoBuilderOptions</p>
  * Extends a {@link Options}
