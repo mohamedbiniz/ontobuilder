@@ -10,7 +10,7 @@ import java.awt.BorderLayout;
  * <p>Title: ThesaurusPanel</p>
  * Extends a {@link JPanel}
  */
-class ThesaurusPanel extends JPanel
+public class ThesaurusPanel extends JPanel
 {
     private static final long serialVersionUID = 1L;
 
