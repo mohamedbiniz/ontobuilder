@@ -38,16 +38,6 @@ import ac.technion.iem.ontobuilder.gui.utils.files.image.PNGImageFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 
 import com.jgraph.JGraph;
-//import com.modica.application.Actions;
-//import com.modica.application.ApplicationUtilities;
-//import com.modica.graph.GraphUtilities;
-//import com.modica.gui.ToolBar;
-//import com.modica.image.ImageFileFilter;
-//import com.modica.image.ImageFileViewer;
-//import com.modica.image.ImageUtilities;
-//import com.modica.image.JPGImageFileFilter;
-//import com.modica.image.PNGImageFileFilter;
-//import com.modica.util.FileUtilities;
 
 /**
  * <p>Title: OntologyGraph</p>
