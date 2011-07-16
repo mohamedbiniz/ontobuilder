@@ -91,7 +91,7 @@ public class WSDLImporter implements Importer
             Definition definition = reader.readWSDL(null, file.getAbsolutePath());
             Ontology wsdlOntology = new Ontology(definition.getQName().toString(), definition
                 .getDocumentationElement().toString());
-            wsdlOntology.getModel().setLight(true);
+            wsdlOntology.setLight(true);
             definitionTerm = new Term(definition.getQName().toString());
             Collection<PortType> portTypes = definition.getPortTypes().values();
 

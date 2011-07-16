@@ -29,7 +29,7 @@ public class XSDImporter implements Importer
     {
         // creating an empty ontology with the name of the file
         Ontology xsdOntology = new Ontology(file.getName());
-        xsdOntology.getModel().setLight(true);
+        xsdOntology.setLight(true);
         try
         {
             // using xsd handlers to break all terms to simple terms (Term class) in order to
