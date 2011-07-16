@@ -138,7 +138,7 @@ class OntoBuilder
     /**
      * Get the Thesaurus
      * 
-     * @return the {@link Thesaurus}
+     * @return the {@link Thesaurus_}
      */
     public Thesaurus getThesaurus()
     {

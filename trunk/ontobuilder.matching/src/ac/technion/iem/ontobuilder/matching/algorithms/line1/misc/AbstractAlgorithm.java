@@ -146,7 +146,7 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm
     /**
      * Gets whether to use the Thesaurus
      * 
-     * @return <code>true</code> if uses the {@link Thesaurus}
+     * @return <code>true</code> if uses the {@link Thesaurus_}
      */
     public boolean usesThesaurus()
     {
@@ -156,7 +156,7 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm
     /**
      * Sets whether to use the Thesaurus
      * 
-     * @param <code>true</code> if to use the {@link Thesaurus}
+     * @param <code>true</code> if to use the {@link Thesaurus_}
      */
     public void setThesaurus(Thesaurus thesaurus)
     {
@@ -166,7 +166,7 @@ abstract public class AbstractAlgorithm implements Algorithm, MatchAlgorithm
     /**
      * Gets the Thesaurus
      * 
-     * @return the {@link Thesaurus}
+     * @return the {@link Thesaurus_}
      */
     public Thesaurus getThesaurus()
     {

@@ -153,7 +153,7 @@ public class TermValueAlgorithm extends AbstractAlgorithm
     protected void getTermsToMatch(Ontology targetOntology, Ontology candidateOntology)
     {
 
-        if (!targetOntology.getModel().isLight())
+        if (!targetOntology.isLight())
         {
             originalTargetTerms = OntologyUtilities.getTermsOfClass(targetOntology, "input");
             originalTargetTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
@@ -164,10 +164,10 @@ public class TermValueAlgorithm extends AbstractAlgorithm
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getModel().getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
         }
 
-        if (!candidateOntology.getModel().isLight())
+        if (!candidateOntology.isLight())
         {
             originalCandidateTerms = OntologyUtilities.getTermsOfClass(candidateOntology, "input");
             originalCandidateTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
@@ -177,7 +177,7 @@ public class TermValueAlgorithm extends AbstractAlgorithm
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getModel().getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
         }
 
     }

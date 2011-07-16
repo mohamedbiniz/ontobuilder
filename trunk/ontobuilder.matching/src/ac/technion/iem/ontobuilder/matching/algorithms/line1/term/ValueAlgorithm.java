@@ -105,24 +105,24 @@ public class ValueAlgorithm extends TermAlgorithm
     protected void getTermsToMatch(Ontology targetOntology, Ontology candidateOntology)
     {
         super.getTermsToMatch(targetOntology, candidateOntology);
-        if (!targetOntology.getModel().isLight())
+        if (!targetOntology.isLight())
         {
             originalTargetTerms.addAll(OntologyUtilities.getTermsOfClass(targetOntology,
                 "decomposition"));
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getModel().getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
         }
 
-        if (!candidateOntology.getModel().isLight())
+        if (!candidateOntology.isLight())
         {
             originalCandidateTerms.addAll(OntologyUtilities.getTermsOfClass(candidateOntology,
                 "decomposition"));
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getModel().getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
         }
 
     }
