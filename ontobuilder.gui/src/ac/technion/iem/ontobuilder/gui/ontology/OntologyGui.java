@@ -20,12 +20,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -50,14 +48,20 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
@@ -74,6 +78,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Attribute;
 import ac.technion.iem.ontobuilder.core.ontology.Axiom;
 import ac.technion.iem.ontobuilder.core.ontology.Domain;
 import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
@@ -84,7 +89,10 @@ import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.gui.application.PropertiesCellEditor;
+import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 import ac.technion.iem.ontobuilder.gui.elements.MultilineLabel;
 import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
@@ -109,49 +117,47 @@ import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.graphs.OrderedDefaultPort;
+import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
 import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 
 import com.jgraph.JGraph;
+import com.jgraph.graph.ConnectionSet;
+import com.jgraph.graph.DefaultGraphCell;
+import com.jgraph.graph.DefaultGraphModel;
+import com.jgraph.graph.DefaultPort;
+import com.jgraph.graph.GraphConstants;
 
 /**
- * <p>Title: Ontology</p>
+ * <p>Title: OntologyGui</p>
+ * <p>Description: Implements the methods of the Ontology used by the GUI</p>
  * Extends {@link JPanel}
- * Implements {@link Schema}
  */
-public class OntologyPanel extends JPanel
-
+public class OntologyGui extends JPanel
 {
     private static final long serialVersionUID = -7583434763421818827L;
-
-    // File formats
-    final public static short XML_FORMAT = 0;
-    final public static short BINARY_FORMAT = 1;
-    final public static short BIZTALK_FORMAT = 2;
-    final public static short LIGHT_XML_FORMAT = 3;
 
     protected JPopupMenu popMenu;
     protected Actions actions;
     protected ArrayList<OntologyModelListener> modelListeners;
     protected ArrayList<OntologySelectionListener> selectionListeners;
 
-    protected OntologyModel model;
+    protected Ontology ontologyCore;
     protected JTree ontologyTree;
     protected OntologyTreeCellEditor ontologyCellEditor;
 
     protected Object actionObject;
 
-    protected boolean dirty;
-    protected File file;
-
     /**
      * Constructs a default Ontology
      */
-    public OntologyPanel()
+    public OntologyGui()
     {
         super(new BorderLayout());
-        model = new OntologyModel();
+        ontologyCore = new Ontology();
         init();
     }
 
@@ -160,10 +166,10 @@ public class OntologyPanel extends JPanel
      * 
      * @param model an {@link OntologyModel}
      */
-    public OntologyPanel(OntologyModel model)
+    public OntologyGui(Ontology model)
     {
         super(new BorderLayout());
-        this.model = model;
+        this.ontologyCore = model;
         init();
     }
 
@@ -172,7 +178,7 @@ public class OntologyPanel extends JPanel
      * 
      * @param name the ontology name
      */
-    public OntologyPanel(String name)
+    public OntologyGui(String name)
     {
         this(name, "");
     }
@@ -183,10 +189,10 @@ public class OntologyPanel extends JPanel
      * @param name the ontology name
      * @param title the ontology title
      */
-    public OntologyPanel(String name, String title)
+    public OntologyGui(String name, String title)
     {
         super(new BorderLayout());
-        model = new OntologyModel(name, title);
+        ontologyCore = new Ontology(name, title);
         init();
     }
 
@@ -199,10 +205,10 @@ public class OntologyPanel extends JPanel
         selectionListeners = new ArrayList<OntologySelectionListener>();
         initializeActions();
         createPopupMenu();
-        dirty = true;
+        ontologyCore.setDirty(true);
 
         // Initialize the model
-        model.addOntologyModelListener(new OntologyModelListener()
+        ontologyCore.addOntologyModelListener(new OntologyModelListener()
         {
             public void modelChanged(OntologyModelEvent e)
             {
@@ -213,96 +219,96 @@ public class OntologyPanel extends JPanel
             {
                 updateTree(e.getObject());
                 fireObjectChangedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void classAdded(OntologyModelEvent e)
             {
                 addClassToTree(e.getSuperClass(), e.getOntologyClass());
                 fireClassAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void classDeleted(OntologyModelEvent e)
             {
                 deleteClassFromTree(e.getSuperClass(), e.getOntologyClass());
                 fireClassDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void termAdded(OntologyModelEvent e)
             {
                 addTermToTree(e.getParent(), e.getTerm(), e.getPosition());
                 fireTermAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void termDeleted(OntologyModelEvent e)
             {
                 deleteTermFromTree(e.getParent(), e.getTerm());
                 fireTermDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void attributeAdded(OntologyModelEvent e)
             {
                 addAttributeToTree(e.getOntologyClass(), e.getAttribute());
                 fireAttributeAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void attributeDeleted(OntologyModelEvent e)
             {
                 deleteAttributeFromTree(e.getOntologyClass(), e.getAttribute());
                 fireAttributeDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void axiomAdded(OntologyModelEvent e)
             {
                 addAxiomToTree(e.getOntologyClass(), e.getAxiom());
                 fireAxiomAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void axiomDeleted(OntologyModelEvent e)
             {
                 deleteAxiomFromTree(e.getOntologyClass(), e.getAxiom());
                 fireAxiomDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void relationshipAdded(OntologyModelEvent e)
             {
                 addRelationshipToTree(e.getTerm(), e.getRelationship());
                 fireRelationshipAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void relationshipDeleted(OntologyModelEvent e)
             {
                 deleteRelationshipFromTree(e.getTerm(), e.getRelationship());
                 fireRelationshipDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void domainEntryAdded(OntologyModelEvent e)
             {
                 addDomainEntryToTree(e.getDomain(), e.getEntry());
                 fireDomainEntryAddedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
 
             public void domainEntryDeleted(OntologyModelEvent e)
             {
                 deleteDomainEntryFromTree(e.getDomain(), e.getEntry());
                 fireDomainEntryDeletedEvent(e);
-                dirty = true;
+                ontologyCore.setDirty(true);
             }
         });
 
         // Initialize the view
-        ontologyTree = new JTree(new OntologyTreeModel(model));
+        ontologyTree = new JTree(new OntologyTreeModel(ontologyCore));
         ontologyTree.setCellRenderer(new OntologyTreeRenderer());
         ontologyTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         ToolTipManager.sharedInstance().registerComponent(ontologyTree);
@@ -357,27 +363,7 @@ public class OntologyPanel extends JPanel
 
     public String toString()
     {
-        return model.toString();
-    }
-
-    /**
-     * Check if the ontology is dirty
-     * 
-     * @return <code>true</code> if is dirty
-     */
-    public boolean isDirty()
-    {
-        return dirty;
-    }
-
-    /**
-     * Set the ontology to dirty
-     * 
-     * @param b <code>true</code> if is dirty
-     */
-    public void setDirty(boolean b)
-    {
-        dirty = b;
+        return ontologyCore.toString();
     }
 
     /**
@@ -385,9 +371,9 @@ public class OntologyPanel extends JPanel
      * 
      * @return the {@link OntologyModel}
      */
-    public OntologyModel getModel()
+    public Ontology getOntology()
     {
-        return model;
+        return ontologyCore;
     }
 
     /**
@@ -397,7 +383,7 @@ public class OntologyPanel extends JPanel
      */
     public String getName()
     {
-        return model.getName();
+        return ontologyCore.getName();
     }
 
     /**
@@ -407,7 +393,7 @@ public class OntologyPanel extends JPanel
      */
     public void setName(String name)
     {
-        model.setName(name);
+        ontologyCore.setName(name);
     }
 
     /**
@@ -417,7 +403,7 @@ public class OntologyPanel extends JPanel
      */
     public String getTitle()
     {
-        return model.getTitle();
+        return ontologyCore.getTitle();
     }
 
     /**
@@ -427,7 +413,7 @@ public class OntologyPanel extends JPanel
      */
     public void setTitle(String title)
     {
-        model.setTitle(title);
+        ontologyCore.setTitle(title);
     }
 
     /**
@@ -437,7 +423,7 @@ public class OntologyPanel extends JPanel
      */
     public void setSiteURL(URL siteURL)
     {
-        model.setSiteURL(siteURL);
+        ontologyCore.setSiteURL(siteURL);
     }
 
     /**
@@ -447,7 +433,7 @@ public class OntologyPanel extends JPanel
      */
     public URL getSiteURL()
     {
-        return model.getSiteURL();
+        return ontologyCore.getSiteURL();
     }
 
     /**
@@ -457,7 +443,7 @@ public class OntologyPanel extends JPanel
      */
     public void addTerm(Term term)
     {
-        model.addTerm(term);
+        ontologyCore.addTerm(term);
     }
 
     /**
@@ -467,7 +453,7 @@ public class OntologyPanel extends JPanel
      */
     public void removeTerm(Term term)
     {
-        model.removeTerm(term);
+        ontologyCore.removeTerm(term);
     }
 
     /**
@@ -475,7 +461,7 @@ public class OntologyPanel extends JPanel
      */
     public int getTermsCount()
     {
-        return model.getTermsCount();
+        return ontologyCore.getTermsCount();
     }
 
     /**
@@ -487,7 +473,7 @@ public class OntologyPanel extends JPanel
      */
     public Term getTerm(int index)
     {
-        return model.getTerm(index);
+        return ontologyCore.getTerm(index);
     }
 
     /**
@@ -500,27 +486,27 @@ public class OntologyPanel extends JPanel
      */
     public Term getTermByID(long id)
     {
-        return model.getTermByID(id);
+        return ontologyCore.getTermByID(id);
     }
 
     public void addClass(OntologyClass ontologyClass)
     {
-        model.addClass(ontologyClass);
+        ontologyCore.addClass(ontologyClass);
     }
 
     public void removeClass(OntologyClass ontologyClass)
     {
-        model.removeClass(ontologyClass);
+        ontologyCore.removeClass(ontologyClass);
     }
 
     public int getClassesCount()
     {
-        return model.getClassesCount();
+        return ontologyCore.getClassesCount();
     }
 
     public OntologyClass getClass(int index)
     {
-        return model.getClass(index);
+        return ontologyCore.getClass(index);
     }
 
     public void addOntologySelectionListener(OntologySelectionListener l)
@@ -945,7 +931,7 @@ public class OntologyPanel extends JPanel
     protected void commandAddClass()
     {
         OntologyClass parent = (OntologyClass) actionObject;
-        OntologyClass c = OntologyClass.createClassDialog(parent);
+        OntologyClass c = OntologyClassGui.createClassDialog(parent);
         if (c == null)
             return;
         if (parent == null)
@@ -957,7 +943,7 @@ public class OntologyPanel extends JPanel
      */
     protected void commandAddTerm()
     {
-        Term t = Term.createTermDialog(model);
+        Term t = TermGui.createTermDialog(ontologyCore);
         if (t == null)
             return;
         Term parent = (Term) actionObject;
@@ -972,7 +958,7 @@ public class OntologyPanel extends JPanel
      */
     protected void commandAddAttribute()
     {
-        Attribute a = Attribute.createAttributeDialog();
+        Attribute a = AttributeGui.createAttributeDialog();
         if (a == null)
             return;
         if (actionObject instanceof DomainEntry)
@@ -987,7 +973,7 @@ public class OntologyPanel extends JPanel
      */
     public void commandAddAxiom()
     {
-        Axiom a = Axiom.createAxiomDialog();
+        Axiom a = AxiomGui.createAxiomDialog();
         if (a == null)
             return;
         OntologyClass parent = (OntologyClass) actionObject;
@@ -1001,7 +987,7 @@ public class OntologyPanel extends JPanel
     public void commandAddRelationship()
     {
         Term source = (Term) actionObject;
-        Relationship r = Relationship.createRelationshipDialog(source, model);
+        Relationship r = RelationshipGui.createRelationshipDialog(source, this);
         if (r != null)
             source.addRelationship(r);
     }
@@ -1012,7 +998,7 @@ public class OntologyPanel extends JPanel
     public void commandAddDomainEntry()
     {
         Domain domain = (Domain) actionObject;
-        DomainEntry entry = DomainEntry.createEntryDialog(model);
+        DomainEntry entry = DomainEntryGui.createEntryDialog(ontologyCore);
         if (entry != null)
             domain.addEntry(entry);
     }
@@ -1025,7 +1011,7 @@ public class OntologyPanel extends JPanel
         if (actionObject instanceof Term)
         {
             Term t = (Term) actionObject;
-            Vector<?> relationships = model.getRelationships();
+            Vector<?> relationships = ontologyCore.getRelationships();
             for (Iterator<?> i = relationships.iterator(); i.hasNext();)
             {
                 Relationship r = (Relationship) i.next();
@@ -1050,7 +1036,7 @@ public class OntologyPanel extends JPanel
         if (actionObject instanceof OntologyClass)
         {
             OntologyClass c = (OntologyClass) actionObject;
-            Vector<?> terms = model.getTerms();
+            Vector<?> terms = ontologyCore.getTerms();
             for (Iterator<?> i = terms.iterator(); i.hasNext();)
                 if (c.equals(((Term) i.next()).getSuperClass()))
                 {
@@ -1221,7 +1207,8 @@ public class OntologyPanel extends JPanel
                 classesNode = treeModel.findChildNodeWithUserObject(parentClassNode,
                     ApplicationUtilities.getResourceString("ontology.class.subclasses"));
             }
-            treeModel.insertNodeInto(ontologyClass.getTreeBranch(), classesNode,
+            OntologyClassGui ontologyClassGui = new OntologyClassGui(ontologyClass);
+            treeModel.insertNodeInto(ontologyClassGui.getTreeBranch(), classesNode,
                 classesNode.getChildCount());
         }
         catch (Exception e)
@@ -1264,7 +1251,8 @@ public class OntologyPanel extends JPanel
                 termsNode = treeModel.findChildNodeWithUserObject(parentTermNode,
                     ApplicationUtilities.getResourceString("ontology.subterms"));
             }
-            treeModel.insertNodeInto(term.getTreeBranch(), termsNode,
+            TermGui termGui = new TermGui(term);
+            treeModel.insertNodeInto(termGui.getTreeBranch(), termsNode,
                 position == -1 ? termsNode.getChildCount() : position);
         }
         catch (Exception e)
@@ -1295,7 +1283,7 @@ public class OntologyPanel extends JPanel
             DefaultMutableTreeNode parentNode = treeModel.findNodeWithUserObject(ontologyClass);
             DefaultMutableTreeNode attributesNode = treeModel.findChildNodeWithUserObject(
                 parentNode, ApplicationUtilities.getResourceString("ontology.attributes"));
-            treeModel.insertNodeInto(attribute.getTreeBranch(), attributesNode,
+            treeModel.insertNodeInto(OntologyObjectGuiFactory.getOntologyObjectGui(attribute).getTreeBranch(), attributesNode,
                 attributesNode.getChildCount());
         }
         catch (Exception e)
@@ -1326,7 +1314,7 @@ public class OntologyPanel extends JPanel
             DefaultMutableTreeNode parentNode = treeModel.findNodeWithUserObject(ontologyClass);
             DefaultMutableTreeNode axiomsNode = treeModel.findChildNodeWithUserObject(parentNode,
                 ApplicationUtilities.getResourceString("ontology.axioms"));
-            treeModel.insertNodeInto(axiom.getTreeBranch(), axiomsNode, axiomsNode.getChildCount());
+            treeModel.insertNodeInto(OntologyObjectGuiFactory.getOntologyObjectGui(axiom).getTreeBranch(), axiomsNode, axiomsNode.getChildCount());
         }
         catch (Exception e)
         {
@@ -1356,7 +1344,7 @@ public class OntologyPanel extends JPanel
             DefaultMutableTreeNode parentNode = treeModel.findNodeWithUserObject(term);
             DefaultMutableTreeNode relationshipsNode = treeModel.findChildNodeWithUserObject(
                 parentNode, ApplicationUtilities.getResourceString("ontology.relationships"));
-            treeModel.insertNodeInto(relationship.getTreeBranch(), relationshipsNode,
+            treeModel.insertNodeInto(OntologyObjectGuiFactory.getOntologyObjectGui(relationship).getTreeBranch(), relationshipsNode,
                 relationshipsNode.getChildCount());
         }
         catch (Exception e)
@@ -1386,7 +1374,7 @@ public class OntologyPanel extends JPanel
         {
             OntologyTreeModel treeModel = (OntologyTreeModel) ontologyTree.getModel();
             DefaultMutableTreeNode domainNode = treeModel.findNodeWithUserObject(domain);
-            treeModel.insertNodeInto(entry.getTreeBranch(), domainNode, domainNode.getChildCount());
+            treeModel.insertNodeInto(OntologyObjectGuiFactory.getOntologyObjectGui(entry).getTreeBranch(), domainNode, domainNode.getChildCount());
         }
         catch (Exception e)
         {
@@ -1426,9 +1414,9 @@ public class OntologyPanel extends JPanel
         treeModel.updateTree();
     }
 
-    protected static OntologyPanel ontology;
+    protected static OntologyGui ontology;
 
-    public static OntologyPanel createOntologyDialog()
+    public static OntologyGui createOntologyDialog()
     {
         final TextField txtOntologyName = new TextField(10);
         final TextField txtOntologyTitle = new TextField(15);
@@ -1456,7 +1444,7 @@ public class OntologyPanel extends JPanel
         {
             public void actionPerformed(ActionEvent e)
             {
-                ontology = new OntologyPanel(txtOntologyName.getText(), txtOntologyTitle.getText());
+                ontology = new OntologyGui(txtOntologyName.getText(), txtOntologyTitle.getText());
                 try
                 {
                     ontology.setSiteURL(NetworkUtilities.makeURL(txtOntologySite.getText()));
@@ -1628,133 +1616,14 @@ public class OntologyPanel extends JPanel
         dialog.setVisible(true);
         return ontology;
     }
-
-    /**
-     * Set the file
-     * 
-     * @param file the {@link File}
-     */
-    public void setFile(File file)
-    {
-        this.file = file;
-    }
-
-    /**
-     * Get the file
-     * 
-     * @return the {@link File}
-     */
-    public File getFile()
-    {
-        return file;
-    }
-
-    /**
-     * Save the ontology to a {@link File}
-     */
-    public void save(File file) throws IOException
-    {
-        save(file, XML_FORMAT);
-    }
-
-    /**
-     * Save the ontology to a {@link File}.
-     * <br>Available formats:
-     * <br><code>BIZTALK_FORMAT</code>, <code>XML_FORMAT</code>, <code>BINARY_FORMAT</code>, <code>LIGHT_XML_FORMAT</code> 
-     */
-    public void save(File file, short format) throws IOException
-    {
-        switch (format)
-        {
-        case BIZTALK_FORMAT:
-            saveToBizTalk(file);
-            break;
-        case XML_FORMAT:
-            saveToXML(file);
-            break;
-        case BINARY_FORMAT:
-            saveToBinary(file);
-            break;
-        case LIGHT_XML_FORMAT:
-            saveToLightXML(file);
-            break;
-        default:
-            throw new IOException(StringUtilities.getReplacedString(
-                ApplicationUtilities.getResourceString("error.ontology.fileFormat"), new String[]
-                {
-                    model.getName()
-                }));
-        }
-
-        dirty = false;
-        this.file = file;
-        model.fireModelChangedEvent(model);
-    }
-
-    /**
-     * Save the ontology to a binary {@link File}
-     */
-    public void saveToBinary(File file) throws IOException
-    {
-        FileOutputStream out = new FileOutputStream(file);
-        ObjectOutputStream os = new ObjectOutputStream(out);
-        os.writeObject(model);
-        os.flush();
-        os.close();
-    }
-
-    /**
-     * Save the ontology to an XML {@link File}
-     */
-    public void saveToXML(File file) throws IOException
-    {
-        org.jdom.Element ontologyElement = model.getXMLRepresentation();
-        DocType ontologyDocType = new DocType("ontology", "dtds/ontology.dtd");
-        org.jdom.Document ontologyDocument = new org.jdom.Document(ontologyElement, ontologyDocType);
-
-        BufferedWriter out = new BufferedWriter(new FileWriter(file));
-        XMLOutputter fmt = new XMLOutputter("    ", true);
-        fmt.output(ontologyDocument, out);
-        out.close();
-    }
-
-    /**
-     * Save the ontology to a light XML {@link File}
-     */
-    public void saveToLightXML(File file) throws IOException
-    {
-        org.jdom.Element ontologyElement = model.getLightXMLRepresentation();
-        DocType ontologyDocType = new DocType("ontology", "dtds/ontology.dtd");
-        org.jdom.Document ontologyDocument = new org.jdom.Document(ontologyElement, ontologyDocType);
-
-        BufferedWriter out = new BufferedWriter(new FileWriter(file));
-        XMLOutputter fmt = new XMLOutputter("    ", true);
-        fmt.output(ontologyDocument, out);
-        out.close();
-    }
-
-    /**
-     * Save the ontology to a BizTalk {@link File}
-     */
-    public void saveToBizTalk(File file) throws IOException
-    {
-        org.jdom.Element schemaElement = model.getBizTalkRepresentation();
-        org.jdom.Document ontologyDocument = new org.jdom.Document(schemaElement);
-
-        BufferedWriter out = new BufferedWriter(new FileWriter(file));
-        XMLOutputter fmt = new XMLOutputter("    ", true);
-        fmt.output(ontologyDocument, out);
-        out.close();
-    }
-
     /**
      * Open an ontology from a file
      * 
      * @param file the {@link File} to read from
-     * @return an {@link OntologyPanel}
+     * @return an {@link OntologyGui}
      * @throws IOException
      */
-    public static OntologyPanel open(File file) throws IOException
+    public static OntologyGui open(File file) throws IOException
     {
         if (!file.exists())
             throw new IOException(StringUtilities.getReplacedString(
@@ -1769,12 +1638,12 @@ public class OntologyPanel extends JPanel
                 return openFromXML(file);
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            OntologyModel model = (OntologyModel) ois.readObject();
+            Ontology model = (Ontology) ois.readObject();
             ois.close();
-            model.listeners = new ArrayList<OntologyModelListener>();
-            OntologyPanel ontology = new OntologyPanel(model);
-            ontology.setFile(file);
-            ontology.setDirty(false);
+            model.setListeners(new ArrayList<OntologyModelListener>());
+            OntologyGui ontology = new OntologyGui(model);
+            ontology.ontologyCore.setFile(file);
+            ontology.ontologyCore.setDirty(false);
             return ontology;
         }
         catch (ClassNotFoundException e)
@@ -1787,10 +1656,10 @@ public class OntologyPanel extends JPanel
      * Open an ontology from an XML file
      * 
      * @param file the {@link File} to read from
-     * @return an {@link OntologyPanel}
+     * @return an {@link OntologyGui}
      * @throws IOException
      */
-    public static OntologyPanel openFromXML(File file) throws IOException
+    public static OntologyGui openFromXML(File file) throws IOException
     {
         if (!file.exists())
             throw new IOException(StringUtilities.getReplacedString(
@@ -1805,10 +1674,10 @@ public class OntologyPanel extends JPanel
             builder.setEntityResolver(new NetworkEntityResolver());
             org.jdom.Document ontologyDocument = builder.build(reader);
 
-            OntologyModel model = OntologyModel.getModelFromXML(ontologyDocument.getRootElement());
-            OntologyPanel ontology = new OntologyPanel(model);
-            ontology.setFile(file);
-            ontology.setDirty(false);
+            Ontology model = Ontology.getModelFromXML(ontologyDocument.getRootElement());
+            OntologyGui ontology = new OntologyGui(model);
+            ontology.ontologyCore.setFile(file);
+            ontology.ontologyCore.setDirty(false);
             return ontology;
         }
         catch (JDOMException e)
@@ -1819,24 +1688,24 @@ public class OntologyPanel extends JPanel
 
     public HyperTree getHyperTree(boolean showClasses, boolean showRelations, boolean showProperties)
     {
-        return new HyperTree(model.getHyperTreeNode(showClasses, showRelations, showProperties));
+        return new HyperTree(getHyperTreeNode(showClasses, showRelations, showProperties));
     }
 
-    public JGraph getGraph()
-    {
-        return model.getGraph();
-    }
+//    public JGraph getGraph()
+//    {
+//        return getGraph();
+//    }
 
     /**
      * Match an ontology according to an algorithm
      * 
-     * @param ontology the {@link OntologyPanel}
+     * @param ontology the {@link OntologyGui}
      * @param algorithm the {@link Algorithm}
      * @return MatchInformation
      */
-    public MatchInformation match(OntologyPanel ontology, Algorithm algorithm)
+    public MatchInformation match(Ontology ontology, Algorithm algorithm)
     {
-        return algorithm.match(this, ontology);
+        return algorithm.match(this.ontologyCore, ontology);
     }
 
     /**
@@ -1844,17 +1713,17 @@ public class OntologyPanel extends JPanel
      */
     public void normalize()
     {
-        model.normalize();
+        ontologyCore.normalize();
     }
 
     /**
      * Generate an ontology from a URL
      * 
-     * @param url the {@link OntologyPanel}
-     * @return an {@link OntologyPanel}
+     * @param url the {@link OntologyGui}
+     * @return an {@link OntologyGui}
      * @throws IOException
      */
-    public static OntologyPanel generateOntology(URL url) throws IOException
+    public static OntologyGui generateOntology(URL url) throws IOException
     {
         org.w3c.dom.Document document = DOMUtilities.getDOM(url,
             new PrintWriter(new StringWriter()));
@@ -1873,7 +1742,7 @@ public class OntologyPanel extends JPanel
             }
         }
 
-        OntologyPanel ontology = new OntologyPanel(ontologyName, ontologyTitle);
+        OntologyGui ontology = new OntologyGui(ontologyName, ontologyTitle);
         ontology.setSiteURL(url);
 
         // Predefined domains
@@ -2179,7 +2048,7 @@ public class OntologyPanel extends JPanel
 
     public String getXMLRepresentationAsString() throws IOException
     {
-        org.jdom.Element ontologyElement = model.getXMLRepresentation();
+        org.jdom.Element ontologyElement = ontologyCore.getXMLRepresentation();
         DocType ontologyDocType = new DocType("ontology");
         org.jdom.Document ontologyDocument = new org.jdom.Document(ontologyElement, ontologyDocType);
 
@@ -2189,6 +2058,238 @@ public class OntologyPanel extends JPanel
         fmt.output(ontologyDocument, out);
         out.close();
         return xmlRepresentation.toString();
+    }
+    
+    public NodeHyperTree getHyperTreeNode(boolean showClasses, boolean showRelations,
+        boolean showProperties)
+    {
+        NodeHyperTree root = new NodeHyperTree(this, NodeHyperTree.CLASS);
+
+        if (showClasses && !ontologyCore.isLight())
+        {
+            NodeHyperTree classesNode = new NodeHyperTree(
+                PropertiesHandler.getResourceString("ontology.classes"), NodeHyperTree.CLASS);
+            root.add(classesNode);
+            for (Iterator<Object> i = ontologyCore.getClasses().iterator(); i.hasNext();)
+            {
+                classesNode.add(((OntologyClassGui) i.next()).getHyperTreeNode(showProperties));
+            }
+        }
+
+        NodeHyperTree termsNode = new NodeHyperTree(
+            PropertiesHandler.getResourceString("ontology.terms"), NodeHyperTree.TERM);
+        root.add(termsNode);
+        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        {
+            TermGui termGui = new TermGui((Term) i.next());
+            termsNode.add(termGui.getHyperTreeNode(showRelations, showClasses,
+                showProperties));
+        }
+
+        return root;
+    }
+
+    public JGraph getGraph()
+    {
+        JGraph graph = new JGraph(new DefaultGraphModel());
+        graph.setEditable(false);
+        ArrayList<DefaultGraphCell> cells = new ArrayList<DefaultGraphCell>();
+        // ConnectionSet for the Insert method
+        ConnectionSet cs = new ConnectionSet();
+        // Hashtable for Attributes (Vertex to Map)
+        Hashtable<DefaultGraphCell, Map<?, ?>> attributes = new Hashtable<DefaultGraphCell, Map<?, ?>>();
+
+        DefaultGraphCell vertex = new DefaultGraphCell(ontologyCore.getName());
+        cells.add(vertex);
+        Map<?, ?> map = GraphUtilities.createDefaultAttributes();
+        GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
+        attributes.put(vertex, map);
+
+        if (!ontologyCore.getTerms().isEmpty())
+        {
+            DefaultPort toChildPort = new OrderedDefaultPort("toChild");
+            vertex.add(toChildPort);
+            for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+            {
+                TermGui termGui = new TermGui((Term) i.next());
+                termGui.buildGraphHierarchy(toChildPort, cells, attributes, cs);
+            }
+            if (GraphUtilities.getShowPrecedenceLinks())
+            {
+                for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+                {
+                    TermGui termGui = new TermGui((Term) i.next());
+                    termGui.buildPrecedenceRelationships(cells, attributes, cs);
+                }
+            }
+        }
+
+        // Insert the cells (View stores attributes)
+        graph.getModel().insert(cells.toArray(), cs, null, attributes);
+        GraphUtilities.alignHierarchy(graph, SwingConstants.LEFT, 10, 10);
+        return graph;
+    }
+
+    public DefaultGraphCell addToGraph(ArrayList<DefaultGraphCell> cells,
+        Hashtable<DefaultGraphCell, Map<?, ?>> attributes, ConnectionSet cs)
+    {
+        DefaultGraphCell vertex = new DefaultGraphCell(ontologyCore.getName());
+        cells.add(vertex);
+        Map<?, ?> map = GraphUtilities.createDefaultAttributes();
+        GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
+        attributes.put(vertex, map);
+
+        if (!ontologyCore.getTerms().isEmpty())
+        {
+            DefaultPort toChildPort = new DefaultPort("toChild");
+            vertex.add(toChildPort);
+            for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+            {
+                TermGui termGui = new TermGui((Term) i.next());
+                termGui.buildGraphHierarchy(toChildPort, cells, attributes, cs);
+            }
+            if (GraphUtilities.getShowPrecedenceLinks())
+            {
+                for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+                {
+                    TermGui termGui = new TermGui((Term) i.next());
+                    termGui.buildPrecedenceRelationships(cells, attributes, cs);
+                }
+            }
+        }
+
+        return vertex;
+    }
+    
+    public JTree getClassesHierarchy()
+    {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(
+            PropertiesHandler.getResourceString("ontology.classes"));
+        for (Iterator<Object> i = ontologyCore.getClasses().iterator(); i.hasNext();)
+        {
+            OntologyClass c = (OntologyClass) i.next();
+            DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(c);
+            ontologyCore.getClassesHierarchyRec(c, classNode);
+        }
+        JTree tree = new JTree(root);
+        tree.setCellRenderer(new OntologyTreeRenderer());
+        return tree;
+    }
+    
+    public JTree getTermsHierarchy()
+    {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(
+            PropertiesHandler.getResourceString("ontology.terms"));
+        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        {
+            Term t = (Term) i.next();
+            DefaultMutableTreeNode termNode = new DefaultMutableTreeNode(t);
+            root.add(termNode);
+            getTermsHierarchyRec(t, termNode);
+        }
+        JTree tree = new JTree(root);
+        tree.setCellRenderer(new OntologyTreeRenderer());
+        return tree;
+    }
+    
+    protected void getTermsHierarchyRec(Term t, DefaultMutableTreeNode root)
+    {
+        for (int i = 0; i < t.getTermsCount(); i++)
+        {
+            Term st = t.getTerm(i);
+            DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(st);
+            root.add(subNode);
+            getTermsHierarchyRec(st, subNode);
+        }
+    }
+    
+    public JTable getProperties()
+    {
+        String columnNames[] =
+        {
+            PropertiesHandler.getResourceString("properties.attribute"),
+            PropertiesHandler.getResourceString("properties.value")
+        };
+        Object data[][] =
+        {
+            {
+                PropertiesHandler.getResourceString("ontology.name"), ontologyCore.getName()
+            },
+            {
+                PropertiesHandler.getResourceString("ontology.title"), ontologyCore.getTitle()
+            },
+            {
+                PropertiesHandler.getResourceString("ontology.site"),
+                ontologyCore.getSiteURL() != null ? ontologyCore.getSiteURL().toExternalForm() : null
+            },
+            {
+                PropertiesHandler.getResourceString("ontology.terms"), new Integer(ontologyCore.getTerms().size())
+            }
+        };
+        JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data)
+        {
+            private static final long serialVersionUID = 1L;
+
+            public boolean isCellEditable(int row, int col)
+            {
+                return col == 1 && (row == 0 || row == 1 || row == 2);
+            }
+        });
+        TableColumn valueColumn = properties.getColumn(columnNames[1]);
+        valueColumn.setCellEditor(new PropertiesCellEditor());
+        properties.getModel().addTableModelListener(new TableModelListener()
+        {
+            public void tableChanged(TableModelEvent e)
+            {
+                int row = e.getFirstRow();
+                int column = e.getColumn();
+                Object data = ((TableModel) e.getSource()).getValueAt(row, column);
+                String label = (String) data;
+                switch (row)
+                // name
+                {
+                case 0:
+                    if (!ontologyCore.getName().equals(label))
+                        setName(label);
+                    break;
+                case 1:
+                    if (!ontologyCore.getTitle().equals(label))
+                        setTitle(label);
+                    break;
+                case 2:
+                    if (!ontologyCore.getSiteURL().toExternalForm().equals(label))
+                        ontologyCore.setSiteURL(label);
+                }
+            }
+        });
+        return properties;
+    }
+    
+    public DefaultMutableTreeNode getTreeBranch()
+    {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
+
+        if (!ontologyCore.isLight())
+        {
+            DefaultMutableTreeNode classesNode = new DefaultMutableTreeNode(
+                PropertiesHandler.getResourceString("ontology.classes"));
+            root.add(classesNode);
+            for (Iterator<Object> i = ontologyCore.getClasses().iterator(); i.hasNext();)
+            {
+                classesNode.add(OntologyObjectGuiFactory.getOntologyObjectGui((OntologyClass) i.next()).getTreeBranch());
+            }
+        }
+
+        DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
+            PropertiesHandler.getResourceString("ontology.terms"));
+        root.add(termsNode);
+        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        {
+            TermGui termGui = new TermGui((Term) i.next());
+            termsNode.add(termGui.getTreeBranch());
+        }
+
+        return root;
     }
 
 }

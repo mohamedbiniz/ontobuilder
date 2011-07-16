@@ -6,6 +6,8 @@ import java.util.Enumeration;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+
 /**
  * <p>Title: OntologyTreeModel</p>
  * Extends {@link DefaultTreeModel}
@@ -14,9 +16,9 @@ public class OntologyTreeModel extends DefaultTreeModel
 {
     private static final long serialVersionUID = 1L;
 
-    protected OntologyModel model;
+    protected Ontology model;
 
-    public OntologyTreeModel(OntologyModel model)
+    public OntologyTreeModel(Ontology model)
     {
         super(model.getTreeBranch());
         this.model = model;

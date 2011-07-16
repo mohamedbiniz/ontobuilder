@@ -7,7 +7,7 @@ import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.elements.Tab;
 import ac.technion.iem.ontobuilder.gui.elements.TabbedPane;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.main.OntoBuilder;
-import ac.technion.iem.ontobuilder.gui.utils.thesaurus.ThesaurusPanel;
+import ac.technion.iem.ontobuilder.gui.utils.thesaurus.ThesaurusGui;
 
 /**
  * <p>Title: UpperPanel</p>
@@ -27,7 +27,7 @@ public class UpperPanel extends TabbedPane
 
     public DOMPanel domPanel;
     public HyperbolicDOMPanel hyperbolicDOMPanel;
-    public ThesaurusPanel thesaurusPanel;
+    public ThesaurusGui thesaurusPanel;
 
     /**
      * Constructs an UpperPanel
@@ -52,7 +52,7 @@ public class UpperPanel extends TabbedPane
 
         Tab tab2 = new Tab(THESAURUS_TAB,
             ApplicationUtilities.getResourceString("panel.thesaurus"), new JScrollPane(
-                thesaurusPanel = new ThesaurusPanel(ontoBuilder)));
+                thesaurusPanel = new ThesaurusGui(ontoBuilder)));
         tab2.setIcon(ApplicationUtilities.getImage("thesaurus.gif"));
         addTab(tab2);
 
