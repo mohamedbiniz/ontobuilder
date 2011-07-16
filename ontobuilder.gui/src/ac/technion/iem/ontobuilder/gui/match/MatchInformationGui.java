@@ -26,6 +26,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
@@ -318,10 +319,10 @@ public class MatchInformationGui
         // Hashtable for Attributes (Vertex to Map)
         Hashtable<DefaultGraphCell, Map<?, ?>> attributes = new Hashtable<DefaultGraphCell, Map<?, ?>>();
 
-        DefaultGraphCell targetCell = _matchInformation.getTargetOntology().getOntology()
-            .addToGraph(cells, attributes, cs);
-        DefaultGraphCell candidateCell = _matchInformation.getCandidateOntology().getOntology()
-            .addToGraph(cells, attributes, cs);
+        OntologyGui targetOntologyGui = new OntologyGui(_matchInformation.getTargetOntology());
+        OntologyGui candidateOntologyGui = new OntologyGui(_matchInformation.getCandidateOntology());
+        DefaultGraphCell targetCell = targetOntologyGui.addToGraph(cells, attributes, cs);
+        DefaultGraphCell candidateCell = candidateOntologyGui.addToGraph(cells, attributes, cs);
 
         NumberFormat nf = NumberFormat.getInstance();
 

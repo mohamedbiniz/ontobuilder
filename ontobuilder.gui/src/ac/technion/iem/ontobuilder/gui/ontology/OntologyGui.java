@@ -16,11 +16,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
@@ -68,8 +66,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.jdom.DocType;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -87,7 +83,6 @@ import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
@@ -1623,7 +1618,7 @@ public class OntologyGui extends JPanel
      * @return an {@link OntologyGui}
      * @throws IOException
      */
-    public static OntologyGui open(File file) throws IOException
+    public static Ontology open(File file) throws IOException
     {
         if (!file.exists())
             throw new IOException(StringUtilities.getReplacedString(
@@ -1635,7 +1630,7 @@ public class OntologyGui extends JPanel
         {
             String ext = FileUtilities.getFileExtension(file);
             if (ext != null && ext.equalsIgnoreCase("xml"))
-                return openFromXML(file);
+                return Ontology.openFromXML(file);
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Ontology model = (Ontology) ois.readObject();
@@ -1644,48 +1639,14 @@ public class OntologyGui extends JPanel
             OntologyGui ontology = new OntologyGui(model);
             ontology.ontologyCore.setFile(file);
             ontology.ontologyCore.setDirty(false);
-            return ontology;
+            return ontology.ontologyCore;
         }
         catch (ClassNotFoundException e)
         {
             throw new IOException(e.getMessage());
         }
     }
-
-    /**
-     * Open an ontology from an XML file
-     * 
-     * @param file the {@link File} to read from
-     * @return an {@link OntologyGui}
-     * @throws IOException
-     */
-    public static OntologyGui openFromXML(File file) throws IOException
-    {
-        if (!file.exists())
-            throw new IOException(StringUtilities.getReplacedString(
-                ApplicationUtilities.getResourceString("error.ontology.file"), new String[]
-                {
-                    file.getAbsolutePath()
-                }));
-        try
-        {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            SAXBuilder builder = new SAXBuilder(true);
-            builder.setEntityResolver(new NetworkEntityResolver());
-            org.jdom.Document ontologyDocument = builder.build(reader);
-
-            Ontology model = Ontology.getModelFromXML(ontologyDocument.getRootElement());
-            OntologyGui ontology = new OntologyGui(model);
-            ontology.ontologyCore.setFile(file);
-            ontology.ontologyCore.setDirty(false);
-            return ontology;
-        }
-        catch (JDOMException e)
-        {
-            throw new IOException(e.getMessage());
-        }
-    }
-
+    
     public HyperTree getHyperTree(boolean showClasses, boolean showRelations, boolean showProperties)
     {
         return new HyperTree(getHyperTreeNode(showClasses, showRelations, showProperties));
