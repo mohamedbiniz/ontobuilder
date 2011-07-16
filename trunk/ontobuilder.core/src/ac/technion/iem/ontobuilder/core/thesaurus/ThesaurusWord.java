@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Vector;
 
+
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelListener;
 
@@ -12,7 +13,7 @@ import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelListener;
  * <p>
  * Title: ThesaurusWord
  * </p>
- * Implements {@link ObjectWithProperties} and {@link Comparator}
+ * Implements {@link Comparator}
  */
 public class ThesaurusWord implements Comparator<Object>
 {
@@ -73,8 +74,8 @@ public class ThesaurusWord implements Comparator<Object>
     /**
      * Compares two ThesaurusWords
      * 
-     * @param o1 the first {@link ThesaurusWord}
-     * @param o2 the first {@link ThesaurusWord}
+     * @param o1 the first {@link ThesaurusWordGui}
+     * @param o2 the first {@link ThesaurusWordGui}
      */
     @Override
     public int compare(Object o1, Object o2)
@@ -83,7 +84,7 @@ public class ThesaurusWord implements Comparator<Object>
     }
 
     /**
-     * Checks if two {@link ThesaurusWord} are equal
+     * Checks if two {@link ThesaurusWordGui} are equal
      * 
      * @return true if they are equal
      */
