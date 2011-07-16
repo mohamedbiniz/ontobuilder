@@ -18,10 +18,10 @@ public class OntologyTreeModel extends DefaultTreeModel
 
     protected Ontology model;
 
-    public OntologyTreeModel(Ontology model)
+    public OntologyTreeModel(OntologyGui model)
     {
         super(model.getTreeBranch());
-        this.model = model;
+        this.model = OntologyGui.ontology.ontologyCore;
         updateTree();
     }
 

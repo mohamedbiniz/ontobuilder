@@ -83,18 +83,18 @@ public class ExactTabelModel extends AbstractTableModel
      */
     public void setTableData(Ontology cand, Ontology target, int checkType)
     {
-        candTermsCnt = cand.getOntology().getTerms().size();
-        targetTermsCnt = target.getOntology().getTerms().size();
+        candTermsCnt = cand.getTerms().size();
+        targetTermsCnt = target.getTerms().size();
         ExactTableRowModel[] tempData = new ExactTableRowModel[candTermsCnt * targetTermsCnt];
         Term candTerm, targetTerm;
         int counter = 0;
         for (int i = 0; i < candTermsCnt; i++)
         {
-            candTerm = (Term) cand.getOntology().getTerms().get(i);
+            candTerm = (Term) cand.getTerms().get(i);
             if (shouldInclude(candTerm, checkType))
                 for (int j = 0; j < targetTermsCnt; j++)
                 {
-                    targetTerm = (Term) target.getOntology().getTerms().get(j);
+                    targetTerm = (Term) target.getTerms().get(j);
                     if (shouldInclude(targetTerm, checkType))
                     {
                         tempData[counter] = new ExactTableRowModel(candTerm, targetTerm,
