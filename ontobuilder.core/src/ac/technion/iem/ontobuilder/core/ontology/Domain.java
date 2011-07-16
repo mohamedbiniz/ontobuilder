@@ -6,17 +6,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.JTable;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.jdom.Element;
 
+import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
+import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-
-import com.modica.application.PropertiesTableModel;
-import com.modica.hypertree.NodeHyperTree;
-import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.operator.StringOperator;
 
 /**
  * <p>Title: Domain</p>
@@ -216,6 +210,14 @@ public class Domain extends OntologyObject
     {
         return entries.size();
     }
+    
+    /**
+     * Get the entries
+     */
+    public ArrayList<DomainEntry> getEntries()
+    {
+        return entries;
+    }
 
     /**
      * Get the entry at a specific index
@@ -278,42 +280,6 @@ public class Domain extends OntologyObject
             if (!entries.get(i).equals(d.entries.get(i)))
                 return false;
         return true;
-    }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            PropertiesHandler.getResourceString("properties.attribute"),
-            PropertiesHandler.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                PropertiesHandler.getResourceString("ontology.domain.name"), name
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.domain.type"), getType()
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 2, data));
-        return properties;
-    }
-
-    public DefaultMutableTreeNode getTreeBranch()
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
-        for (Iterator<DomainEntry> i = entries.iterator(); i.hasNext();)
-            root.add(((OntologyObject) i.next()).getTreeBranch());
-        return root;
-    }
-
-    public NodeHyperTree getHyperTreeNode()
-    {
-        NodeHyperTree root = new NodeHyperTree(this, NodeHyperTree.PROPERTY);
-        for (Iterator<DomainEntry> i = entries.iterator(); i.hasNext();)
-            root.add(((OntologyObject) i.next()).getHyperTreeNode());
-        return root;
     }
 
     /**

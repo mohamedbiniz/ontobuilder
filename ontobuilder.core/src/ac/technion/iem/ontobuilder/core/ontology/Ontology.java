@@ -1,43 +1,30 @@
 package ac.technion.iem.ontobuilder.core.ontology;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JTable;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.jdom.DocType;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.jdom.output.XMLOutputter;
 
+import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
+import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-
-import com.jgraph.JGraph;
-import com.jgraph.graph.ConnectionSet;
-import com.jgraph.graph.DefaultGraphCell;
-import com.jgraph.graph.DefaultGraphModel;
-import com.jgraph.graph.DefaultPort;
-import com.jgraph.graph.GraphConstants;
-import com.modica.application.PropertiesCellEditor;
-import com.modica.application.PropertiesTableModel;
-import com.modica.graph.GraphUtilities;
-import com.modica.graph.OrderedDefaultPort;
-import com.modica.hypertree.NodeHyperTree;
-import com.modica.ontology.event.OntologyModelEvent;
-import com.modica.ontology.event.OntologyModelListener;
-import com.modica.util.NetworkUtilities;
-import com.modica.util.StringUtilities;
 
 /**
  * <p>Title: Ontology</p>
@@ -46,6 +33,12 @@ import com.modica.util.StringUtilities;
 public class Ontology extends OntologyObject
 {
     private static final long serialVersionUID = -6672012851686868915L;
+    
+    // File formats
+    final public static short XML_FORMAT = 0;
+    final public static short BINARY_FORMAT = 1;
+    final public static short BIZTALK_FORMAT = 2;
+    final public static short LIGHT_XML_FORMAT = 3;
 
     protected String title;
     protected URL siteURL;
@@ -54,6 +47,9 @@ public class Ontology extends OntologyObject
     protected ArrayList<OntologyClass> classes;
 
     protected boolean isLight = false;
+    protected boolean dirty;
+    
+    protected File file;
 
     transient protected ArrayList<OntologyModelListener> listeners;
 
@@ -94,7 +90,7 @@ public class Ontology extends OntologyObject
         listeners.remove(l);
     }
 
-    protected void fireModelChangedEvent(OntologyObject object)
+    public void fireModelChangedEvent(OntologyObject object)
     {
         OntologyModelEvent event = new OntologyModelEvent(this, object);
         for (Iterator<OntologyModelListener> i = listeners.iterator(); i.hasNext();)
@@ -459,6 +455,16 @@ public class Ontology extends OntologyObject
     {
         return classes.size();
     }
+    
+    public ArrayList<OntologyModelListener> getListeners()
+    {
+        return listeners;
+    }
+    
+    public void setListeners(ArrayList<OntologyModelListener> listeners)
+    {
+        this.listeners = listeners;
+    }
 
     public OntologyClass getClass(int index)
     {
@@ -484,216 +490,6 @@ public class Ontology extends OntologyObject
                 return false;
         return true;
     }
-
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            PropertiesHandler.getResourceString("properties.attribute"),
-            PropertiesHandler.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                PropertiesHandler.getResourceString("ontology.name"), name
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.title"), title
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.site"),
-                siteURL != null ? siteURL.toExternalForm() : null
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.terms"), new Integer(terms.size())
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data)
-        {
-            private static final long serialVersionUID = 1L;
-
-            public boolean isCellEditable(int row, int col)
-            {
-                return col == 1 && (row == 0 || row == 1 || row == 2);
-            }
-        });
-        TableColumn valueColumn = properties.getColumn(columnNames[1]);
-        valueColumn.setCellEditor(new PropertiesCellEditor());
-        properties.getModel().addTableModelListener(new TableModelListener()
-        {
-            public void tableChanged(TableModelEvent e)
-            {
-                int row = e.getFirstRow();
-                int column = e.getColumn();
-                Object data = ((TableModel) e.getSource()).getValueAt(row, column);
-                String label = (String) data;
-                switch (row)
-                // name
-                {
-                case 0:
-                    if (!name.equals(label))
-                        setName(label);
-                    break;
-                case 1:
-                    if (!title.equals(label))
-                        setTitle(label);
-                    break;
-                case 2:
-                    if (!siteURL.toExternalForm().equals(label))
-                        setSiteURL(label);
-                }
-            }
-        });
-        return properties;
-    }
-
-    public DefaultMutableTreeNode getTreeBranch()
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
-
-        if (!isLight)
-        {
-            DefaultMutableTreeNode classesNode = new DefaultMutableTreeNode(
-                PropertiesHandler.getResourceString("ontology.classes"));
-            root.add(classesNode);
-            for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
-                classesNode.add(((OntologyClass) i.next()).getTreeBranch());
-        }
-
-        DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.terms"));
-        root.add(termsNode);
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            termsNode.add(((Term) i.next()).getTreeBranch());
-
-        return root;
-    }
-
-    public NodeHyperTree getHyperTreeNode(boolean showClasses, boolean showRelations,
-        boolean showProperties)
-    {
-        NodeHyperTree root = new NodeHyperTree(this, NodeHyperTree.CLASS);
-
-        if (showClasses && !isLight)
-        {
-            NodeHyperTree classesNode = new NodeHyperTree(
-                PropertiesHandler.getResourceString("ontology.classes"), NodeHyperTree.CLASS);
-            root.add(classesNode);
-            for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
-                classesNode.add(((OntologyClass) i.next()).getHyperTreeNode(showProperties));
-        }
-
-        NodeHyperTree termsNode = new NodeHyperTree(
-            PropertiesHandler.getResourceString("ontology.terms"), NodeHyperTree.TERM);
-        root.add(termsNode);
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            termsNode.add(((Term) i.next()).getHyperTreeNode(showRelations, showClasses,
-                showProperties));
-
-        return root;
-    }
-
-    public JGraph getGraph()
-    {
-        JGraph graph = new JGraph(new DefaultGraphModel());
-        graph.setEditable(false);
-        ArrayList<DefaultGraphCell> cells = new ArrayList<DefaultGraphCell>();
-        // ConnectionSet for the Insert method
-        ConnectionSet cs = new ConnectionSet();
-        // Hashtable for Attributes (Vertex to Map)
-        Hashtable<DefaultGraphCell, Map<?, ?>> attributes = new Hashtable<DefaultGraphCell, Map<?, ?>>();
-
-        DefaultGraphCell vertex = new DefaultGraphCell(name);
-        cells.add(vertex);
-        Map<?, ?> map = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
-        attributes.put(vertex, map);
-
-        if (!terms.isEmpty())
-        {
-            DefaultPort toChildPort = new OrderedDefaultPort("toChild");
-            vertex.add(toChildPort);
-            for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            {
-                Term term = (Term) i.next();
-                term.buildGraphHierarchy(toChildPort, cells, attributes, cs);
-            }
-            if (GraphUtilities.getShowPrecedenceLinks())
-            {
-                for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-                {
-                    Term term = (Term) i.next();
-                    term.buildPrecedenceRelationships(cells, attributes, cs);
-                }
-            }
-        }
-
-        // Insert the cells (View stores attributes)
-        graph.getModel().insert(cells.toArray(), cs, null, attributes);
-        GraphUtilities.alignHierarchy(graph, SwingConstants.LEFT, 10, 10);
-        return graph;
-    }
-
-    public DefaultGraphCell addToGraph(ArrayList<DefaultGraphCell> cells,
-        Hashtable<DefaultGraphCell, Map<?, ?>> attributes, ConnectionSet cs)
-    {
-        DefaultGraphCell vertex = new DefaultGraphCell(name);
-        cells.add(vertex);
-        Map<?, ?> map = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
-        attributes.put(vertex, map);
-
-        if (!terms.isEmpty())
-        {
-            DefaultPort toChildPort = new DefaultPort("toChild");
-            vertex.add(toChildPort);
-            for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            {
-                Term term = (Term) i.next();
-                term.buildGraphHierarchy(toChildPort, cells, attributes, cs);
-            }
-            if (GraphUtilities.getShowPrecedenceLinks())
-            {
-                for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-                {
-                    Term term = (Term) i.next();
-                    term.buildPrecedenceRelationships(cells, attributes, cs);
-                }
-            }
-        }
-
-        return vertex;
-    }
-
-    // public DefaultGraphCell addToGraph(ArrayList cells,Hashtable attributes,ConnectionSet cs)
-    // {
-    // DefaultGraphCell vertex=new DefaultGraphCell(name);
-    // cells.add(vertex);
-    // Map map=GraphUtilities.createDefaultAttributes();
-    // GraphConstants.setIcon(map, PropertiesHandler.getImage("ontology.gif"));
-    // attributes.put(vertex,map);
-    //
-    // if(!terms.isEmpty())
-    // {
-    // DefaultPort toChildPort=new DefaultPort("toChild");
-    // vertex.add(toChildPort);
-    // for(Iterator i=terms.iterator();i.hasNext();)
-    // {
-    // Term term=(Term)i.next();
-    // term.buildGraphHierarchy(toChildPort,cells,attributes,cs);
-    // }
-    // if(GraphUtilities.getShowPrecedenceLinks())
-    // {
-    // for(Iterator i=terms.iterator();i.hasNext();)
-    // {
-    // Term term=(Term)i.next();
-    // term.buildPrecedenceRelationships(cells,attributes,cs);
-    // }
-    // }
-    // }
-    //
-    // return vertex;
-    // }
 
     /**
      * Get the XML {@link Element} representation of the Ontology Model
@@ -889,22 +685,7 @@ public class Ontology extends OntologyObject
         }
     }
 
-    public JTree getClassesHierarchy()
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.classes"));
-        for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
-        {
-            OntologyClass c = (OntologyClass) i.next();
-            DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(c);
-            getClassesHierarchyRec(c, classNode);
-        }
-        JTree tree = new JTree(root);
-        tree.setCellRenderer(new OntologyTreeRenderer());
-        return tree;
-    }
-
-    protected void getClassesHierarchyRec(OntologyClass c, DefaultMutableTreeNode root)
+    public void getClassesHierarchyRec(OntologyClass c, DefaultMutableTreeNode root)
     {
         for (int i = 0; i < c.getSubClassesCount(); i++)
         {
@@ -1008,33 +789,6 @@ public class Ontology extends OntologyObject
         }
     }
 
-    public JTree getTermsHierarchy()
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.terms"));
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-        {
-            Term t = (Term) i.next();
-            DefaultMutableTreeNode termNode = new DefaultMutableTreeNode(t);
-            root.add(termNode);
-            getTermsHierarchyRec(t, termNode);
-        }
-        JTree tree = new JTree(root);
-        tree.setCellRenderer(new OntologyTreeRenderer());
-        return tree;
-    }
-
-    protected void getTermsHierarchyRec(Term t, DefaultMutableTreeNode root)
-    {
-        for (int i = 0; i < t.getTermsCount(); i++)
-        {
-            Term st = t.getTerm(i);
-            DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(st);
-            root.add(subNode);
-            getTermsHierarchyRec(st, subNode);
-        }
-    }
-
     public Vector<Relationship> getRelationships()
     {
         Vector<Relationship> rs = new Vector<Relationship>();
@@ -1078,5 +832,134 @@ public class Ontology extends OntologyObject
 
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
             ((Term) i.next()).normalize();
+    }
+    
+    /**
+     * Save the ontology to a BizTalk {@link File}
+     */
+    public void saveToBizTalk(File file) throws IOException
+    {
+        org.jdom.Element schemaElement = getBizTalkRepresentation();
+        org.jdom.Document ontologyDocument = new org.jdom.Document(schemaElement);
+
+        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+        XMLOutputter fmt = new XMLOutputter("    ", true);
+        fmt.output(ontologyDocument, out);
+        out.close();
+    }
+    
+    /**
+     * Save the ontology to a binary {@link File}
+     */
+    public void saveToBinary(File file) throws IOException
+    {
+        FileOutputStream out = new FileOutputStream(file);
+        ObjectOutputStream os = new ObjectOutputStream(out);
+        os.writeObject(this);
+        os.flush();
+        os.close();
+    }
+    
+
+    /**
+     * Save the ontology to an XML {@link File}
+     */
+    public void saveToXML(File file) throws IOException
+    {
+        org.jdom.Element ontologyElement = getXMLRepresentation();
+        DocType ontologyDocType = new DocType("ontology", "dtds/ontology.dtd");
+        org.jdom.Document ontologyDocument = new org.jdom.Document(ontologyElement, ontologyDocType);
+
+        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+        XMLOutputter fmt = new XMLOutputter("    ", true);
+        fmt.output(ontologyDocument, out);
+        out.close();
+    }
+    
+    /**
+     * Save the ontology to a {@link File}
+     */
+    public void save(File file) throws IOException
+    {
+        save(file, XML_FORMAT);
+    }
+
+    /**
+     * Save the ontology to a {@link File}.
+     * <br>Available formats:
+     * <br><code>BIZTALK_FORMAT</code>, <code>XML_FORMAT</code>, <code>BINARY_FORMAT</code>, <code>LIGHT_XML_FORMAT</code> 
+     */
+    public void save(File file, short format) throws IOException
+    {
+        switch (format)
+        {
+        case BIZTALK_FORMAT:
+            saveToBizTalk(file);
+            break;
+        case XML_FORMAT:
+            saveToXML(file);
+            break;
+        case BINARY_FORMAT:
+            saveToBinary(file);
+            break;
+        case LIGHT_XML_FORMAT:
+            saveToLightXML(file);
+            break;
+        default:
+            throw new IOException(StringUtilities.getReplacedString(
+                PropertiesHandler.getResourceString("error.ontology.fileFormat"), new String[]
+                {
+                    getName()
+                }));
+        }
+
+        dirty = false;
+        this.file = file;
+        fireModelChangedEvent(this);
+    }
+    
+    /**
+     * Set the file
+     * 
+     * @param file the {@link File}
+     */
+    public void setFile(File file)
+    {
+        this.file = file;
+    }
+
+    /**
+     * Get the file
+     * 
+     * @return the {@link File}
+     */
+    public File getFile()
+    {
+        return file;
+    }
+    
+    /**
+     * Save the ontology to a light XML {@link File}
+     */
+    public void saveToLightXML(File file) throws IOException
+    {
+        org.jdom.Element ontologyElement = getLightXMLRepresentation();
+        DocType ontologyDocType = new DocType("ontology", "dtds/ontology.dtd");
+        org.jdom.Document ontologyDocument = new org.jdom.Document(ontologyElement, ontologyDocType);
+
+        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+        XMLOutputter fmt = new XMLOutputter("    ", true);
+        fmt.output(ontologyDocument, out);
+        out.close();
+    }
+    
+    public void setDirty(boolean dirty)
+    {
+        this.dirty = dirty;
+    }
+
+    public boolean getDirty()
+    {
+        return dirty;
     }
 }
