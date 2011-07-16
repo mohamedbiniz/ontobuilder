@@ -77,7 +77,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
     {
         // TODO change to a dynamic filter that you can choose in runtime the filters
 
-        if (!targetOntology.getModel().isLight())
+        if (!targetOntology.isLight())
         {
             originalTargetTerms = OntologyUtilities.getTermsOfClass(targetOntology, "input");
             originalTargetTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
@@ -85,10 +85,10 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getModel().getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
         }
 
-        if (!candidateOntology.getModel().isLight())
+        if (!candidateOntology.isLight())
         {
             originalCandidateTerms = OntologyUtilities.getTermsOfClass(candidateOntology, "input");
             originalCandidateTerms = OntologyUtilities.filterTermListRemovingTermsOfClass(
@@ -96,7 +96,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getModel().getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
         }
 
     }
@@ -374,7 +374,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
     /**
      * Checks whether a Thesaurus is in use
      * 
-     * @return <code>true</code> is is to use {@link Thesaurus}
+     * @return <code>true</code> is is to use {@link Thesaurus_}
      */
     public boolean usesThesaurus()
     {
