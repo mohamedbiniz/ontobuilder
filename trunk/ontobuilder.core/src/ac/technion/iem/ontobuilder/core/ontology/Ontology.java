@@ -1,8 +1,10 @@
 package ac.technion.iem.ontobuilder.core.ontology;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,12 +19,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdom.DocType;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.Namespace;
+import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 
@@ -951,6 +956,39 @@ public class Ontology extends OntologyObject
         XMLOutputter fmt = new XMLOutputter("    ", true);
         fmt.output(ontologyDocument, out);
         out.close();
+    }
+    
+    /**
+     * Open an ontology from an XML file
+     * 
+     * @param file the {@link File} to read from
+     * @return an {@link OntologyGui}
+     * @throws IOException
+     */
+    public static Ontology openFromXML(File file) throws IOException
+    {
+        if (!file.exists())
+            throw new IOException(StringUtilities.getReplacedString(
+                PropertiesHandler.getResourceString("error.ontology.file"), new String[]
+                {
+                    file.getAbsolutePath()
+                }));
+        try
+        {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            SAXBuilder builder = new SAXBuilder(true);
+            builder.setEntityResolver(new NetworkEntityResolver());
+            org.jdom.Document ontologyDocument = builder.build(reader);
+
+            Ontology ontology = getModelFromXML(ontologyDocument.getRootElement());
+            ontology.setFile(file);
+            ontology.setDirty(false);
+            return ontology;
+        }
+        catch (JDOMException e)
+        {
+            throw new IOException(e.getMessage());
+        }
     }
     
     public void setDirty(boolean dirty)
