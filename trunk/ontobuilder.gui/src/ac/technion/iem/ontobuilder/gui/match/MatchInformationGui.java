@@ -318,9 +318,9 @@ public class MatchInformationGui
         // Hashtable for Attributes (Vertex to Map)
         Hashtable<DefaultGraphCell, Map<?, ?>> attributes = new Hashtable<DefaultGraphCell, Map<?, ?>>();
 
-        DefaultGraphCell targetCell = _matchInformation.getTargetOntology().getModel()
+        DefaultGraphCell targetCell = _matchInformation.getTargetOntology().getOntology()
             .addToGraph(cells, attributes, cs);
-        DefaultGraphCell candidateCell = _matchInformation.getCandidateOntology().getModel()
+        DefaultGraphCell candidateCell = _matchInformation.getCandidateOntology().getOntology()
             .addToGraph(cells, attributes, cs);
 
         NumberFormat nf = NumberFormat.getInstance();

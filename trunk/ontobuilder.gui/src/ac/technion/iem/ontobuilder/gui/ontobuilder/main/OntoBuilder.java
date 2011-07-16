@@ -66,7 +66,7 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelAdapter;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
-import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
+import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus_;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelAdapter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
@@ -138,7 +138,7 @@ public final class OntoBuilder extends Application
     private static Splash splash;
 
     protected Browser browser;
-    protected Thesaurus thesaurus;
+    protected Thesaurus_ thesaurus;
     public Vector<AbstractAlgorithm> algorithms;
 
     protected UpperPanel upperPanel;
@@ -653,9 +653,9 @@ public final class OntoBuilder extends Application
             File thesaurusFile = new File(ApplicationUtilities.getCurrentDirectory() +
                 ApplicationUtilities.getStringProperty("thesaurus.file"));
             if (thesaurusFile.exists())
-                thesaurus = new Thesaurus(thesaurusFile);
+                thesaurus = new Thesaurus_(thesaurusFile);
             else
-                thesaurus = new Thesaurus("/" +
+                thesaurus = new Thesaurus_("/" +
                     ApplicationUtilities.getStringProperty("thesaurus.file"));
         }
         catch (ThesaurusException e)

@@ -68,7 +68,7 @@ public class OntologyPanel extends JTabbedPane
     /**
      * Close the current ontology
      *
-     * @param ontology the {@link Ontology} to close
+     * @param ontologyGui the {@link Ontology} to close
      */
     public void closeCurrentOntology()
     {

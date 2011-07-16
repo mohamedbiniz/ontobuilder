@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 
 /**
  * <p>Title: OntologyHyperTree</p>
@@ -34,7 +35,7 @@ public class OntologyHyperTree extends JDialog implements ActionListener
     private static final long serialVersionUID = 1L;
 
     protected HyperTree tree;
-    protected Ontology ontology;
+    protected OntologyGui ontologyGui;
     protected JScrollPane hypPane;
     protected JCheckBox showClasses;
     protected JCheckBox showRelations;
@@ -48,10 +49,10 @@ public class OntologyHyperTree extends JDialog implements ActionListener
      * @param ontology the {@link Ontology}
      * @param parent the parent {@link JFrame}
      */
-    public OntologyHyperTree(Ontology ontology, JFrame parent)
+    public OntologyHyperTree(OntologyGui ontology, JFrame parent)
     {
         super(parent, false);
-        this.ontology = ontology;
+        this.ontologyGui = ontology;
         this.tree = ontology.getHyperTree(false, false, false);
 
         setSize(new Dimension(ApplicationUtilities.getIntProperty("ontology.hypertree.width"),
@@ -67,7 +68,7 @@ public class OntologyHyperTree extends JDialog implements ActionListener
         mainPanel.add(BorderLayout.SOUTH, buttonsPanel);
 
         buttonsPanel.add(showClasses = new JCheckBox("Show Classes", false));
-        showClasses.setEnabled(!ontology.getModel().isLight());
+        showClasses.setEnabled(!ontology.getOntology().isLight());
 
         buttonsPanel.add(showRelations = new JCheckBox("Show Relationships", false));
         buttonsPanel.add(showProperties = new JCheckBox("Show Properties", false));
@@ -123,7 +124,7 @@ public class OntologyHyperTree extends JDialog implements ActionListener
             e.getActionCommand().equals("show relations") ||
             e.getActionCommand().equals("show properties"))
         {
-            tree = ontology.getHyperTree(showClasses.isSelected(), showRelations.isSelected(),
+            tree = ontologyGui.getHyperTree(showClasses.isSelected(), showRelations.isSelected(),
                 showProperties.isSelected());
             hypPane = (JScrollPane) mainPanel.getComponent(1);
             hypPane.setViewportView(tree.getView());
