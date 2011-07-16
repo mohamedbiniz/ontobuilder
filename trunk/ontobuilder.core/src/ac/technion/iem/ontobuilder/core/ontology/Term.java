@@ -1,19 +1,5 @@
 package ac.technion.iem.ontobuilder.core.ontology;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,38 +8,17 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Vector;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdom.Element;
 import org.jdom.Namespace;
 
-import com.jgraph.graph.ConnectionSet;
-import com.jgraph.graph.DefaultEdge;
-import com.jgraph.graph.DefaultGraphCell;
-import com.jgraph.graph.DefaultPort;
-import com.jgraph.graph.GraphConstants;
-import com.modica.application.PropertiesTableModel;
-import com.modica.biztalk.BizTalkUtilities;
-import com.modica.graph.GraphUtilities;
-import com.modica.graph.OrderedDefaultPort;
-import com.modica.gui.MultilineLabel;
-import com.modica.hypertree.NodeHyperTree;
-import com.modica.ontology.domain.GuessedDomain;
-import com.modica.ontology.operator.StringOperator;
-import com.modica.util.Email;
-import com.modica.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.biztalk.BizTalkUtilities;
+import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
+import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
+import ac.technion.iem.ontobuilder.core.util.Email;
+import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 
 /**
  * <p>Title: Term</p>
@@ -333,6 +298,14 @@ public class Term extends OntologyClass
     {
         return terms.size();
     }
+    
+    /**
+     * Get the terms
+     */
+    public ArrayList<Term> getTerms()
+    {
+        return terms;
+    }
 
     /**
      * Get the term by a specific index
@@ -424,6 +397,14 @@ public class Term extends OntologyClass
     public int getRelationshipsCount()
     {
         return relationships.size();
+    }
+    
+    /**
+     * Get the relationships
+     */
+    public ArrayList<Relationship> getRelationships()
+    {
+        return relationships;
     }
 
     /**
@@ -845,111 +826,6 @@ public class Term extends OntologyClass
         return term;
     }
 
-    public JTable getProperties()
-    {
-        String columnNames[] =
-        {
-            PropertiesHandler.getResourceString("properties.attribute"),
-            PropertiesHandler.getResourceString("properties.value")
-        };
-        Object data[][] =
-        {
-            {
-                PropertiesHandler.getResourceString("ontology.term.name"), name
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.term.value"), value
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.domain"), domain.getName()
-            },
-            {
-                PropertiesHandler.getResourceString("ontology.class"),
-                superClass != null ? superClass.getName() : null
-            },
-            {
-                PropertiesHandler.getResourceString("ontology"),
-                ontology != null ? ontology.getName() : null
-            }
-        };
-        JTable properties = new JTable(new PropertiesTableModel(columnNames, 5, data));
-        return properties;
-    }
-
-    public DefaultMutableTreeNode getTreeBranch()
-    {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
-
-        root.add(domain.getTreeBranch());
-
-        DefaultMutableTreeNode attributesNode = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.attributes"));
-        root.add(attributesNode);
-        for (Iterator<?> i = attributes.iterator(); i.hasNext();)
-            attributesNode.add(((Attribute) i.next()).getTreeBranch());
-
-        DefaultMutableTreeNode axiomsNode = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.axioms"));
-        root.add(axiomsNode);
-        for (Iterator<?> i = axioms.iterator(); i.hasNext();)
-            axiomsNode.add(((Axiom) i.next()).getTreeBranch());
-
-        DefaultMutableTreeNode relationshipsNode = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.relationships"));
-        root.add(relationshipsNode);
-        for (Iterator<Relationship> i = relationships.iterator(); i.hasNext();)
-            relationshipsNode.add(((Relationship) i.next()).getTreeBranch());
-
-        DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
-            PropertiesHandler.getResourceString("ontology.subterms"));
-        root.add(termsNode);
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            termsNode.add(((Term) i.next()).getTreeBranch());
-
-        return root;
-    }
-
-    public NodeHyperTree getHyperTreeNode(boolean showRelations, boolean showClasses,
-        boolean showProperties)
-    {
-        NodeHyperTree root = new NodeHyperTree(this, NodeHyperTree.TERM);
-
-        if (showProperties)
-        {
-            root.add(domain.getHyperTreeNode());
-            NodeHyperTree attributesNode = new NodeHyperTree(
-                PropertiesHandler.getResourceString("ontology.attributes"),
-                NodeHyperTree.PROPERTY);
-            root.add(attributesNode);
-            for (Iterator<?> i = attributes.iterator(); i.hasNext();)
-                attributesNode.add(((Attribute) i.next()).getHyperTreeNode());
-
-            NodeHyperTree axiomsNode = new NodeHyperTree(
-                PropertiesHandler.getResourceString("ontology.axioms"), NodeHyperTree.PROPERTY);
-            root.add(axiomsNode);
-            for (Iterator<?> i = axioms.iterator(); i.hasNext();)
-                axiomsNode.add(((Axiom) i.next()).getHyperTreeNode());
-        }
-
-        if (showRelations)
-        {
-            NodeHyperTree relationshipsNode = new NodeHyperTree(
-                PropertiesHandler.getResourceString("ontology.relationships"),
-                NodeHyperTree.RELATIONSHIP);
-            root.add(relationshipsNode);
-            for (Iterator<Relationship> i = relationships.iterator(); i.hasNext();)
-                relationshipsNode.add(((Relationship) i.next()).getHyperTreeNode());
-        }
-
-        // NodeHyperTree termsNode=new
-        // NodeHyperTree(PropertiesHandler.getResourceString("ontology.subterms"));
-        // root.add(termsNode);
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            root.add(((Term) i.next()).getHyperTreeNode(showRelations, showClasses, showProperties));
-
-        return root;
-    }
-
     /**
      * Get the XML {@link Element} representation of the term
      * 
@@ -1173,419 +1049,6 @@ public class Term extends OntologyClass
                     break;
                 }
             }
-        }
-    }
-
-    protected static Term t;
-
-    public static Term createTermDialog(Ontology model)
-    {
-        final com.modica.gui.TextField txtTermName = new com.modica.gui.TextField(15);
-        final com.modica.gui.TextField txtTermValue = new com.modica.gui.TextField(15);
-        final com.modica.gui.ComboBox cmbTermDomain = new com.modica.gui.ComboBox(
-            Domain.getPredefinedDomains());
-        cmbTermDomain.setEditable(true);
-        cmbTermDomain.setSelectedIndex(-1);
-        cmbTermDomain.setRenderer(new javax.swing.plaf.basic.BasicComboBoxRenderer()
-        {
-            private static final long serialVersionUID = 1L;
-
-            public Component getListCellRendererComponent(JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus)
-            {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                setIcon(PropertiesHandler.getImage("domain.gif"));
-                return this;
-            }
-        });
-
-        Vector<Object> classes = model.getClasses();
-        classes.add(0, "               ");
-        final com.modica.gui.ComboBox cmbTermClass = new com.modica.gui.ComboBox(classes);
-        cmbTermClass.setSelectedIndex(0);
-        cmbTermClass.setRenderer(new javax.swing.plaf.basic.BasicComboBoxRenderer()
-        {
-            private static final long serialVersionUID = 1L;
-
-            public Component getListCellRendererComponent(JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus)
-            {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof OntologyClass)
-                    setIcon(PropertiesHandler.getImage("class.gif"));
-                return this;
-            }
-        });
-
-        final JDialog dialog = new JDialog((JFrame) null,
-            PropertiesHandler.getResourceString("ontology.term.dialog.windowTitle"), true);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        dialog.setSize(new Dimension(PropertiesHandler
-            .getIntProperty("ontology.term.dialog.width"), PropertiesHandler
-            .getIntProperty("ontology.term.dialog.height")));
-        dialog.setLocationRelativeTo(null);
-        dialog.setResizable(false);
-
-        JPanel south = new JPanel();
-        south.setLayout(new FlowLayout());
-        final JButton okButton;
-        south.add(okButton = new JButton(PropertiesHandler
-            .getResourceString("ontology.term.dialog.button.ok")));
-        dialog.getRootPane().setDefaultButton(okButton);
-        okButton.setEnabled(txtTermName.getText().trim().length() > 0);
-        okButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                if (cmbTermClass.getSelectedIndex() > 0)
-                    t = new Term((OntologyClass) cmbTermClass.getSelectedItem());
-                else
-                    t = new Term();
-                t.name = txtTermName.getText();
-                t.value = txtTermValue.getText();
-                String domain = cmbTermDomain.getText();
-                if (domain != null && domain.trim().length() > 0)
-                    t.domain.setName(domain);
-                dialog.dispose();
-            }
-        });
-        JButton cancelButton;
-        south.add(cancelButton = new JButton(PropertiesHandler
-            .getResourceString("ontology.term.dialog.button.cancel")));
-        cancelButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                t = null;
-                dialog.dispose();
-            }
-        });
-        panel.add(BorderLayout.SOUTH, south);
-
-        JPanel center = new JPanel(new GridBagLayout());
-        panel.add(BorderLayout.CENTER, center);
-        center.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-        {// Title
-            JLabel title = new JLabel(PropertiesHandler.getResourceString("ontology.term"),
-                PropertiesHandler.getImage("term.gif"), JLabel.LEFT);
-            title.setFont(new Font(dialog.getFont().getFontName(), Font.BOLD, dialog.getFont()
-                .getSize() + 6));
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.weightx = 1;
-            gbcl.gridwidth = 2;
-            gbcl.fill = GridBagConstraints.HORIZONTAL;
-            gbcl.insets = new Insets(0, 0, 10, 0);
-            gbcl.anchor = GridBagConstraints.NORTHWEST;
-            center.add(title, gbcl);
-        }
-
-        {// Explanation
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.gridy = 1;
-            gbcl.gridwidth = 2;
-            gbcl.weightx = 1;
-            gbcl.fill = GridBagConstraints.HORIZONTAL;
-            gbcl.insets = new Insets(0, 0, 20, 0);
-            gbcl.anchor = GridBagConstraints.WEST;
-            center.add(
-                new MultilineLabel(PropertiesHandler
-                    .getResourceString("ontology.term.dialog.explanation")), gbcl);
-        }
-
-        {// Name
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.gridy = 2;
-            gbcl.insets = new Insets(0, 0, 5, 5);
-            gbcl.anchor = GridBagConstraints.EAST;
-            JLabel name = new JLabel(PropertiesHandler.getResourceString("ontology.term.name") +
-                ":");
-            name.setFont(new Font(dialog.getFont().getName(), Font.BOLD, dialog.getFont().getSize()));
-            center.add(name, gbcl);
-
-            gbcl.gridx = 1;
-            gbcl.anchor = GridBagConstraints.WEST;
-            center.add(txtTermName, gbcl);
-            txtTermName.addKeyListener(new KeyAdapter()
-            {
-                public void keyTyped(KeyEvent event)
-                {
-                    SwingUtilities.invokeLater(new Runnable()
-                    {
-                        public void run()
-                        {
-                            if (!txtTermName.getText().trim().equals(""))
-                                okButton.setEnabled(true);
-                            else
-                                okButton.setEnabled(false);
-                        }
-                    });
-                }
-            });
-        }
-
-        {// Value
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.gridy = 3;
-            gbcl.insets = new Insets(0, 0, 5, 5);
-            gbcl.anchor = GridBagConstraints.EAST;
-            JLabel value = new JLabel(
-                PropertiesHandler.getResourceString("ontology.term.value") + ":");
-            center.add(value, gbcl);
-
-            gbcl.gridx = 1;
-            gbcl.anchor = GridBagConstraints.WEST;
-            center.add(txtTermValue, gbcl);
-        }
-
-        {// Domain
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.gridy = 4;
-            gbcl.insets = new Insets(0, 0, 5, 5);
-            gbcl.anchor = GridBagConstraints.EAST;
-            JLabel domain = new JLabel(PropertiesHandler.getResourceString("ontology.domain") +
-                ":");
-            center.add(domain, gbcl);
-
-            gbcl.gridx = 1;
-            gbcl.anchor = GridBagConstraints.WEST;
-            center.add(cmbTermDomain, gbcl);
-        }
-
-        {// Class
-            GridBagConstraints gbcl = new GridBagConstraints();
-            gbcl.gridy = 5;
-            gbcl.insets = new Insets(0, 0, 0, 5);
-            gbcl.anchor = GridBagConstraints.EAST;
-            JLabel clazz = new JLabel(PropertiesHandler.getResourceString("ontology.class") +
-                ":");
-            center.add(clazz, gbcl);
-
-            gbcl.gridx = 1;
-            gbcl.anchor = GridBagConstraints.WEST;
-            center.add(cmbTermClass, gbcl);
-        }
-
-        {// Separator
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridy = 6;
-            gbc.gridwidth = 2;
-            gbc.gridheight = GridBagConstraints.REMAINDER;
-            gbc.fill = GridBagConstraints.VERTICAL;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            center.add(new JPanel(), gbc);
-        }
-
-        dialog.addWindowListener(new WindowAdapter()
-        {
-            public void windowOpened(WindowEvent e)
-            {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
-                        txtTermName.requestFocus();
-                    }
-                });
-            }
-
-            public void windowClosing(WindowEvent e)
-            {
-                t = null;
-                dialog.dispose();
-            }
-        });
-        dialog.setContentPane(panel);
-
-        dialog.setVisible(true);// show();
-        return t;
-    }
-
-    // public DefaultGraphCell buildGraphHierarchy(DefaultPort parentPort,ArrayList cells,Hashtable
-    // attributes,ConnectionSet cs)
-    // {
-    // if(isInstanceOf("hidden") && !GraphUtilities.isShowHiddenElements()) return null;
-    // DefaultGraphCell termVertex=new DefaultGraphCell(this);
-    // cells.add(termVertex);
-    // Map termMap=GraphUtilities.createDefaultAttributes();
-    // GraphConstants.setIcon(termMap, PropertiesHandler.getImage("term.gif"));
-    // attributes.put(termVertex,termMap);
-    //
-    // if(parentPort!=null) // Connect parent with this child
-    // {
-    // DefaultPort toParentPort=new DefaultPort("toParent");
-    // termVertex.add(toParentPort);
-    // DefaultEdge edge=new DefaultEdge();
-    // cs.connect(edge,parentPort, true);
-    // cs.connect(edge,toParentPort,false);
-    // cells.add(edge);
-    // }
-    //
-    // if(!terms.isEmpty()) // It has children
-    // {
-    // DefaultPort toChildPort=new OrderedDefaultPort("toChild");
-    // termVertex.add(toChildPort);
-    // for(Iterator i=terms.iterator();i.hasNext();)
-    // {
-    // Term term=(Term)i.next();
-    // DefaultGraphCell nextVertex=term.buildGraphHierarchy(toChildPort,cells,attributes,cs);
-    // }
-    // }
-
-    public DefaultGraphCell buildGraphHierarchy(DefaultPort parentPort,
-        ArrayList<DefaultGraphCell> cells, Hashtable<DefaultGraphCell, Map<?, ?>> attributes,
-        ConnectionSet cs)
-    {
-        if (isInstanceOf("hidden") && !GraphUtilities.isShowHiddenElements())
-            return null;
-        DefaultGraphCell termVertex = new DefaultGraphCell(this);
-        cells.add(termVertex);
-        Map<?, ?> termMap = GraphUtilities.createDefaultAttributes();
-        GraphConstants.setIcon(termMap, PropertiesHandler.getImage("term.gif"));
-        attributes.put(termVertex, termMap);
-
-        if (parentPort != null) // Connect parent with this child
-        {
-            DefaultPort toParentPort = new DefaultPort("toParent");
-            termVertex.add(toParentPort);
-            DefaultEdge edge = new DefaultEdge();
-            cs.connect(edge, parentPort, true);
-            cs.connect(edge, toParentPort, false);
-            cells.add(edge);
-        }
-
-        if (!terms.isEmpty()) // It has children
-        {
-            DefaultPort toChildPort = new OrderedDefaultPort("toChild");
-            termVertex.add(toChildPort);
-            for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-            {
-                Term term = (Term) i.next();
-                /* DefaultGraphCell nextVertex= */term.buildGraphHierarchy(toChildPort, cells,
-                    attributes, cs);
-            }
-        }
-
-        return termVertex;
-    }
-
-    //
-    // return termVertex;
-    // }
-
-    // public void buildPrecedenceRelationships(ArrayList cells,Hashtable attributes,ConnectionSet
-    // cs)
-    // {
-    // DefaultGraphCell vertex=GraphUtilities.getCellWithObject(cells,this);
-    // if(vertex==null) return;
-    // if(precede!=null)
-    // {
-    // DefaultGraphCell prevVertex=null;
-    // Term auxPrecede=this;
-    // do
-    // {
-    // auxPrecede=auxPrecede.precede;
-    // prevVertex=GraphUtilities.getCellWithObject(cells,auxPrecede);
-    // } while(prevVertex==null && auxPrecede!=null);
-    // if(prevVertex!=null)
-    // {
-    // DefaultPort prevPort=new DefaultPort("precedes");
-    // prevVertex.add(prevPort);
-    // DefaultPort nextPort=new DefaultPort("isPreceded");
-    // vertex.add(nextPort);
-    // DefaultEdge edge=new DefaultEdge();
-    // cs.connect(edge,prevPort,true);
-    // cs.connect(edge,nextPort,false);
-    // cells.add(edge);
-    // }
-    // }
-    // if(succeed!=null)
-    // {
-    // DefaultGraphCell nextVertex=null;
-    // Term auxSucceed=this;
-    // do
-    // {
-    // auxSucceed=auxSucceed.succeed;
-    // nextVertex=GraphUtilities.getCellWithObject(cells,auxSucceed);
-    // } while (nextVertex==null && auxSucceed!=null);
-    // if(nextVertex!=null)
-    // {
-    // DefaultPort prevPort=new DefaultPort("isSucceeded");
-    // vertex.add(prevPort);
-    // DefaultPort nextPort=new DefaultPort("succeeds");
-    // vertex.add(nextPort);
-    // DefaultEdge edge=new DefaultEdge();
-    // cs.connect(edge,prevPort,false);
-    // cs.connect(edge,nextPort,true);
-    // cells.add(edge);
-    // }
-    // }
-    //
-    // for(Iterator i=terms.iterator();i.hasNext();)
-    // {
-    // Term term=(Term)i.next();
-    // term.buildPrecedenceRelationships(cells,attributes,cs);
-    // }
-    // }
-
-    public void buildPrecedenceRelationships(ArrayList<DefaultGraphCell> cells,
-        Hashtable<?, ?> attributes, ConnectionSet cs)
-    {
-        DefaultGraphCell vertex = GraphUtilities.getCellWithObject(cells, this);
-        if (vertex == null)
-            return;
-        if (precede != null)
-        {
-            DefaultGraphCell prevVertex = null;
-            Term auxPrecede = this;
-            do
-            {
-                auxPrecede = auxPrecede.precede;
-                prevVertex = GraphUtilities.getCellWithObject(cells, auxPrecede);
-            }
-            while (prevVertex == null && auxPrecede != null);
-            if (prevVertex != null)
-            {
-                DefaultPort prevPort = new DefaultPort("precedes");
-                prevVertex.add(prevPort);
-                DefaultPort nextPort = new DefaultPort("isPreceded");
-                vertex.add(nextPort);
-                DefaultEdge edge = new DefaultEdge();
-                cs.connect(edge, prevPort, true);
-                cs.connect(edge, nextPort, false);
-                cells.add(edge);
-            }
-        }
-        if (succeed != null)
-        {
-            DefaultGraphCell nextVertex = null;
-            Term auxSucceed = this;
-            do
-            {
-                auxSucceed = auxSucceed.succeed;
-                nextVertex = GraphUtilities.getCellWithObject(cells, auxSucceed);
-            }
-            while (nextVertex == null && auxSucceed != null);
-            if (nextVertex != null)
-            {
-                DefaultPort prevPort = new DefaultPort("isSucceeded");
-                vertex.add(prevPort);
-                DefaultPort nextPort = new DefaultPort("succeeds");
-                vertex.add(nextPort);
-                DefaultEdge edge = new DefaultEdge();
-                cs.connect(edge, prevPort, false);
-                cs.connect(edge, nextPort, true);
-                cells.add(edge);
-            }
-        }
-
-        for (Iterator<Term> i = terms.iterator(); i.hasNext();)
-        {
-            Term term = (Term) i.next();
-            term.buildPrecedenceRelationships(cells, attributes, cs);
         }
     }
 
