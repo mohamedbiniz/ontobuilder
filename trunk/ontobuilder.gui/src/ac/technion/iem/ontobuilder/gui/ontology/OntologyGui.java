@@ -22,8 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,8 +65,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Document;
 
 import ac.technion.iem.ontobuilder.core.ontology.Attribute;
 import ac.technion.iem.ontobuilder.core.ontology.Axiom;
@@ -76,6 +73,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Domain;
 import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyGenerateHelper;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
@@ -115,7 +113,6 @@ import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.OrderedDefaultPort;
 import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 
@@ -303,7 +300,7 @@ public class OntologyGui extends JPanel
         });
 
         // Initialize the view
-        ontologyTree = new JTree(new OntologyTreeModel(ontologyCore));
+        ontologyTree = new JTree(new OntologyTreeModel(this));
         ontologyTree.setCellRenderer(new OntologyTreeRenderer());
         ontologyTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         ToolTipManager.sharedInstance().registerComponent(ontologyTree);
@@ -1658,7 +1655,7 @@ public class OntologyGui extends JPanel
 //    }
 
     /**
-     * Match an ontology according to an algorithm
+     * Match two ontologies according to an algorithm
      * 
      * @param ontology the {@link OntologyGui}
      * @param algorithm the {@link Algorithm}
@@ -1684,137 +1681,26 @@ public class OntologyGui extends JPanel
      * @return an {@link OntologyGui}
      * @throws IOException
      */
-    public static OntologyGui generateOntology(URL url) throws IOException
+    public static Ontology generateOntology(URL url) throws IOException
     {
-        org.w3c.dom.Document document = DOMUtilities.getDOM(url,
-            new PrintWriter(new StringWriter()));
-
-        String ontologyTitle = "";
-        String ontologyName = url.getHost();
-
-        NodeList titles = document.getElementsByTagName("title");
-        for (int i = 0; i < titles.getLength(); i++)
-        {
-            Node titleNode = (((org.w3c.dom.Element) titles.item(i)).getFirstChild());
-            if (titleNode != null)
-            {
-                ontologyTitle = titleNode.getNodeValue();
-                break;
-            }
-        }
-
-        OntologyGui ontology = new OntologyGui(ontologyName, ontologyTitle);
-        ontology.setSiteURL(url);
-
-        // Predefined domains
-        Domain formMethodDomain = new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.choice"), "choice");
-        formMethodDomain.addEntry(new DomainEntry("post"));
-        formMethodDomain.addEntry(new DomainEntry("get"));
-
-        // Classes
-        OntologyClass pageClass = new OntologyClass("page");
-        ontology.addClass(pageClass);
-        OntologyClass formClass = new OntologyClass("form");
-        formClass.addAttribute(new Attribute("method", "get", formMethodDomain));
-        formClass.addAttribute(new Attribute("action", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.url"), "url")));
-        ontology.addClass(formClass);
-        OntologyClass inputClass = new OntologyClass("input");
-        inputClass.addAttribute(new Attribute("name", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.text"), "text")));
-        inputClass.addAttribute(new Attribute("disabled", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-        ontology.addClass(inputClass);
-
-        // Text Class
-        OntologyClass textInputClass = new OntologyClass(inputClass, "text");
-        textInputClass.addAttribute(new Attribute("type", "text"));
-        textInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.text"), "text")));
-        textInputClass.addAttribute(new Attribute("value", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.text"), "text")));
-        textInputClass.addAttribute(new Attribute("size", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "pinteger")));
-        textInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.pinteger"), "pinteger")));
-        textInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-
-        // Password Class
-        OntologyClass passwordInputClass = new OntologyClass(inputClass, "password");
-        passwordInputClass.addAttribute(new Attribute("type", "password"));
-        passwordInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.text"), "text")));
-        passwordInputClass.addAttribute(new Attribute("size", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "text")));
-        passwordInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.pinteger"), "pinteger")));
-        passwordInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-
-        // File Class
-        OntologyClass fileInputClass = new OntologyClass(inputClass, "file");
-        fileInputClass.addAttribute(new Attribute("type", "file"));
-        fileInputClass.addAttribute(new Attribute("size", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "pinteger")));
-        fileInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.pinteger"), "pinteger")));
-        fileInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-
-        // Hidden Class
-        OntologyClass hiddenInputClass = new OntologyClass(inputClass, "hidden");
-        hiddenInputClass.addAttribute(new Attribute("type", "hidden"));
-
-        // Checkbox Class
-        OntologyClass checkboxInputClass = new OntologyClass(inputClass, "checkbox");
-        checkboxInputClass.addAttribute(new Attribute("type", "checkbox"));
-
-        // Radio Class
-        OntologyClass radioInputClass = new OntologyClass(inputClass, "radio");
-        radioInputClass.addAttribute(new Attribute("type", "radio"));
-
-        // Select Class
-        OntologyClass selectInputClass = new OntologyClass(inputClass, "select");
-        selectInputClass.addAttribute(new Attribute("type", "select"));
-        selectInputClass.addAttribute(new Attribute("size", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "pinteger")));
-        selectInputClass.addAttribute(new Attribute("multiple", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-
-        // Textarea Class
-        OntologyClass textareaInputClass = new OntologyClass(inputClass, "textarea");
-        textareaInputClass.addAttribute(new Attribute("type", "textarea"));
-        textareaInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.text"), "text")));
-        textareaInputClass.addAttribute(new Attribute("rows", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "pinteger")));
-        textareaInputClass.addAttribute(new Attribute("cols", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.pinteger"), "pinteger")));
-        textareaInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
-            ApplicationUtilities.getResourceString("ontology.domain.boolean"), "boolean")));
-
-        // Button Class
-        OntologyClass buttonInputClass = new OntologyClass(inputClass, "button");
-        hiddenInputClass.addAttribute(new Attribute("type", "button"));
-
-        // Submit Class
-        OntologyClass submitInputClass = new OntologyClass(inputClass, "submit");
-        submitInputClass.addAttribute(new Attribute("type", "submit"));
-
-        // Reset Class
-        OntologyClass resetInputClass = new OntologyClass(inputClass, "reset");
-        resetInputClass.addAttribute(new Attribute("type", "reset"));
-
-        // Image Class
-        OntologyClass imageInputClass = new OntologyClass(inputClass, "image");
-        imageInputClass.addAttribute(new Attribute("type", "image"));
-        imageInputClass.addAttribute(new Attribute("src", null, new Domain(ApplicationUtilities
-            .getResourceString("ontology.domain.url"), "url")));
-
-        Term pageTerm = new Term(pageClass, url.toExternalForm());
-        ontology.addTerm(pageTerm);
+        OntologyGenerateHelper ontologyGenerateHelper = Ontology.generateOntology(url);
+        Ontology ontology = ontologyGenerateHelper.getOntology();
+        Document document = ontologyGenerateHelper.getDocument();
+        OntologyClass formClass = ontologyGenerateHelper.getFormClass();
+        OntologyClass textInputClass = ontologyGenerateHelper.getTextInputClass();
+        OntologyClass passwordInputClass = ontologyGenerateHelper.getPasswordInputClass();
+        OntologyClass fileInputClass = ontologyGenerateHelper.getFileInputClass();
+        OntologyClass hiddenInputClass = ontologyGenerateHelper.getHiddenInputClass();
+        OntologyClass checkboxInputClass = ontologyGenerateHelper.getCheckboxInputClass();
+        OntologyClass radioInputClass = ontologyGenerateHelper.getRadioInputClass();
+        OntologyClass selectInputClass = ontologyGenerateHelper.getSelectInputClass();
+        OntologyClass textareaInputClass = ontologyGenerateHelper.getTextareaInputClass();
+        OntologyClass buttonInputClass = ontologyGenerateHelper.getButtonInputClass();
+        OntologyClass submitInputClass = ontologyGenerateHelper.getSubmitInputClass();
+        OntologyClass resetInputClass = ontologyGenerateHelper.getResetInputClass();
+        OntologyClass imageInputClass = ontologyGenerateHelper.getImageInputClass();
+        Term pageTerm = ontologyGenerateHelper.getPageTerm();
+            
         JTree elementsTree = HTMLUtilities.getFORMElementsHierarchy(document, url);
         ArrayList<?> f = HTMLUtilities.extractFormsFromTree((DefaultMutableTreeNode) elementsTree
             .getModel().getRoot());
@@ -2130,11 +2016,25 @@ public class OntologyGui extends JPanel
         {
             OntologyClass c = (OntologyClass) i.next();
             DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(c);
-            ontologyCore.getClassesHierarchyRec(c, classNode);
+            getClassesHierarchyRec(c, classNode);
         }
         JTree tree = new JTree(root);
         tree.setCellRenderer(new OntologyTreeRenderer());
         return tree;
+    }
+    
+    public void getClassesHierarchyRec(OntologyClass c, DefaultMutableTreeNode root)
+    {
+        for (int i = 0; i < c.getSubClassesCount(); i++)
+        {
+            OntologyClass sc = c.getSubClass(i);
+            if (!(sc instanceof Term))
+            {
+                DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(sc);
+                root.add(subNode);
+                getClassesHierarchyRec(sc, subNode);
+            }
+        }
     }
     
     public JTree getTermsHierarchy()
@@ -2251,6 +2151,11 @@ public class OntologyGui extends JPanel
         }
 
         return root;
+    }
+    
+    public void setOntology(Ontology ontology)
+    {
+        ontologyCore = ontology;
     }
 
 }

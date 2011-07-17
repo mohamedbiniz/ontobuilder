@@ -10,6 +10,7 @@ import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelAdapter;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.main.OntoBuilder;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 
 /**
  * <p>Title: OntologyPanel</p>
@@ -61,7 +62,7 @@ public class OntologyPanel extends JTabbedPane
         JScrollPane scroll = (JScrollPane) getSelectedComponent();
         if (scroll == null)
             return null;
-        Ontology o = (Ontology) scroll.getViewport().getView();
+        Ontology o = ((OntologyGui) scroll.getViewport().getView()).getOntology();
         return o;
     }
 
@@ -86,7 +87,7 @@ public class OntologyPanel extends JTabbedPane
         for (int i = 0; i < getTabCount(); i++)
         {
             JScrollPane scroll = (JScrollPane) getComponentAt(i);
-            ontologies.add((Ontology)(scroll.getViewport().getView()));
+            ontologies.add(((OntologyGui)(scroll.getViewport().getView())).getOntology());
         }
         return ontologies;
     }

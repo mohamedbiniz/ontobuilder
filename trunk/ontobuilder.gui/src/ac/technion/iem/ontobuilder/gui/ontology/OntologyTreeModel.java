@@ -16,18 +16,20 @@ public class OntologyTreeModel extends DefaultTreeModel
 {
     private static final long serialVersionUID = 1L;
 
-    protected Ontology model;
+    protected Ontology ontology;
 
     public OntologyTreeModel(OntologyGui model)
     {
         super(model.getTreeBranch());
-        this.model = OntologyGui.ontology.ontologyCore;
+        this.ontology = OntologyGui.ontology.ontologyCore;
         updateTree();
     }
 
     public void updateTree()
     {
-        setRoot(model.getTreeBranch());
+        OntologyGui ontologyGui = new OntologyGui();
+        ontologyGui.setOntology(ontology);
+        setRoot(ontologyGui.getTreeBranch());
     }
 
     public DefaultMutableTreeNode findNodeWithUserObject(Object object)

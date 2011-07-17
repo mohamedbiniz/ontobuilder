@@ -59,6 +59,7 @@ import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.gui.elements.AbsoluteConstraints;
 import ac.technion.iem.ontobuilder.gui.elements.AbsoluteLayout;
 import ac.technion.iem.ontobuilder.gui.elements.MultilineLabel;
+import ac.technion.iem.ontobuilder.gui.elements.TextField;
 import ac.technion.iem.ontobuilder.gui.elements.ToolBar;
 import ac.technion.iem.ontobuilder.gui.match.MatchInformationGui;
 import ac.technion.iem.ontobuilder.gui.match.MatchTableModel;
@@ -87,6 +88,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.Schema
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformationFormatTypesEnum;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaMatchingsUtilities;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
@@ -182,7 +184,7 @@ public class OntologyMergeWizard
             AlgorithmsGuiFactory.getAlgorithmGui(algorithm).updateProperties(dataMap);
         }
 
-        MatchInformation matchInformation = target.match(candidate, algorithm);
+        MatchInformation matchInformation = MatchOntologyHandler.match(target, candidate, algorithm);
         if (matchInformation == null)
             return null;
 

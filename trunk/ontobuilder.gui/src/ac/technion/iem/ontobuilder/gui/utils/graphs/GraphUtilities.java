@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.swing.SwingConstants;
 import javax.swing.tree.TreeNode;
 
+import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 
@@ -630,7 +631,7 @@ public class GraphUtilities
         ArrayList<TreeNode> parents = getParents(cell);
         ArrayList<DefaultGraphCell> siblings = getSiblings(cell);
 
-        OntologyModel om = ((Term) cell.getUserObject()).getOntology();
+        Ontology om = ((Term) cell.getUserObject()).getOntology();
 
         GraphModel model = graph.getModel();
         outer: for (int i = 0; i < model.getRootCount(); i++)

@@ -17,6 +17,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationEvent;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationListener;
@@ -25,7 +26,6 @@ import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.URLVisitedListener;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.AElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 
 /**
 * <p>Title: SiteMap</p>
