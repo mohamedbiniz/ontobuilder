@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.wrapper;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -12,6 +11,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmExcep
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 
 /**
  * <p>Title: OntoBuilderWrapper</p>
@@ -127,7 +127,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
                 }
                 System.out.println("matching process starts...uses algorithm:" +
                     algorithm.getName());
-                targetOntology = Ontology.generateOntology(targetURL);
+                targetOntology = Ontology.generateOntology(targetURL).getOntology();
                 System.out.println("target ontology generation finished...");
                 if (targetOntology == null)
                 {
@@ -135,7 +135,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
                 }
                 if (newCandidate)
                 {
-                    candidateOntology = Ontology.generateOntology(candidateURL);
+                    candidateOntology = Ontology.generateOntology(candidateURL).getOntology();
                     System.out.println("candidate ontology generation finished...");
                 }
                 else
@@ -150,7 +150,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
                 targetOntology.normalize();
                 candidateOntology.normalize();
                 System.out.println("match process finished...");
-                return candidateOntology.match(targetOntology, algorithm);
+                return MatchOntologyHandler.match(targetOntology, candidateOntology, algorithm);
             }
         }
         catch (Throwable e)
@@ -182,7 +182,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
             System.out.println("normalizing ontologies...");
             targetOntology.normalize();
             candidateOntology.normalize();
-            MatchInformation res = candidateOntology.match(targetOntology, algorithm);
+            MatchInformation res = MatchOntologyHandler.match(targetOntology, candidateOntology, algorithm);
             System.out.println("match process finished...");
             return res;
         }
@@ -273,7 +273,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
     {
         try
         {
-            Ontology toReturn = Ontology.generateOntology(new URL(siteURL));
+            Ontology toReturn = Ontology.generateOntology(new URL(siteURL)).getOntology();
             if (toReturn == null)
                 return null;
             if (normalize)
