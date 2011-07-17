@@ -21,7 +21,7 @@ public class HTMLImporter implements Importer
     {
         try
         {
-            Ontology htmlOntology = Ontology.generateOntology(file.toURI().toURL());
+            Ontology htmlOntology = Ontology.generateOntology(file.toURI().toURL()).getOntology();
             htmlOntology.setName(file.getName());
             return htmlOntology;
         }
