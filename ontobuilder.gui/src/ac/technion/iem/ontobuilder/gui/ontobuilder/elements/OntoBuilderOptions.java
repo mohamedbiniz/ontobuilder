@@ -26,6 +26,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 
 import ac.technion.iem.ontobuilder.core.biztalk.BizTalkUtilities;
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilitiesPropertiesEnum;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
@@ -40,7 +41,6 @@ import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.io.exports.ExportUtilities;
 import ac.technion.iem.ontobuilder.io.imports.ImportUtilities;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 
 /**

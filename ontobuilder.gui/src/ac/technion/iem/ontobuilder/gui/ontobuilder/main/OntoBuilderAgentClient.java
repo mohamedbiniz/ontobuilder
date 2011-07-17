@@ -12,9 +12,11 @@ import ac.technion.iem.ontobuilder.core.util.AgentEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 
 /**
  * <p>Title: OntoBuilderAgentClient</p>
@@ -141,7 +143,7 @@ public class OntoBuilderAgentClient extends Thread
                     MessageFormat.format(
                         ApplicationUtilities.getResourceString("commandLine.ontology.generating"),
                         url.toExternalForm()));
-            Ontology ontology = Ontology.generateOntology(url);
+            Ontology ontology = OntologyGui.generateOntology(url);
             if (ontology == null)
                 return ("Error:" + MessageFormat.format(
                     ApplicationUtilities.getResourceString("error.ontology.generating"),
@@ -162,7 +164,9 @@ public class OntoBuilderAgentClient extends Thread
                     System.out.println(" " +
                         ApplicationUtilities.getResourceString("commandLine.ontology.normalized"));
             }
-            String xmlRepresentation = ontology.getXMLRepresentationAsString();
+            OntologyGui ontologyGui = new OntologyGui();
+            ontologyGui.setOntology(ontology);
+            String xmlRepresentation = ontologyGui.getXMLRepresentationAsString();
             if (verbose)
                 System.out.println(ApplicationUtilities.getResourceString("commandLine.generated"));
             return xmlRepresentation;
@@ -219,7 +223,7 @@ public class OntoBuilderAgentClient extends Thread
                 System.out.print(MessageFormat.format(
                     ApplicationUtilities.getResourceString("commandLine.ontology.generating"),
                     targetURL.toExternalForm()));
-            Ontology targetOntology = Ontology.generateOntology(targetURL);
+            Ontology targetOntology = OntologyGui.generateOntology(targetURL);
             if (targetOntology == null)
                 return ("Error: " + MessageFormat.format(
                     ApplicationUtilities.getResourceString("error.ontology.generating"),
@@ -233,7 +237,7 @@ public class OntoBuilderAgentClient extends Thread
                 System.out.print(MessageFormat.format(
                     ApplicationUtilities.getResourceString("commandLine.ontology.generating"),
                     candidateURL.toExternalForm()));
-            Ontology candidateOntology = Ontology.generateOntology(candidateURL);
+            Ontology candidateOntology = OntologyGui.generateOntology(candidateURL);
             if (candidateOntology == null)
                 return ("Error: " + MessageFormat.format(
                     ApplicationUtilities.getResourceString("error.ontology.generating"),
@@ -264,7 +268,7 @@ public class OntoBuilderAgentClient extends Thread
             }
             if (verbose)
                 System.out.print(ApplicationUtilities.getResourceString("commandLine.matching"));
-            MatchInformation matchInformation = targetOntology.match(candidateOntology, algorithm);
+            MatchInformation matchInformation = MatchOntologyHandler.match(targetOntology, candidateOntology, algorithm);
             if (matchInformation == null)
                 return ("Error: " + ApplicationUtilities
                     .getResourceString("error.matchInformation.generating"));

@@ -66,13 +66,14 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelAdapter;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
-import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus_;
+import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelAdapter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionListener;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilitiesPropertiesEnum;
@@ -91,6 +92,7 @@ import ac.technion.iem.ontobuilder.gui.ontobuilder.elements.OntoBuilderToolBar;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.elements.OntologyGraph;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.elements.OntologyHyperTree;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.elements.UpperPanel;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.gui.ontology.OntologySelectionEvent;
 import ac.technion.iem.ontobuilder.gui.ontology.OntologySelectionListener;
 import ac.technion.iem.ontobuilder.gui.tools.exactmapping.ToolMetadata;
@@ -111,6 +113,7 @@ import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileView;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.files.xml.XMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.thesaurus.ThesaurusGui;
 import ac.technion.iem.ontobuilder.io.exports.ExportException;
 import ac.technion.iem.ontobuilder.io.exports.ExportUtilities;
 import ac.technion.iem.ontobuilder.io.exports.ExporterMetadata;
@@ -119,11 +122,11 @@ import ac.technion.iem.ontobuilder.io.imports.ImportUtilities;
 import ac.technion.iem.ontobuilder.io.imports.Importer;
 import ac.technion.iem.ontobuilder.io.imports.ImporterMetadata;
 import ac.technion.iem.ontobuilder.io.utils.dom.DOMNode;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 
 import com.jgraph.JGraph;
 
@@ -138,7 +141,7 @@ public final class OntoBuilder extends Application
     private static Splash splash;
 
     protected Browser browser;
-    protected Thesaurus_ thesaurus;
+    protected ThesaurusGui thesaurus;
     public Vector<AbstractAlgorithm> algorithms;
 
     protected UpperPanel upperPanel;
@@ -224,7 +227,7 @@ public final class OntoBuilder extends Application
                         MessageFormat.format(ApplicationUtilities
                             .getResourceString("commandLine.ontology.generating"),
                             ApplicationParameters.url.toExternalForm()));
-                Ontology ontology = Ontology.generateOntology(ApplicationParameters.url);
+                Ontology ontology = OntologyGui.generateOntology(ApplicationParameters.url);
                 if (ontology == null)
                 {
                     System.out.println("\n" +
@@ -295,7 +298,7 @@ public final class OntoBuilder extends Application
                     System.out.print(MessageFormat.format(
                         ApplicationUtilities.getResourceString("commandLine.ontology.generating"),
                         ApplicationParameters.targetURL.toExternalForm()));
-                Ontology targetOntology = Ontology
+                Ontology targetOntology = OntologyGui
                     .generateOntology(ApplicationParameters.targetURL);
                 if (targetOntology == null)
                 {
@@ -313,7 +316,7 @@ public final class OntoBuilder extends Application
                     System.out.print(MessageFormat.format(
                         ApplicationUtilities.getResourceString("commandLine.ontology.generating"),
                         ApplicationParameters.candidateURL.toExternalForm()));
-                Ontology candidateOntology = Ontology
+                Ontology candidateOntology = OntologyGui
                     .generateOntology(ApplicationParameters.candidateURL);
                 if (candidateOntology == null)
                 {
@@ -352,8 +355,7 @@ public final class OntoBuilder extends Application
                 if (verbose)
                     System.out
                         .print(ApplicationUtilities.getResourceString("commandLine.matching"));
-                MatchInformation matchInformation = targetOntology.match(candidateOntology,
-                    algorithm);
+                MatchInformation matchInformation = MatchOntologyHandler.match(targetOntology, candidateOntology, algorithm);
                 if (matchInformation == null)
                 {
                     System.out
@@ -612,7 +614,7 @@ public final class OntoBuilder extends Application
                 Algorithm algorithm = (Algorithm) i.next();
                 algorithm.setThreshold(threshold / (double) 100);
                 if (algorithm.usesThesaurus())
-                    algorithm.setThesaurus(thesaurus);
+                    algorithm.setThesaurus(thesaurus.getThesaurus());
             }
         }
         catch (Exception e)
@@ -653,9 +655,9 @@ public final class OntoBuilder extends Application
             File thesaurusFile = new File(ApplicationUtilities.getCurrentDirectory() +
                 ApplicationUtilities.getStringProperty("thesaurus.file"));
             if (thesaurusFile.exists())
-                thesaurus = new Thesaurus_(thesaurusFile);
+                thesaurus = new ThesaurusGui(thesaurusFile);
             else
-                thesaurus = new Thesaurus_("/" +
+                thesaurus = new ThesaurusGui("/" +
                     ApplicationUtilities.getStringProperty("thesaurus.file"));
         }
         catch (ThesaurusException e)

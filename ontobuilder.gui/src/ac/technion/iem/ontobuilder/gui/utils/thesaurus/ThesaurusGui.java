@@ -1005,4 +1005,9 @@ public class ThesaurusGui extends JPanel
             e.printStackTrace();
         }
     }
+    
+    public Thesaurus getThesaurus()
+    {
+        return model;
+    }
 }

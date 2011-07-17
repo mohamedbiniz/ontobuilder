@@ -97,6 +97,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.utils.TopKPlot
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsException;
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 import ac.technion.iem.ontobuilder.matching.meta.aggregators.AbstractGlobalAggregator;
 import ac.technion.iem.ontobuilder.matching.meta.aggregators.AbstractLocalAggregator;
 import ac.technion.iem.ontobuilder.matching.meta.aggregators.AverageGlobalAggregator;
@@ -237,7 +238,7 @@ public class OntologyMetaTopKWizard
         while (algItr.hasNext())
         {
             algorithm = (AbstractAlgorithm) algItr.next();
-            matchInformation = target.match(candidate, algorithm);
+            matchInformation = MatchOntologyHandler.match(target, candidate, algorithm);
             if (matchInformation == null)
                 return null;
             else

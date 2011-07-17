@@ -14,9 +14,9 @@ import javax.swing.tree.TreeSelectionModel;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
 import ac.technion.iem.ontobuilder.io.utils.dom.DOMNode;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 
 
 /**

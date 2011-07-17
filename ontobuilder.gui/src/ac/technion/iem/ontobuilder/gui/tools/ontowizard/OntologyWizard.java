@@ -55,6 +55,7 @@ import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.ObjectWithProperties;
@@ -80,7 +81,6 @@ import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElement;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
-import ac.technion.iem.ontobuilder.io.utils.dom.DOMUtilities;
 
 /**
  * <p>Title: OntologyWizard</p>
