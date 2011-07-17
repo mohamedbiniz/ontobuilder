@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,18 +17,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.jdom.DocType;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
@@ -690,20 +693,6 @@ public class Ontology extends OntologyObject
         }
     }
 
-    public void getClassesHierarchyRec(OntologyClass c, DefaultMutableTreeNode root)
-    {
-        for (int i = 0; i < c.getSubClassesCount(); i++)
-        {
-            OntologyClass sc = c.getSubClass(i);
-            if (!(sc instanceof Term))
-            {
-                DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(sc);
-                root.add(subNode);
-                getClassesHierarchyRec(sc, subNode);
-            }
-        }
-    }
-
     /**
      * Find a term according to its name
      * 
@@ -995,9 +984,173 @@ public class Ontology extends OntologyObject
     {
         this.dirty = dirty;
     }
-
-    public boolean getDirty()
+    
+    /**
+     * Check if the ontology is dirty
+     * 
+     * @return <code>true</code> if is dirty
+     */
+    public boolean isDirty()
     {
         return dirty;
+    }
+    
+    /**
+     * Generate an ontology from a URL
+     * 
+     * @param url the {@link OntologyGui}
+     * @return an {@link OntologyGui}
+     * @throws IOException
+     */
+    public static OntologyGenerateHelper generateOntology(URL url) throws IOException
+    {
+        org.w3c.dom.Document document = DOMUtilities.getDOM(url,
+            new PrintWriter(new StringWriter()));
+
+        String ontologyTitle = "";
+        String ontologyName = url.getHost();
+
+        NodeList titles = document.getElementsByTagName("title");
+        for (int i = 0; i < titles.getLength(); i++)
+        {
+            Node titleNode = (((org.w3c.dom.Element) titles.item(i)).getFirstChild());
+            if (titleNode != null)
+            {
+                ontologyTitle = titleNode.getNodeValue();
+                break;
+            }
+        }
+
+        Ontology ontology = new Ontology(ontologyName, ontologyTitle);
+        ontology.setSiteURL(url);
+
+        // Predefined domains
+        Domain formMethodDomain = new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.choice"), "choice");
+        formMethodDomain.addEntry(new DomainEntry("post"));
+        formMethodDomain.addEntry(new DomainEntry("get"));
+
+        // Classes
+        OntologyClass pageClass = new OntologyClass("page");
+        ontology.addClass(pageClass);
+        OntologyClass formClass = new OntologyClass("form");
+        formClass.addAttribute(new Attribute("method", "get", formMethodDomain));
+        formClass.addAttribute(new Attribute("action", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.url"), "url")));
+        ontology.addClass(formClass);
+        OntologyClass inputClass = new OntologyClass("input");
+        inputClass.addAttribute(new Attribute("name", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.text"), "text")));
+        inputClass.addAttribute(new Attribute("disabled", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+        ontology.addClass(inputClass);
+
+        // Text Class
+        OntologyClass textInputClass = new OntologyClass(inputClass, "text");
+        textInputClass.addAttribute(new Attribute("type", "text"));
+        textInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.text"), "text")));
+        textInputClass.addAttribute(new Attribute("value", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.text"), "text")));
+        textInputClass.addAttribute(new Attribute("size", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "pinteger")));
+        textInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.pinteger"), "pinteger")));
+        textInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+
+        // Password Class
+        OntologyClass passwordInputClass = new OntologyClass(inputClass, "password");
+        passwordInputClass.addAttribute(new Attribute("type", "password"));
+        passwordInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.text"), "text")));
+        passwordInputClass.addAttribute(new Attribute("size", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "text")));
+        passwordInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.pinteger"), "pinteger")));
+        passwordInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+
+        // File Class
+        OntologyClass fileInputClass = new OntologyClass(inputClass, "file");
+        fileInputClass.addAttribute(new Attribute("type", "file"));
+        fileInputClass.addAttribute(new Attribute("size", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "pinteger")));
+        fileInputClass.addAttribute(new Attribute("maxLength", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.pinteger"), "pinteger")));
+        fileInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+
+        // Hidden Class
+        OntologyClass hiddenInputClass = new OntologyClass(inputClass, "hidden");
+        hiddenInputClass.addAttribute(new Attribute("type", "hidden"));
+
+        // Checkbox Class
+        OntologyClass checkboxInputClass = new OntologyClass(inputClass, "checkbox");
+        checkboxInputClass.addAttribute(new Attribute("type", "checkbox"));
+
+        // Radio Class
+        OntologyClass radioInputClass = new OntologyClass(inputClass, "radio");
+        radioInputClass.addAttribute(new Attribute("type", "radio"));
+
+        // Select Class
+        OntologyClass selectInputClass = new OntologyClass(inputClass, "select");
+        selectInputClass.addAttribute(new Attribute("type", "select"));
+        selectInputClass.addAttribute(new Attribute("size", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "pinteger")));
+        selectInputClass.addAttribute(new Attribute("multiple", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+
+        // Textarea Class
+        OntologyClass textareaInputClass = new OntologyClass(inputClass, "textarea");
+        textareaInputClass.addAttribute(new Attribute("type", "textarea"));
+        textareaInputClass.addAttribute(new Attribute("defaultValue", null, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.text"), "text")));
+        textareaInputClass.addAttribute(new Attribute("rows", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "pinteger")));
+        textareaInputClass.addAttribute(new Attribute("cols", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.pinteger"), "pinteger")));
+        textareaInputClass.addAttribute(new Attribute("readOnly", Boolean.FALSE, new Domain(
+            PropertiesHandler.getResourceString("ontology.domain.boolean"), "boolean")));
+
+        // Button Class
+        OntologyClass buttonInputClass = new OntologyClass(inputClass, "button");
+        hiddenInputClass.addAttribute(new Attribute("type", "button"));
+
+        // Submit Class
+        OntologyClass submitInputClass = new OntologyClass(inputClass, "submit");
+        submitInputClass.addAttribute(new Attribute("type", "submit"));
+
+        // Reset Class
+        OntologyClass resetInputClass = new OntologyClass(inputClass, "reset");
+        resetInputClass.addAttribute(new Attribute("type", "reset"));
+
+        // Image Class
+        OntologyClass imageInputClass = new OntologyClass(inputClass, "image");
+        imageInputClass.addAttribute(new Attribute("type", "image"));
+        imageInputClass.addAttribute(new Attribute("src", null, new Domain(PropertiesHandler
+            .getResourceString("ontology.domain.url"), "url")));
+
+        Term pageTerm = new Term(pageClass, url.toExternalForm());
+        ontology.addTerm(pageTerm);
+
+        OntologyGenerateHelper ontologyGenerateHelper = new OntologyGenerateHelper();
+        ontologyGenerateHelper.setButtonInputClass(buttonInputClass);
+        ontologyGenerateHelper.setCheckboxInputClass(checkboxInputClass);
+        ontologyGenerateHelper.setDocument(document);
+        ontologyGenerateHelper.setFileInputClass(fileInputClass);
+        ontologyGenerateHelper.setFormClass(formClass);
+        ontologyGenerateHelper.setHiddenInputClass(hiddenInputClass);
+        ontologyGenerateHelper.setImageInputClass(imageInputClass);
+        ontologyGenerateHelper.setOntology(ontology);
+        ontologyGenerateHelper.setPageTerm(pageTerm);
+        ontologyGenerateHelper.setPasswordInputClass(passwordInputClass);
+        ontologyGenerateHelper.setRadioInputClass(radioInputClass);
+        ontologyGenerateHelper.setResetInputClass(resetInputClass);
+        ontologyGenerateHelper.setSelectInputClass(selectInputClass);
+        ontologyGenerateHelper.setSubmitInputClass(submitInputClass);
+        ontologyGenerateHelper.setTextareaInputClass(textareaInputClass);
+        ontologyGenerateHelper.setTextInputClass(textInputClass);
+        return ontologyGenerateHelper;
     }
 }
