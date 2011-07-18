@@ -66,7 +66,6 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelAdapter;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
-import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelAdapter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
@@ -111,11 +110,15 @@ import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFilePreviewer;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileView;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyBIZFileFilter;
+import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyONTFileFilter;
+import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyXMLFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.xml.XMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.thesaurus.ThesaurusGui;
 import ac.technion.iem.ontobuilder.io.exports.ExportException;
 import ac.technion.iem.ontobuilder.io.exports.ExportUtilities;
+import ac.technion.iem.ontobuilder.io.exports.Exporter;
 import ac.technion.iem.ontobuilder.io.exports.ExporterMetadata;
 import ac.technion.iem.ontobuilder.io.imports.ImportException;
 import ac.technion.iem.ontobuilder.io.imports.ImportUtilities;
@@ -1857,7 +1860,8 @@ public final class OntoBuilder extends Application
                         {
                             ontology.getName()
                         }));
-                    ontology.addOntologySelectionListener(new OntologySelectionListener()
+                    OntologyGui ontologyGui = new OntologyGui(ontology);
+                    ontologyGui.addOntologySelectionListener(new OntologySelectionListener()
                     {
                         public void valueChanged(OntologySelectionEvent e)
                         {
@@ -1883,7 +1887,7 @@ public final class OntoBuilder extends Application
                                 lowerPanel.propertiesPanel.showProperties(null);
                         }
                     });
-                    mainPanel.ontologyPanel.addOntology(ontology);
+                    mainPanel.ontologyPanel.addOntology(ontologyGui);
                     mainPanel.selectPanel(MainPanel.ONTOLOGY_TAB);
                 }
             }
@@ -2011,7 +2015,7 @@ public final class OntoBuilder extends Application
                         {
                             try
                             {
-                                Ontology ontology = Ontology.open(file);
+                                Ontology ontology = OntologyGui.open(file);
                                 addOntologyToPanel(ontology);
                             }
                             catch (IOException e)
@@ -2092,7 +2096,8 @@ public final class OntoBuilder extends Application
     {
         if (ontology == null)
             return;
-        ontology.addOntologySelectionListener(new OntologySelectionListener()
+        OntologyGui ontologyGui = new OntologyGui(ontology);
+        ontologyGui.addOntologySelectionListener(new OntologySelectionListener()
         {
             public void valueChanged(OntologySelectionEvent e)
             {
@@ -2118,7 +2123,7 @@ public final class OntoBuilder extends Application
                     lowerPanel.propertiesPanel.showProperties(null);
             }
         });
-        mainPanel.ontologyPanel.addOntology(ontology);
+        mainPanel.ontologyPanel.addOntology(ontologyGui);
         mainPanel.selectPanel(MainPanel.ONTOLOGY_TAB);
     }
 
@@ -2127,10 +2132,10 @@ public final class OntoBuilder extends Application
      */
     public void commandNewOntology()
     {
-        Ontology ontology = Ontology.createOntologyDialog();
+        Ontology ontology = OntologyGui.createOntologyDialog().getOntology();
         try
         {
-            Ontology template = Ontology.open(new File("ontologies/base.xml"));
+            Ontology template = OntologyGui.open(new File("ontologies/base.xml"));
             template.setFile(null);
             template.setDirty(true);
             template.setName(ontology.getName());
@@ -2169,7 +2174,7 @@ public final class OntoBuilder extends Application
                 {
                     try
                     {
-                        Ontology ontology = Ontology.open(file);
+                        Ontology ontology = OntologyGui.open(file);
                         addOntologyToPanel(ontology);
                     }
                     catch (IOException e)
@@ -2582,7 +2587,8 @@ public final class OntoBuilder extends Application
         Ontology ontology = mainPanel.ontologyPanel.getCurrentOntology();
         if (ontology == null)
             return;
-        new OntologyHyperTree(ontology, frame).setVisible(true);// show();
+        OntologyGui ontologyGui = new OntologyGui(ontology);
+        new OntologyHyperTree(ontologyGui, frame).setVisible(true);// show();
     }
 
     /**
@@ -2593,7 +2599,8 @@ public final class OntoBuilder extends Application
         Ontology ontology = mainPanel.ontologyPanel.getCurrentOntology();
         if (ontology == null)
             return;
-        JGraph graph = ontology.getGraph();
+        OntologyGui ontologyGui = new OntologyGui(ontology);
+        JGraph graph = ontologyGui.getGraph();
         new OntologyGraph(frame, graph).setVisible(true);// show();
     }
 
