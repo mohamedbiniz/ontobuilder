@@ -56,6 +56,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.w3c.dom.Document;
@@ -111,6 +112,8 @@ import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFilePreviewer;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileView;
 import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyBIZFileFilter;
+import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyFileFilter;
+import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyFileViewer;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyONTFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyXMLFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.xml.XMLUtilities;
@@ -139,6 +142,12 @@ import com.jgraph.JGraph;
  */
 public final class OntoBuilder extends Application
 {
+    public static FileFilter ontologyFileFilter = new OntologyFileFilter();
+    public static FileFilter ontologyONTFileFilter = new OntologyONTFileFilter();
+    public static FileFilter ontologyXMLFileFilter = new OntologyXMLFileFilter();
+    public static FileFilter ontologyBIZFileFilter = new OntologyBIZFileFilter();
+    public static FileView ontologyFileViewer = new OntologyFileViewer();
+    
     private static final long serialVersionUID = 1L;
 
     private static Splash splash;
@@ -1970,11 +1979,11 @@ public final class OntoBuilder extends Application
 
         // Filters
         ArrayList<FileFilter> filters = new ArrayList<FileFilter>();
-        filters.add(OntologyUtilities.ontologyFileFilter);
+        filters.add(ontologyFileFilter);
         FileUtilities.configureFileDialogFilters(filters);
         // Viewers
         FileUtilities.fileViewer.removeAllViewers();
-        FileUtilities.fileViewer.addViewer(OntologyUtilities.ontologyFileViewer);
+        FileUtilities.fileViewer.addViewer(ontologyFileViewer);
 
         // ArrayList filters=new ArrayList();
         // FileUtilities.fileViewer.removeAllViewers();
@@ -2156,11 +2165,11 @@ public final class OntoBuilder extends Application
     {
         // Filters
         ArrayList<FileFilter> filters = new ArrayList<FileFilter>();
-        filters.add(OntologyUtilities.ontologyFileFilter);
+        filters.add(ontologyFileFilter);
         FileUtilities.configureFileDialogFilters(filters);
         // Viewers
         FileUtilities.fileViewer.removeAllViewers();
-        FileUtilities.fileViewer.addViewer(OntologyUtilities.ontologyFileViewer);
+        FileUtilities.fileViewer.addViewer(ontologyFileViewer);
 
         final File file = FileUtilities.openFileDialog(this);
         if (file != null)
@@ -2300,13 +2309,13 @@ public final class OntoBuilder extends Application
     {
         // Filters
         ArrayList<FileFilter> filters = new ArrayList<FileFilter>();
-        filters.add(OntologyUtilities.ontologyBIZFileFilter);
-        filters.add(OntologyUtilities.ontologyONTFileFilter);
-        filters.add(OntologyUtilities.ontologyXMLFileFilter);
+        filters.add(ontologyBIZFileFilter);
+        filters.add(ontologyONTFileFilter);
+        filters.add(ontologyXMLFileFilter);
         FileUtilities.configureFileDialogFilters(filters);
         // Viewers
         FileUtilities.fileViewer.removeAllViewers();
-        FileUtilities.fileViewer.addViewer(OntologyUtilities.ontologyFileViewer);
+        FileUtilities.fileViewer.addViewer(ontologyFileViewer);
 
         final Ontology ontology = mainPanel.ontologyPanel.getCurrentOntology();
         if (ontology == null)
@@ -2749,12 +2758,12 @@ public final class OntoBuilder extends Application
                         try
                         {
                             ArrayList<FileFilter> filters = new ArrayList<FileFilter>();
-                            filters.add(OntologyUtilities.ontologyBIZFileFilter);
+                            filters.add(ontologyBIZFileFilter);
                             FileUtilities.configureFileDialogFilters(filters);
                             // Viewers
                             FileUtilities.fileViewer.removeAllViewers();
                             FileUtilities.fileViewer
-                                .addViewer(OntologyUtilities.ontologyFileViewer);
+                                .addViewer(ontologyFileViewer);
 
                             final File file = FileUtilities.saveFileDialog(OntoBuilder.this, null);
                             if (file != null)
