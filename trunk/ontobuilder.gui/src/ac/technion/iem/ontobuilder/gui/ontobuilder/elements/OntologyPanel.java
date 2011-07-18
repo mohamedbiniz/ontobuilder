@@ -34,7 +34,7 @@ public class OntologyPanel extends JTabbedPane
      *
      * @param ontology the {@link Ontology} to add
      */
-    public void addOntology(final Ontology ontology)
+    public void addOntology(final OntologyGui ontology)
     {
         final JScrollPane scroll = new JScrollPane(ontology);
         ontology.addOntologyModelListener(new OntologyModelAdapter()
@@ -44,10 +44,10 @@ public class OntologyPanel extends JTabbedPane
                 int index = indexOfComponent(scroll);
                 if (index == -1)
                     return;
-                setTitleAt(index, ontology.getName() + (ontology.isDirty() ? " *" : ""));
+                setTitleAt(index, ontology.getName() + (ontology.getOntology().isDirty() ? " *" : ""));
             }
         });
-        addTab(ontology.getName() + (ontology.isDirty() ? " *" : ""),
+        addTab(ontology.getName() + (ontology.getOntology().isDirty() ? " *" : ""),
             ApplicationUtilities.getImage("ontology.gif"), scroll);
         setSelectedComponent(scroll);
     }

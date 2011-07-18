@@ -51,7 +51,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
-import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
@@ -63,6 +62,7 @@ import ac.technion.iem.ontobuilder.gui.elements.TextField;
 import ac.technion.iem.ontobuilder.gui.elements.ToolBar;
 import ac.technion.iem.ontobuilder.gui.match.MatchInformationGui;
 import ac.technion.iem.ontobuilder.gui.match.MatchTableModel;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyUtilitiesGui;
 import ac.technion.iem.ontobuilder.gui.tools.algorithms.line1.AlgorithmsGuiFactory;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FilePreviewer;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
@@ -190,7 +190,7 @@ public class OntologyMergeWizard
 
         if (showMatchInformation(matchInformation).getNextAction() == WizardStatus.CANCEL_ACTION)
             return null;
-        Ontology mergedOntology = OntologyUtilities.createOntology(ontologyName, matchInformation);
+        Ontology mergedOntology = OntologyUtilitiesGui.createOntology(ontologyName, matchInformation);
 
         if (ApplicationParameters.result)
             System.out

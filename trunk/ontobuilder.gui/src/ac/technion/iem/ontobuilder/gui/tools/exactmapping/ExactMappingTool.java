@@ -3,7 +3,6 @@ package ac.technion.iem.ontobuilder.gui.tools.exactmapping;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -23,6 +22,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.elements.AbsoluteConstraints;
 import ac.technion.iem.ontobuilder.gui.elements.AbsoluteLayout;
+import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.gui.tools.utils.ExceptionsHandler;
 import ac.technion.iem.ontobuilder.gui.tools.utils.FileChoosingUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
@@ -299,7 +299,8 @@ public class ExactMappingTool extends JPanel
             {
                 candOnto = Ontology.openFromXML((File) candidateXMLFiles.get(candOntology
                     .getSelectedItem()));
-                if (!candOnto.isLightweight())
+                OntologyGui ontologyGui = new OntologyGui(candOnto);
+                if (!ontologyGui.isLightweight())
                 {
                     candOnto.normalize();
                 }
