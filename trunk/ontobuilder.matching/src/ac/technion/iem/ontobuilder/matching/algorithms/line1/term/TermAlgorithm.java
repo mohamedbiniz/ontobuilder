@@ -1,8 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +16,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.match.MatchComparator;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 /**
@@ -129,7 +128,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
             preprocess();
 
             // changed haggai - 6/12/03
-            MatchMatrix matchMatrix = OntologyUtilities.createMatchMatrix(originalTargetTerms,
+            MatchMatrix matchMatrix = MatchOntologyHandler.createMatchMatrix(originalTargetTerms,
                 targetTerms, originalCandidateTerms, candidateTerms, this);
             matchInformation = buildMatchInformation(matchMatrix.transpose());
             matchInformation.setTargetOntologyTermsTotal(originalTargetTerms.size());
