@@ -62,7 +62,7 @@ public class Ontology extends OntologyObject
     transient protected ArrayList<OntologyModelListener> listeners;
 
     /**
-     * Constructs a default OntologyModel
+     * Constructs a default Ontology
      */
     public Ontology()
     {
@@ -76,7 +76,20 @@ public class Ontology extends OntologyObject
     }
 
     /**
-     * Constructs a OntologyModel
+     * Constructs a Ontology
+     * 
+     * @param name the OntologyModel name
+     * @param title the OntologyModel title
+     */
+    public Ontology(String name)
+    {
+        this();
+        this.name = name;
+        this.title = "";
+    }
+    
+    /**
+     * Constructs a Ontology
      * 
      * @param name the OntologyModel name
      * @param title the OntologyModel title
