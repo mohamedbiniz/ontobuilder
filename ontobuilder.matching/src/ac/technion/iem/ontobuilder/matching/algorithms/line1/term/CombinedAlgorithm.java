@@ -20,6 +20,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtili
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence.PrecedenceMatch;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
+import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 
 /**
@@ -263,9 +264,9 @@ public class CombinedAlgorithm extends TermValueAlgorithm
             // double termValueMatchMatrix[][]=combineMatrices(termMatchMatrix,valueMatchMatrix);
 
             // added by haggai 6/12/03
-            MatchMatrix termMatchMM = OntologyUtilities.createMatchMatrix(originalTargetTerms,
+            MatchMatrix termMatchMM = MatchOntologyHandler.createMatchMatrix(originalTargetTerms,
                 targetTerms, originalCandidateTerms, candidateTerms, termAlgorithm);
-            MatchMatrix valueMatchMM = OntologyUtilities.createMatchMatrix(originalTargetTerms,
+            MatchMatrix valueMatchMM = MatchOntologyHandler.createMatchMatrix(originalTargetTerms,
                 targetTerms, originalCandidateTerms, candidateTerms, valueAlgorithm);
             // ***end haggai
             // new version - haggai 6/12/03
