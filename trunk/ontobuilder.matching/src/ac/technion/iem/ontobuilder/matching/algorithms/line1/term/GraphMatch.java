@@ -3,8 +3,6 @@ package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JTable;
-
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
