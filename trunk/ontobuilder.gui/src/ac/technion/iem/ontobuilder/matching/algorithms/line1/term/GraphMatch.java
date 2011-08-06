@@ -7,7 +7,10 @@ import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.GraphUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
+
+import com.jgraph.JGraph;
+import com.jgraph.graph.DefaultGraphCell;
 
 /**
  * <p>Title: GraphMatch</p>
