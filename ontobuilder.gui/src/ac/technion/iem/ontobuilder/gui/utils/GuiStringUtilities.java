@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 
 public class GuiStringUtilities extends StringUtilities
 {

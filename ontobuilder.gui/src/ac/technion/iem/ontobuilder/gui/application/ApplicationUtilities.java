@@ -9,9 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertyException;
-import ac.technion.iem.ontobuilder.core.util.properties.ResourceException;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertyException;
+import ac.technion.iem.ontobuilder.core.utils.properties.ResourceException;
 
 /**
  * <p>Title: ApplicationUtilities</p>

@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util;
+package ac.technion.iem.ontobuilder.core.utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;

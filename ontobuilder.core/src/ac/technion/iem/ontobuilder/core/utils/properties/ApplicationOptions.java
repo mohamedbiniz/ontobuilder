@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util.properties;
+package ac.technion.iem.ontobuilder.core.utils.properties;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -22,8 +22,8 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
 
 /**
  * <p>Title: ApplicationOptions</p>

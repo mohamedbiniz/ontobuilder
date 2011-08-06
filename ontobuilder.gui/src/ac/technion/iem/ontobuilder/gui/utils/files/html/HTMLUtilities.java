@@ -19,9 +19,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FilePreview;
 

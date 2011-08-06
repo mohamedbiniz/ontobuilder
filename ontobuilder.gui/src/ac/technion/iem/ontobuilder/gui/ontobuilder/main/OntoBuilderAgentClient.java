@@ -8,9 +8,9 @@ import org.jdom.*;
 import org.jdom.input.*;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
-import ac.technion.iem.ontobuilder.core.util.AgentEntityResolver;
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
+import ac.technion.iem.ontobuilder.core.utils.AgentEntityResolver;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;

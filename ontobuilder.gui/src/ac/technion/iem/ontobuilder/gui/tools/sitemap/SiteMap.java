@@ -17,8 +17,8 @@ import javax.swing.tree.TreeSelectionModel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationEvent;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationListener;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.URLVisitedEvent;

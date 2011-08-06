@@ -5,9 +5,9 @@ import java.net.MalformedURLException;
 import java.util.*;
 import java.text.*;
 
-import ac.technion.iem.ontobuilder.core.util.Email;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.Email;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
  * <p>Title: GuessedDomain</p>

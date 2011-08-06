@@ -26,7 +26,7 @@ import org.jdom.output.XMLOutputter;
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
-import ac.technion.iem.ontobuilder.core.util.files.StringOutputStream;
+import ac.technion.iem.ontobuilder.core.utils.files.StringOutputStream;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.meta.MetaAlgorithm;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;

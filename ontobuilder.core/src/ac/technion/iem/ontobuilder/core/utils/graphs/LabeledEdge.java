@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util.graphs;
+package ac.technion.iem.ontobuilder.core.utils.graphs;
 
 /**
  * <p>

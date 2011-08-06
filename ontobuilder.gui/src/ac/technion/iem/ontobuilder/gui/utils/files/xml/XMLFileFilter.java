@@ -1,6 +1,6 @@
 package ac.technion.iem.ontobuilder.gui.utils.files.xml;
 
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.ExtensionFileFilter;
 
 /**

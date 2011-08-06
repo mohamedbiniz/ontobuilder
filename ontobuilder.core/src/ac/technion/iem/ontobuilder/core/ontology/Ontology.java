@@ -28,11 +28,11 @@ import org.w3c.dom.NodeList;
 
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.dom.DOMUtilities;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
  * <p>Title: Ontology</p>

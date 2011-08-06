@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util.dom;
+package ac.technion.iem.ontobuilder.core.utils.dom;
 
 
 import java.io.FileInputStream;
@@ -23,10 +23,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.files.StringInputStream;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.files.StringInputStream;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /*
  * Changes: 1) Haggai: fix for Cookie Management

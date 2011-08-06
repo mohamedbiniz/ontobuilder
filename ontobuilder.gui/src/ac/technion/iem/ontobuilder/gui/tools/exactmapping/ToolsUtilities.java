@@ -13,7 +13,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.gui.elements.Tab;
 import ac.technion.iem.ontobuilder.io.imports.ImportException;
 

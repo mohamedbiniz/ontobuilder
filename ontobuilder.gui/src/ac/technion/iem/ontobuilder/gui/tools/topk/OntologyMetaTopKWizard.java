@@ -52,7 +52,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.gui.elements.MultilineLabel;
