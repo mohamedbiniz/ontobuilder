@@ -14,19 +14,12 @@ import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-import com.jgraph.JGraph;
-import com.jgraph.graph.ConnectionSet;
-import com.jgraph.graph.DefaultEdge;
-import com.jgraph.graph.DefaultGraphCell;
-import com.jgraph.graph.DefaultGraphModel;
-import com.jgraph.graph.DefaultPort;
-
 import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
+import ac.technion.iem.ontobuilder.gui.utils.GuiStringUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
@@ -35,6 +28,13 @@ import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaMatchingsUtilities;
 import ac.technion.iem.ontobuilder.matching.utils.SchemaTranslator;
+
+import com.jgraph.JGraph;
+import com.jgraph.graph.ConnectionSet;
+import com.jgraph.graph.DefaultEdge;
+import com.jgraph.graph.DefaultGraphCell;
+import com.jgraph.graph.DefaultGraphModel;
+import com.jgraph.graph.DefaultPort;
 
 /**
  * <p>
@@ -274,21 +274,21 @@ public class MatchInformationGui
         sb.append("\n");
         sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.matches"))
             .append("\n");
-        sb.append(StringUtilities.getJTableStringRepresentation(getMatchTable()));
+        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMatchTable()));
         sb.append("\n\n");
         sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatches"))
             .append("\n");
-        sb.append(StringUtilities.getJTableStringRepresentation(getMismatchTable()));
+        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMismatchTable()));
         sb.append("\n\n");
         sb.append(
             PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatchesTarget"))
             .append("\n");
-        sb.append(StringUtilities.getJTableStringRepresentation(getMismatchTargetOntologyTable()));
+        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMismatchTargetOntologyTable()));
         sb.append("\n\n");
         sb.append(
             PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatchesCandidate"))
             .append("\n");
-        sb.append(StringUtilities
+        sb.append(GuiStringUtilities
             .getJTableStringRepresentation(getMismatchCandidateOntologyTable()));
         return sb.toString();
     }

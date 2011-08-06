@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.precedence;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -455,8 +454,7 @@ public class PrecedenceAlgorithm extends TermValueAlgorithm
                 PropertiesHandler.getResourceString("algorithm.value") + " + " +
                 PropertiesHandler.getResourceString("algorithm.precedence"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 5, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 5, matchTable));
         }
 
         return matchMatrix;

@@ -7,11 +7,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
-
-import com.jgraph.JGraph;
-import com.jgraph.graph.DefaultGraphCell;
-import com.modica.application.PropertiesTableModel;
-import com.modica.graph.GraphUtilities;
+import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.graphs.utils.GraphUtilities;
 
 /**
  * <p>Title: GraphMatch</p>
@@ -159,8 +155,7 @@ public class GraphMatch
 
             System.out.println(PropertiesHandler.getResourceString("algorithm.graph"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 0, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 0, matchTable));
         }
 
         return matchMatrix;
