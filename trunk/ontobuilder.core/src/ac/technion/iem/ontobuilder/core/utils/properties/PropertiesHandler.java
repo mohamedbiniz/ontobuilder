@@ -155,7 +155,8 @@ public class PropertiesHandler
         try
         {
             InputStream propertiesStream;// =PropertiesHandler.class.getResourceAsStream(propertiesFile);
-            propertiesStream = new FileInputStream(resourceFile);
+//            propertiesStream = new FileInputStream(resourceFile);
+            propertiesStream = PropertiesHandler.class.getResourceAsStream(resourceFile);
 
             resources = new java.util.Properties();
             resources.load(propertiesStream);
