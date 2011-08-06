@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-
 import ac.technion.iem.ontobuilder.core.ontology.operator.NGramStringOperator;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 
@@ -420,27 +417,75 @@ public class StringUtilities
         return bf.toString();
     }
 
-    public static String getJTableStringRepresentation(JTable table)
+//    public static String getJTableStringRepresentation(JTable table)
+//    {
+//        StringBuffer bf = new StringBuffer("");
+//
+//        TableModel model = table.getModel();
+//        ArrayList<Integer> columnsWidths = new ArrayList<Integer>();
+//        for (int i = 0; i < model.getColumnCount(); i++)
+//        {
+//            int width = model.getColumnName(i).length();
+//            for (int j = 0; j < model.getRowCount(); j++)
+//            {
+//                Object o = model.getValueAt(j, i);
+//                if (o == null)
+//                    continue;
+//                width = Math.max(width, o.toString().length());
+//            }
+//            columnsWidths.add(new Integer(width));
+//        }
+//        for (int i = 0; i < model.getColumnCount(); i++)
+//        {
+//            String columnName = model.getColumnName(i);
+//            int width = ((Integer) columnsWidths.get(i)).intValue();
+//            bf.append(columnName).append(buildString(' ', width - columnName.length() + 1));
+//        }
+//        bf.append("\n");
+//        for (int i = 0; i < columnsWidths.size(); i++)
+//        {
+//            int width = ((Integer) columnsWidths.get(i)).intValue();
+//            bf.append(buildString('-', width)).append(" ");
+//        }
+//        bf.append("\n");
+//
+//        for (int i = 0; i < model.getRowCount(); i++)
+//        {
+//            for (int j = 0; j < model.getColumnCount(); j++)
+//            {
+//                int width = ((Integer) columnsWidths.get(j)).intValue();
+//                Object o = model.getValueAt(i, j);
+//                if (o == null)
+//                    continue;
+//                String cell = o.toString();
+//                bf.append(cell).append(buildString(' ', width - cell.length() + 1));
+//            }
+//            bf.append("\n");
+//        }
+//
+//        return bf.toString();
+//    }
+    
+    public static String getTableStringRepresentation(String[] columnNames, int propsCnt, Object data[][])
     {
         StringBuffer bf = new StringBuffer("");
 
-        TableModel model = table.getModel();
         ArrayList<Integer> columnsWidths = new ArrayList<Integer>();
-        for (int i = 0; i < model.getColumnCount(); i++)
+        for (int i = 0; i < columnNames.length; i++)
         {
-            int width = model.getColumnName(i).length();
-            for (int j = 0; j < model.getRowCount(); j++)
+            int width = columnNames[i].length();
+            for (int j = 0; j < data.length; j++)
             {
-                Object o = model.getValueAt(j, i);
+                Object o = data[j][i];
                 if (o == null)
                     continue;
                 width = Math.max(width, o.toString().length());
             }
             columnsWidths.add(new Integer(width));
         }
-        for (int i = 0; i < model.getColumnCount(); i++)
+        for (int i = 0; i < columnNames.length; i++)
         {
-            String columnName = model.getColumnName(i);
+            String columnName = columnNames[i];
             int width = ((Integer) columnsWidths.get(i)).intValue();
             bf.append(columnName).append(buildString(' ', width - columnName.length() + 1));
         }
@@ -452,12 +497,12 @@ public class StringUtilities
         }
         bf.append("\n");
 
-        for (int i = 0; i < model.getRowCount(); i++)
+        for (int i = 0; i < data.length; i++)
         {
-            for (int j = 0; j < model.getColumnCount(); j++)
+            for (int j = 0; j < columnNames.length; j++)
             {
                 int width = ((Integer) columnsWidths.get(j)).intValue();
-                Object o = model.getValueAt(i, j);
+                Object o = data[i][j];
                 if (o == null)
                     continue;
                 String cell = o.toString();

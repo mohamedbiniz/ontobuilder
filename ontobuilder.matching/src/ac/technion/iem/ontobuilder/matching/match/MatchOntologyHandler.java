@@ -96,8 +96,7 @@ public class MatchOntologyHandler
         {
             System.out.println(comparator.getName());
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 0, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 0, matchTable));
         }
 
         return matchMatrix;

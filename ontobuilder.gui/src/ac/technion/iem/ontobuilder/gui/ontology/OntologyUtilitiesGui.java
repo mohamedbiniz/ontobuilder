@@ -3,8 +3,6 @@ package ac.technion.iem.ontobuilder.gui.ontology;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JTable;
-
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
@@ -12,7 +10,6 @@ import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.util.StringUtilities;
 import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
-import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchComparator;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
@@ -188,8 +185,7 @@ public class OntologyUtilitiesGui
         {
             System.out.println(ApplicationUtilities.getResourceString("verbose.match.syntactic"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 0, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 0, matchTable));
         }
 
         return matchInformation;
@@ -241,8 +237,7 @@ public class OntologyUtilitiesGui
         {
             System.out.println(ApplicationUtilities.getResourceString("verbose.match.syntactic"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 0, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 0, matchTable));
         }
 
         return matchInformation;
@@ -304,8 +299,7 @@ public class OntologyUtilitiesGui
         {
             System.out.println(comparator.getName());
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 0, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 0, matchTable));
         }
 
         return matchMatrix;

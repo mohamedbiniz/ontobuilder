@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -452,8 +451,7 @@ public class GraphAlgorithm extends TermValueAlgorithm
                 PropertiesHandler.getResourceString("algorithm.value") + " + " +
                 PropertiesHandler.getResourceString("algorithm.graph"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 5, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 5, matchTable));
         }
 
         return matchMatrix;

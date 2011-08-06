@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.gui.utils.graphs;
+package ac.technion.iem.ontobuilder.core.util.graphs;
 
 import java.util.Vector;
 

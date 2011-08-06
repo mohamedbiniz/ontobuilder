@@ -13,14 +13,13 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
+import ac.technion.iem.ontobuilder.core.util.graphs.LabeledEdge;
+import ac.technion.iem.ontobuilder.core.util.graphs.LabeledVertex;
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.topk.wrapper.SchemaMatchingsWrapper;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.Mismatch;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchMatrix;
 import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
-
-import com.modica.graph.LabeledEdge;
-import com.modica.graph.LabeledVertex;
 
 /**
  * <p>
@@ -385,7 +384,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
     private Vector<LabeledEdge> getEdges(Ontology ontology, Vector<LabeledVertex> verts)
     {
         Vector<LabeledEdge> result = new Vector<LabeledEdge>();
-        Vector<?> relationships = ontology.getModel().getRelationships();
+        Vector<?> relationships = ontology.getRelationships();
         for (int i = 0; i < relationships.size(); i++)
         {
             Relationship rel = (Relationship) relationships.get(i);
@@ -420,7 +419,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
      */
     private Vector<LabeledVertex> getVertexes(Ontology ontology)
     {
-        Vector<?> terms = ontology.getModel().getTerms();
+        Vector<?> terms = ontology.getTerms();
         Vector<LabeledVertex> result = new Vector<LabeledVertex>();
         for (int i = 0; i < terms.size(); i++)
         {
@@ -491,7 +490,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
      */
     private ArrayList<Term> getTerms(Ontology o)
     {
-        Vector<Term> terms = o.getModel().getTerms();
+        Vector<Term> terms = o.getTerms();
         ArrayList<Term> result = new ArrayList<Term>();
         for (int i = 0; i < terms.size(); i++)
         {

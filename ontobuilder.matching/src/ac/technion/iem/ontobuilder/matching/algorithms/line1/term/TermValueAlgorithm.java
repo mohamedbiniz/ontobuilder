@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -388,8 +387,7 @@ public class TermValueAlgorithm extends AbstractAlgorithm
             System.out.println(PropertiesHandler.getResourceString("algorithm.term") + " + " +
                 PropertiesHandler.getResourceString("algorithm.value"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 2, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 2, matchTable));
         }
 
         return matchMatrix;
@@ -489,8 +487,7 @@ public class TermValueAlgorithm extends AbstractAlgorithm
             System.out.println(PropertiesHandler.getResourceString("algorithm.term") + " + " +
                 PropertiesHandler.getResourceString("algorithm.value"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 2, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 2, matchTable));
         }
 
         return matchMatrix;

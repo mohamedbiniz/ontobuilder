@@ -1,7 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.algorithms.line1.term;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -538,8 +537,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
                 PropertiesHandler.getResourceString("algorithm.graph") + " + " +
                 PropertiesHandler.getResourceString("algorithm.precedence"));
             System.out.println();
-            System.out.println(StringUtilities.getJTableStringRepresentation(new JTable(
-                new PropertiesTableModel(columnNames, 4, matchTable))));
+            System.out.println(StringUtilities.getTableStringRepresentation(columnNames, 4, matchTable));
         }
 
         return matchMatrix;
