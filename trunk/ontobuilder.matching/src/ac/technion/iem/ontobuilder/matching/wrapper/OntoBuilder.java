@@ -1,6 +1,8 @@
 package ac.technion.iem.ontobuilder.matching.wrapper;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
@@ -121,8 +123,9 @@ class OntoBuilder
     {
         try
         {
-            File thesaurusFile = new File(PropertiesHandler.getCurrentDirectory() +
-                File.separator + PropertiesHandler.getStringProperty("thesaurus.file"));
+//            File thesaurusFile = new File(PropertiesHandler.getCurrentDirectory() +
+//                File.separator + PropertiesHandler.getStringProperty("thesaurus.file"));
+            File thesaurusFile = getFileForProperty("thesaurus.file");
             if (thesaurusFile.exists())
                 thesaurus = new Thesaurus(thesaurusFile);
             else
@@ -133,6 +136,17 @@ class OntoBuilder
         {
             e.printStackTrace();
         }
+        catch (URISyntaxException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private File getFileForProperty(String propertyKey) throws URISyntaxException
+    {
+        String property = PropertiesHandler.getStringProperty(propertyKey);
+        URL resource = getClass().getResource(property);
+        return new File(resource.toURI());
     }
 
     /**
@@ -212,7 +226,6 @@ class OntoBuilder
         try
         {
             PropertiesHandler.initializeResources(
-                PropertiesHandler.getCurrentDirectory() + File.separator +
                     PropertiesHandler.getStringProperty("application.resourceBundle"), locale);
         }
         catch (ResourceException e)
