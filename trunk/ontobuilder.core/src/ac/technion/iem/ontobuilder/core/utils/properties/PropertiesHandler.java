@@ -1,6 +1,5 @@
 package ac.technion.iem.ontobuilder.core.utils.properties;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
