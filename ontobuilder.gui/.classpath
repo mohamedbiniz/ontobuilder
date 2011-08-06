@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="images"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.extraction.webform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.io"/>
