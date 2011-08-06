@@ -37,7 +37,7 @@ import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelListener;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionListener;
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationParameters;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 import ac.technion.iem.ontobuilder.gui.elements.PopupListener;

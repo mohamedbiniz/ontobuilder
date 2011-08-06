@@ -19,8 +19,8 @@ import org.jdom.output.XMLOutputter;
 import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
-import ac.technion.iem.ontobuilder.core.util.Email;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.Email;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 
 /**
  * <p>Title: OntologyUtilities</p>

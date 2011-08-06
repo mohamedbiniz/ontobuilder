@@ -15,7 +15,7 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.application.Application;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 

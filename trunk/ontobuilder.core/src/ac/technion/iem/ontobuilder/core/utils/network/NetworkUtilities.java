@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util.network;
+package ac.technion.iem.ontobuilder.core.utils.network;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

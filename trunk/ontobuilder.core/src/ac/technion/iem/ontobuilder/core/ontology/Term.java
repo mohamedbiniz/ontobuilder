@@ -16,9 +16,9 @@ import org.jdom.Namespace;
 import ac.technion.iem.ontobuilder.core.biztalk.BizTalkUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
-import ac.technion.iem.ontobuilder.core.util.Email;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.Email;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
  * <p>Title: Term</p>

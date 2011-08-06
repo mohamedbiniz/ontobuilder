@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util.properties;
+package ac.technion.iem.ontobuilder.core.utils.properties;
 
 /**
  * <p>Title: PropertyException</p>

@@ -15,9 +15,9 @@ import org.jdom.output.XMLOutputter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelAdapter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelListener;
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
-import ac.technion.iem.ontobuilder.core.util.network.NetworkEntityResolver;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
  * <p>Title: ThesaurusModel</p>

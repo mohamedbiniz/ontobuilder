@@ -1,6 +1,6 @@
 package ac.technion.iem.ontobuilder.core.ontology.operator;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 
 /**
  * <p>Title: WordSeparatorOperator</p>

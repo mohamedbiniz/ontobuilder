@@ -10,7 +10,7 @@ import org.jdom.Element;
 
 import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
-import ac.technion.iem.ontobuilder.core.util.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
  * <p>Title: Domain</p>

@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.JTable;
 
-import ac.technion.iem.ontobuilder.core.util.network.NetworkUtilities;
+import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 

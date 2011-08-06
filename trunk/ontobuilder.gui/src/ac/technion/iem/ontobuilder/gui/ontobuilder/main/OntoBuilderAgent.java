@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.MessageFormat;
 
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 
 /**

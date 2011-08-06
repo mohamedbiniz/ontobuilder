@@ -15,7 +15,7 @@ import javax.swing.KeyStroke;
 import javax.swing.JFrame;
 import javax.help.CSH;
 
-import ac.technion.iem.ontobuilder.core.util.properties.ApplicationOptions;
+import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
 
 /**
  * <p>Title: Options</p>

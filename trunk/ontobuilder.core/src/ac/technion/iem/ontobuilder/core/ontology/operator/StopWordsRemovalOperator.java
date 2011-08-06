@@ -2,7 +2,7 @@ package ac.technion.iem.ontobuilder.core.ontology.operator;
 
 import java.util.ArrayList;
 
-import ac.technion.iem.ontobuilder.core.util.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 
 /**
  * <p>Title: StopWordsRemovalOperator</p>

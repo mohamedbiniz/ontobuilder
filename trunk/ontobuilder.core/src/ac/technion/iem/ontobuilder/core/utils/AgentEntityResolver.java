@@ -1,4 +1,4 @@
-package ac.technion.iem.ontobuilder.core.util;
+package ac.technion.iem.ontobuilder.core.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
