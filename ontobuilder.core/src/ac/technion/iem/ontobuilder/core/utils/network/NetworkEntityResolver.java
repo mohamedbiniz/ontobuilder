@@ -1,6 +1,5 @@
 package ac.technion.iem.ontobuilder.core.utils.network;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,14 +22,15 @@ public class NetworkEntityResolver implements EntityResolver
         String filtered;
         if (systemId.indexOf("file:/") != -1)
         {
-            filtered = systemId.substring(6, systemId.length());
+            filtered = systemId.substring(7, systemId.length());
 
         }
         else
         {
             filtered = systemId;
         }
-        InputStream entityStream = new FileInputStream(filtered);
+        InputStream entityStream = getClass().getResourceAsStream(filtered);
+//        InputStream entityStream = new FileInputStream(filtered);
         return new InputSource(entityStream);
     }
 }
