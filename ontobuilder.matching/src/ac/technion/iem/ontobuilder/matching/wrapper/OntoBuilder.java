@@ -1,8 +1,6 @@
 package ac.technion.iem.ontobuilder.matching.wrapper;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
@@ -13,7 +11,6 @@ import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilitiesPropertiesEnum;
 import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
-import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertyException;
 import ac.technion.iem.ontobuilder.core.utils.properties.ResourceException;
@@ -21,6 +18,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgori
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
+import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: OntoBuilder</p>
@@ -125,28 +123,13 @@ class OntoBuilder
         {
 //            File thesaurusFile = new File(PropertiesHandler.getCurrentDirectory() +
 //                File.separator + PropertiesHandler.getStringProperty("thesaurus.file"));
-            File thesaurusFile = getFileForProperty("thesaurus.file");
-            if (thesaurusFile.exists())
-                thesaurus = new Thesaurus(thesaurusFile);
-            else
-                thesaurus = new Thesaurus("/" +
-                    PropertiesHandler.getStringProperty("thesaurus.file"));
+            File thesaurusFile = new File(OntoBuilderResources.Config.THESAURUS_XML);
+            thesaurus = new Thesaurus(thesaurusFile);
         }
         catch (ThesaurusException e)
         {
             e.printStackTrace();
         }
-        catch (URISyntaxException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    private File getFileForProperty(String propertyKey) throws URISyntaxException
-    {
-        String property = PropertiesHandler.getStringProperty(propertyKey);
-        URL resource = getClass().getResource(property);
-        return new File(resource.toURI());
     }
 
     /**
@@ -165,13 +148,8 @@ class OntoBuilder
     private void initializeOptions()
     {
         options = new ApplicationOptions();
-        File optionFile = new File(PropertiesHandler.getCurrentDirectory() + File.separator +
-            PropertiesHandler.getStringProperty("application.configurationFile"));
-        if (optionFile.exists())
-            options.loadOptions(optionFile);
-        else
-            options.loadOptions("/" +
-                PropertiesHandler.getStringProperty("application.configurationFile"));
+        File optionFile = new File(OntoBuilderResources.Config.CONFIGURATION_XML);
+        options.loadOptions(optionFile);
     }
 
     /**
@@ -181,13 +159,11 @@ class OntoBuilder
     {
         try
         {
-            File algorithmsFile = new File(PropertiesHandler.getCurrentDirectory() +
-                PropertiesHandler.getStringProperty("algorithms.file"));
+//            File algorithmsFile = new File(PropertiesHandler.getCurrentDirectory() +
+//                PropertiesHandler.getStringProperty("algorithms.file"));
+            File algorithmsFile = new File(OntoBuilderResources.Config.Matching.ALGORITHMS_XML);
             if (algorithmsFile.exists())
                 algorithms = AlgorithmUtilities.getAlgorithmsInstances(algorithmsFile);
-            else
-                algorithms = AlgorithmUtilities.getAlgorithmsInstances("/" +
-                    PropertiesHandler.getStringProperty("algorithms.file"));
             if (algorithms == null)
                 return;
             double threshold = Double.parseDouble((String) options
@@ -214,7 +190,7 @@ class OntoBuilder
         // Initialise the properties
         try
         {
-            PropertiesHandler.initializeProperties(ApplicationParameters.PROPERTIES_FILE);
+            PropertiesHandler.initializeProperties(OntoBuilderResources.Config.APPLICATION_PROPERTIES);
         }
         catch (PropertyException e)
         {
@@ -225,8 +201,7 @@ class OntoBuilder
         // Initialise the resource bundle
         try
         {
-            PropertiesHandler.initializeResources(
-                    PropertiesHandler.getStringProperty("application.resourceBundle"), locale);
+            PropertiesHandler.initializeResources(OntoBuilderResources.Config.RESOURCES_PROPERTIES, locale);
         }
         catch (ResourceException e)
         {

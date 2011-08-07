@@ -22,7 +22,6 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 
 import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
-import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertyException;
 import ac.technion.iem.ontobuilder.core.utils.properties.ResourceException;
 import ac.technion.iem.ontobuilder.gui.application.action.Actions;
@@ -30,6 +29,7 @@ import ac.technion.iem.ontobuilder.gui.elements.About;
 import ac.technion.iem.ontobuilder.gui.elements.MenuBar;
 import ac.technion.iem.ontobuilder.gui.elements.StatusBar;
 import ac.technion.iem.ontobuilder.gui.elements.ToolBar;
+import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: Application</p>
@@ -173,7 +173,7 @@ public abstract class Application extends JPanel
             try
             {
 
-                ApplicationUtilities.initializeProperties(ApplicationParameters.PROPERTIES_FILE);
+                ApplicationUtilities.initializeProperties(OntoBuilderResources.Config.APPLICATION_PROPERTIES);
             }
             catch (PropertyException e)
             {
@@ -185,8 +185,7 @@ public abstract class Application extends JPanel
         // Initialize the resource bundle
         try
         {
-            ApplicationUtilities.initializeResources(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("application.resourceBundle"), locale);
+            ApplicationUtilities.initializeResources(OntoBuilderResources.Config.RESOURCES_PROPERTIES, locale);
         }
         catch (ResourceException e)
         {
@@ -204,13 +203,8 @@ public abstract class Application extends JPanel
     protected void initializeOptions()
     {
         options = new ApplicationOptions();
-        File optionFile = new File(ApplicationUtilities.getCurrentDirectory() +
-            ApplicationUtilities.getStringProperty("application.configurationFile"));
-        if (optionFile.exists())
-            options.loadOptions(optionFile);
-        else
-            options.loadOptions("/" +
-                ApplicationUtilities.getStringProperty("application.configurationFile"));
+        File optionFile = new File(OntoBuilderResources.Config.CONFIGURATION_XML);
+        options.loadOptions(optionFile);
     }
 
     /**
@@ -615,8 +609,7 @@ public abstract class Application extends JPanel
         if (isApplication())
         {
             if (options != null)
-                options.saveOptions(ApplicationUtilities
-                    .getStringProperty("application.configurationFile"));
+                options.saveOptions(OntoBuilderResources.Config.CONFIGURATION_XML);
             frame.dispose();
             System.exit(0);
         }

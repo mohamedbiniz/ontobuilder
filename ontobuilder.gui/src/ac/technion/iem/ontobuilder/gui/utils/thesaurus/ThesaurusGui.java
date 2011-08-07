@@ -37,11 +37,11 @@ import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelListener;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionEvent;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusSelectionListener;
-import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
 import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
+import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: Thesaurus</p>
@@ -963,7 +963,7 @@ public class ThesaurusGui extends JPanel
         try
         {
             ApplicationUtilities
-                .initializeProperties(ApplicationParameters.PROPERTIES_FILE);
+                .initializeProperties(OntoBuilderResources.Config.APPLICATION_PROPERTIES);
         }
         catch (Exception e)
         {
@@ -975,7 +975,7 @@ public class ThesaurusGui extends JPanel
         try
         {
             ApplicationUtilities.initializeResources(
-                ApplicationUtilities.getStringProperty("application.resourceBundle"),
+            	OntoBuilderResources.Config.RESOURCES_PROPERTIES,
                 java.util.Locale.getDefault());
         }
         catch (Exception e)
@@ -987,13 +987,8 @@ public class ThesaurusGui extends JPanel
         try
         {
             ThesaurusGui thesaurus;
-            File thesaurusFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("thesaurus.file"));
-            if (thesaurusFile.exists())
-                thesaurus = new ThesaurusGui(thesaurusFile);
-            else
-                thesaurus = new ThesaurusGui("/" +
-                    ApplicationUtilities.getStringProperty("thesaurus.file"));
+            File thesaurusFile = new File(OntoBuilderResources.Config.THESAURUS_XML);
+            thesaurus = new ThesaurusGui(thesaurusFile);
 
             System.out.println("'" + args[0] + "' and '" + args[1] + "' are " +
                 (thesaurus.isSynonym(args[0], args[1]) ? "" : "not ") + "synonyms");
