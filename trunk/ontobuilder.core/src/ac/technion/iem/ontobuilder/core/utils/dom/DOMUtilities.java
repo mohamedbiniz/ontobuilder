@@ -177,9 +177,8 @@ public class DOMUtilities
         while ((c = stream.read()) != -1)
             input.append((char) c);
         String filteredInput = filterInput(input.toString());
-        String propertiesFile = PropertiesHandler.getStringProperty("tidy.configurationFile");
-        InputStream propertiesStream = PropertiesHandler.class.getResourceAsStream("\\" +
-            propertiesFile);
+        InputStream propertiesStream = PropertiesHandler.class.getResourceAsStream(
+        	"/config/tidyconfig.PROPERTIES");
         if (propertiesStream == null)
         {
             // throw new PropertyException("The property file '" + propertiesFile +
@@ -231,9 +230,8 @@ public class DOMUtilities
     {
         if (doc == null || out == null)
             throw new NullPointerException();
-        String propertiesFile = PropertiesHandler.getStringProperty("tidy.configurationFile");
-        InputStream propertiesStream = PropertiesHandler.class.getResourceAsStream("\\" +
-            propertiesFile);
+        InputStream propertiesStream = PropertiesHandler.class.getResourceAsStream(
+        	"/config/tidyconfig.PROPERTIES");
         if (propertiesStream == null)
         {
             // throw new PropertyException("The property file '" + propertiesFile +

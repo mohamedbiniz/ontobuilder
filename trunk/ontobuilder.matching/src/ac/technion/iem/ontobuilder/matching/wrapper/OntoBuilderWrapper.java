@@ -12,6 +12,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtili
 import ac.technion.iem.ontobuilder.matching.algorithms.line2.misc.MatchingAlgorithmsNamesEnum;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
+import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: OntoBuilderWrapper</p>
@@ -74,8 +75,8 @@ public final class OntoBuilderWrapper extends OntoBuilder
      */
     public AbstractAlgorithm loadMatchAlgorithm(String algorithmToUse) throws AlgorithmException
     {
-        return (AbstractAlgorithm) AlgorithmUtilities.getAlgorithmsInstance(new File(
-            "algorithms.xml"), algorithmToUse);
+        return (AbstractAlgorithm) AlgorithmUtilities.getAlgorithmsInstance(
+        	getAlgorithmsFile(), algorithmToUse);
     }
 
     /**
@@ -119,7 +120,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
                 return null;
             else
             {
-                algorithm = AlgorithmUtilities.getAlgorithmsInstance(new File("algorithms.xml"),
+                algorithm = AlgorithmUtilities.getAlgorithmsInstance(getAlgorithmsFile(),
                     algorithmToUse);
                 if (algorithm == null)
                 {
@@ -172,7 +173,7 @@ public final class OntoBuilderWrapper extends OntoBuilder
     {
         try
         {
-            algorithm = AlgorithmUtilities.getAlgorithmsInstance(new File("algorithms.xml"),
+            algorithm = AlgorithmUtilities.getAlgorithmsInstance(getAlgorithmsFile(),
                 algorithmToUse);
             if (algorithm == null)
             {
@@ -284,5 +285,10 @@ public final class OntoBuilderWrapper extends OntoBuilder
         {
             throw new OntoBuilderWrapperException(e.getMessage());
         }
+    }
+    
+    private File getAlgorithmsFile()
+    {
+    	return new File(OntoBuilderResources.Config.Matching.ALGORITHMS_XML);
     }
 }

@@ -175,11 +175,8 @@ public class ApplicationUtilities
      * @throws ResourceException when cannot load the image
      */
     public static ImageIcon getImage(String icon) throws ResourceException
-    {
-        String imagesDirectory = PropertiesHandler.getStringProperty("application.imagesDirectory");
-        
-        URL url = ApplicationUtilities.class.getResource("\\" +
-            imagesDirectory + icon);
+    {   
+        URL url = ApplicationUtilities.class.getResource("/images/" + icon);
         if (url == null)
         {
             try

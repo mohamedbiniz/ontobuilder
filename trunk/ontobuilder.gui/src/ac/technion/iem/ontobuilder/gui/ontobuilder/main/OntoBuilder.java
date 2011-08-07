@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -133,6 +134,7 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
+import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 import com.jgraph.JGraph;
 
@@ -521,14 +523,10 @@ public final class OntoBuilder extends Application
         try
         {
 
-            File importersFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("importers.file"));
+            File importersFile = new File(OntoBuilderResources.Config.IO.IMPORTERS_XML);
             if (!importersFile.exists())
             {
-                importersFile = new File(File.pathSeparator +
-                    ApplicationUtilities.getStringProperty("importers.file"));
-                if (!importersFile.exists())
-                    return;
+            	return;
             }
 
             ImportUtilities.initializeImporters(importersFile);
@@ -550,14 +548,10 @@ public final class OntoBuilder extends Application
         try
         {
 
-            File exportersFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("exporters.file"));
+            File exportersFile = new File(OntoBuilderResources.Config.IO.IMPORTERS_XML);
             if (!exportersFile.exists())
             {
-                exportersFile = new File(File.pathSeparator +
-                    ApplicationUtilities.getStringProperty("exporters.file"));
-                if (!exportersFile.exists())
-                    return;
+                return;
             }
 
             ExportUtilities.initializeExporters(exportersFile);
@@ -578,21 +572,17 @@ public final class OntoBuilder extends Application
     {
         try
         {
-
-            File toolsFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("tools.file"));
+        	URI uri = getClass().getResource("/config/tools.xml").toURI();
+            File toolsFile = new File(uri);
             if (!toolsFile.exists())
             {
-                toolsFile = new File(File.pathSeparator +
-                    ApplicationUtilities.getStringProperty("tools.file"));
-                if (!toolsFile.exists())
-                    return;
+                return;
             }
 
             ToolsUtilities.intializeTools(toolsFile);
 
         }
-        catch (ToolsException e)
+        catch (Exception e)
         {
             JOptionPane.showMessageDialog(OntoBuilder.this,
                 ApplicationUtilities.getResourceString("error") + ": " + e.getMessage(),
@@ -607,13 +597,9 @@ public final class OntoBuilder extends Application
     {
         try
         {
-            File algorithmsFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("algorithms.file"));
+            File algorithmsFile = new File(OntoBuilderResources.Config.Matching.ALGORITHMS_XML);
             if (algorithmsFile.exists())
                 algorithms = AlgorithmUtilities.getAlgorithmsInstances(algorithmsFile);
-            else
-                algorithms = AlgorithmUtilities.getAlgorithmsInstances("/" +
-                    ApplicationUtilities.getStringProperty("algorithms.file"));
             if (algorithms == null)
                 return;
             double threshold = Double.parseDouble((String) options
@@ -643,13 +629,8 @@ public final class OntoBuilder extends Application
     protected void initializeGUIComponents()
     {
         browser = new Browser(this);
-        File browserHistory = new File(ApplicationUtilities.getCurrentDirectory() +
-            ApplicationUtilities.getStringProperty("browser.historyFile"));
-        if (browserHistory.exists())
-            browser.loadAddressHistory(browserHistory);
-        else
-            browser.loadAddressHistory("/" +
-                ApplicationUtilities.getStringProperty("browser.historyFile"));
+        File browserHistory = new File(OntoBuilderResources.Config.GUI.BROWSER_HISTORY);
+        browser.loadAddressHistory(browserHistory);
         browser.addPropertyChangeListener(new PropertyChangeListener()
         {
             public void propertyChange(PropertyChangeEvent evt)
@@ -664,13 +645,8 @@ public final class OntoBuilder extends Application
 
         try
         {
-            File thesaurusFile = new File(ApplicationUtilities.getCurrentDirectory() +
-                ApplicationUtilities.getStringProperty("thesaurus.file"));
-            if (thesaurusFile.exists())
-                thesaurus = new ThesaurusGui(thesaurusFile);
-            else
-                thesaurus = new ThesaurusGui("/" +
-                    ApplicationUtilities.getStringProperty("thesaurus.file"));
+            File thesaurusFile = new File(OntoBuilderResources.Config.THESAURUS_XML);
+            thesaurus = new ThesaurusGui(thesaurusFile);
         }
         catch (ThesaurusException e)
         {
@@ -1510,13 +1486,12 @@ public final class OntoBuilder extends Application
     public void exit()
     {
         if (browser != null && isApplication())
-            browser.saveAddressHistory(ApplicationUtilities
-                .getStringProperty("browser.historyFile"));
+            browser.saveAddressHistory(OntoBuilderResources.Config.GUI.BROWSER_HISTORY);
         if (thesaurus != null && isApplication())
         {
             try
             {
-                thesaurus.saveThesaurus(ApplicationUtilities.getStringProperty("thesaurus.file"));
+                thesaurus.saveThesaurus(OntoBuilderResources.Config.THESAURUS_XML);
             }
             catch (ThesaurusException e)
             {

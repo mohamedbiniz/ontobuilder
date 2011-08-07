@@ -1,5 +1,6 @@
 package ac.technion.iem.ontobuilder.core.utils.properties;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -34,18 +35,17 @@ public class PropertiesHandler
     {
         try
         {
-            InputStream propertiesStream = PropertiesHandler.class
-                .getResourceAsStream(propertiesFile);
-            if (propertiesStream == null)
-                throw new PropertyException("The property file '" + propertiesFile +
-                    "' doesn't exists.");
+            InputStream propertiesStream = new FileInputStream(propertiesFile);
+//            if (propertiesStream == null)
+//                throw new PropertyException("The property file '" + propertiesFile +
+//                    "' doesn't exists.");
             properties = new java.util.Properties();
             properties.load(propertiesStream);
         }
         catch (IOException e)
         {
             throw new PropertyException("There was an error trying to read properties from '" +
-                propertiesFile + "'.");
+                propertiesFile + "'. cause: " + e.getMessage());
         }
     }
 
@@ -154,8 +154,8 @@ public class PropertiesHandler
         try
         {
             InputStream propertiesStream;// =PropertiesHandler.class.getResourceAsStream(propertiesFile);
-//            propertiesStream = new FileInputStream(resourceFile);
-            propertiesStream = PropertiesHandler.class.getResourceAsStream(resourceFile);
+            propertiesStream = new FileInputStream(resourceFile);
+//            propertiesStream = PropertiesHandler.class.getResourceAsStream(resourceFile);
 
             resources = new java.util.Properties();
             resources.load(propertiesStream);
