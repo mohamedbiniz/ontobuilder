@@ -21,7 +21,7 @@ public class OntologyTreeModel extends DefaultTreeModel
     public OntologyTreeModel(OntologyGui model)
     {
         super(model.getTreeBranch());
-        this.ontology = OntologyGui.ontology.ontologyCore;
+        this.ontology = model.getOntology();
         updateTree();
     }
 
