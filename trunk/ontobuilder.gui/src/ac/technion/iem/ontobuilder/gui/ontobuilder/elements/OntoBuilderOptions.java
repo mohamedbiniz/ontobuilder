@@ -963,7 +963,7 @@ public class OntoBuilderOptions extends Options
             JPanel impexp = new JPanel(new GridBagLayout());
             panels.add(ApplicationUtilities.getResourceString("options.panel.impexp"), impexp);
 
-            {// Match Algorithms
+            {// Importers
                 JPanel importers = new JPanel(new GridBagLayout());
                 importers.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createLineBorder(Color.black),
@@ -1015,7 +1015,7 @@ public class OntoBuilderOptions extends Options
                     ApplicationUtilities.getResourceString("options.exporters")));
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.gridy = 1;
-                gbc.gridx = 0;
+                //gbc.gridx = 0;
                 gbc.fill = GridBagConstraints.HORIZONTAL;
                 gbc.insets = new Insets(5, 5, 5, 5);
                 impexp.add(exporters, gbc);
@@ -1045,7 +1045,8 @@ public class OntoBuilderOptions extends Options
 
                     GridBagConstraints gbcl = new GridBagConstraints();
                     gbcl.gridy = 1;
-                    gbcl.gridx = 2;
+                    gbcl.gridx = 1;
+                    //gbcl.gridx = 2;
                     gbcl.weightx = 1;
                     gbcl.weighty = 1;
                     gbcl.fill = GridBagConstraints.BOTH;

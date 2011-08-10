@@ -548,7 +548,7 @@ public final class OntoBuilder extends Application
         try
         {
 
-            File exportersFile = new File(OntoBuilderResources.Config.IO.IMPORTERS_XML);
+            File exportersFile = new File(OntoBuilderResources.Config.IO.EXPORTERS_XML);
             if (!exportersFile.exists())
             {
                 return;
