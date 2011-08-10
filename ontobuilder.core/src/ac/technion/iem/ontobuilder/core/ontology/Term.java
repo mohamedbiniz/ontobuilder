@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import org.jdom.Element;
@@ -18,6 +19,12 @@ import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.ontology.operator.StringOperator;
 import ac.technion.iem.ontobuilder.core.utils.Email;
 import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.graphs.Connections;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphCell;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphEdge;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphPort;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphUtilities;
+import ac.technion.iem.ontobuilder.core.utils.graphs.OrderedGraphPort;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 
 /**
@@ -1164,5 +1171,97 @@ public class Term extends OntologyClass
         }
         termElement.setAttribute("name", (String) getAttributeValue("name"));
         return termElement;
+    }
+
+    public GraphCell buildGraphHierarchy(GraphPort parentPort,
+        ArrayList<GraphCell> cells, Hashtable<GraphCell, Map<?, ?>> attributes,
+        Connections cs)
+    {
+        if (this.isInstanceOf("hidden"))
+            return null;
+        GraphCell termVertex = new GraphCell(this);
+        cells.add(termVertex);
+
+        if (parentPort != null) // Connect parent with this child
+        {
+            GraphPort toParentPort = new GraphPort("toParent");
+            termVertex.addChild(toParentPort);
+            GraphEdge edge = new GraphEdge();
+            cs.connect(edge, parentPort, true);
+            cs.connect(edge, toParentPort, false);
+            cells.add(edge);
+        }
+
+        if (!this.getTerms().isEmpty()) // It has children
+        {
+            GraphPort toChildPort = new OrderedGraphPort("toChild");
+            termVertex.addChild(toChildPort);
+            for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+            {
+                Term term = (Term) i.next();
+                term.buildGraphHierarchy(toChildPort, cells,
+                    attributes, cs);
+            }
+        }
+
+        return termVertex;
+    }
+
+    public void buildPrecedenceRelationships(ArrayList<GraphCell> cells,
+        Hashtable<?, ?> attributes, Connections cs)
+    {
+        GraphCell vertex = GraphUtilities.getCellWithObject(cells, this);
+        if (vertex == null)
+            return;
+        if (this.getPrecede() != null)
+        {
+            GraphCell prevVertex = null;
+            Term auxPrecede = this;
+            do
+            {
+                auxPrecede = auxPrecede.getPrecede();
+                prevVertex = GraphUtilities.getCellWithObject(cells, auxPrecede);
+            }
+            while (prevVertex == null && auxPrecede != null);
+            if (prevVertex != null)
+            {
+                GraphPort prevPort = new GraphPort("precedes");
+                prevVertex.addChild(prevPort);
+                GraphPort nextPort = new GraphPort("isPreceded");
+                vertex.addChild(nextPort);
+                GraphEdge edge = new GraphEdge();
+                cs.connect(edge, prevPort, true);
+                cs.connect(edge, nextPort, false);
+                cells.add(edge);
+            }
+        }
+        if (this.getSucceed() != null)
+        {
+            GraphCell nextVertex = null;
+            Term auxSucceed = this;
+            do
+            {
+                auxSucceed = auxSucceed.getSucceed();
+                nextVertex = GraphUtilities.getCellWithObject(cells, auxSucceed);
+            }
+            while (nextVertex == null && auxSucceed != null);
+            if (nextVertex != null)
+            {
+                GraphPort prevPort = new GraphPort("isSucceeded");
+                vertex.addChild(prevPort);
+                GraphPort nextPort = new GraphPort("succeeds");
+                vertex.addChild(nextPort);
+                GraphEdge edge = new GraphEdge();
+                cs.connect(edge, prevPort, false);
+                cs.connect(edge, nextPort, true);
+                cells.add(edge);
+            }
+        }
+
+        for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+        {
+            Term term = (Term) i.next();
+            term.buildPrecedenceRelationships(cells, attributes, cs);
+        }
     }
 }
