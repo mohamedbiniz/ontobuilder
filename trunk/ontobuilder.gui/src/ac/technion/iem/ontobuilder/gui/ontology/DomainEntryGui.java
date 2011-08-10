@@ -430,4 +430,10 @@ public class DomainEntryGui extends OntologyObjectGui
         dialog.setVisible(true);// show();
         return e;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return domainEntry == null ? "<NULL>" : domainEntry.toString();
+    }
 }

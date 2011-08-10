@@ -515,4 +515,10 @@ public class TermGui extends OntologyObjectGui
             termGui.buildPrecedenceRelationships(cells, attributes, cs);
         }
     }
+    
+    @Override
+    public String toString()
+    {
+    	return term == null ? "<NULL>" : term.toString(); 
+    }
 }

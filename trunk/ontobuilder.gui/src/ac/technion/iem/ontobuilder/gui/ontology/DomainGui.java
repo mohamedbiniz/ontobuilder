@@ -66,4 +66,10 @@ public class DomainGui extends OntologyObjectGui
             root.add((OntologyObjectGuiFactory.getOntologyObjectGui((OntologyObject) i.next())).getHyperTreeNode());
         return root;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return domain == null ? "<NULL>" : domain.toString();
+    }
 }

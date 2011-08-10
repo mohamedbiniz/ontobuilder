@@ -310,4 +310,10 @@ public class RelationshipGui extends OntologyObjectGui
         dialog.setVisible(true);// show();
         return r;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return relationship == null ? "<NULL>" : relationship.toString();
+    }
 }
