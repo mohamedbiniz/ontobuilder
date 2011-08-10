@@ -13,8 +13,10 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.jdom.DocType;
@@ -30,6 +32,11 @@ import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelListener;
 import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 import ac.technion.iem.ontobuilder.core.utils.dom.DOMUtilities;
+import ac.technion.iem.ontobuilder.core.utils.graphs.Connections;
+import ac.technion.iem.ontobuilder.core.utils.graphs.Graph;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphCell;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphPort;
+import ac.technion.iem.ontobuilder.core.utils.graphs.OrderedGraphPort;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
@@ -1165,5 +1172,41 @@ public class Ontology extends OntologyObject
         ontologyGenerateHelper.setTextareaInputClass(textareaInputClass);
         ontologyGenerateHelper.setTextInputClass(textInputClass);
         return ontologyGenerateHelper;
+    }
+    
+    public Graph getGraph()
+    {
+    	Graph graph = new Graph();
+        ArrayList<GraphCell> cells = new ArrayList<GraphCell>();
+        // ConnectionSet for the Insert method
+        Connections cs = new Connections();
+        // Hashtable for Attributes (Vertex to Map)
+        Hashtable<GraphCell, Map<?, ?>> attributes = new Hashtable<GraphCell, Map<?, ?>>();
+
+        GraphCell vertex = new GraphCell(getName());
+        cells.add(vertex);
+
+        if (!this.getTerms().isEmpty())
+        {
+            GraphPort toChildPort = new OrderedGraphPort("toChild");
+            vertex.addChild(toChildPort);
+            for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+            {
+                Term term = (Term) i.next();
+                term.buildGraphHierarchy(toChildPort, cells, attributes, cs);
+            }
+//            if (GraphUtilities.getShowPrecedenceLinks())
+            {
+                for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+                {
+                    Term term = (Term) i.next();
+                    term.buildPrecedenceRelationships(cells, attributes, cs);
+                }
+            }
+        }
+
+        // Insert the cells (View stores attributes)
+        graph.insert(cells, cs);
+        return graph;
     }
 }

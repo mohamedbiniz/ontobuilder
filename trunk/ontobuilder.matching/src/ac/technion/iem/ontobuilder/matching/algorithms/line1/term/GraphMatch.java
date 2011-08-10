@@ -5,12 +5,11 @@ import java.util.Iterator;
 
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.graphs.Graph;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphCell;
+import ac.technion.iem.ontobuilder.core.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
-import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
-
-import com.jgraph.JGraph;
-import com.jgraph.graph.DefaultGraphCell;
 
 /**
  * <p>Title: GraphMatch</p>
@@ -25,8 +24,8 @@ public class GraphMatch
     protected double parentsWeight;
     protected double threshold;
 
-    protected JGraph targetGraph;
-    protected JGraph candidateGraph;
+    protected Graph targetGraph;
+    protected Graph candidateGraph;
     protected ArrayList<Term> targetTerms;
     protected ArrayList<Term> candidateTerms;
 
@@ -40,7 +39,7 @@ public class GraphMatch
      * @param candidateGraph the candidate {@link JGraph}
      */
     public GraphMatch(double matchMatrix[][], ArrayList<Term> targetTerms,
-        ArrayList<Term> candidateTerms, JGraph targetGraph, JGraph candidateGraph)
+        ArrayList<Term> candidateTerms, Graph targetGraph, Graph candidateGraph)
     {
         this.matchMatrix = new double[candidateTerms.size()][targetTerms.size()];
         for (int i = 0; i < matchMatrix.length; i++)
@@ -123,7 +122,7 @@ public class GraphMatch
         for (Iterator<?> i = candidateTerms.iterator(); i.hasNext();)
         {
             Term term = (Term) i.next();
-            DefaultGraphCell cell = GraphUtilities.getCellWithObject(candidateGraph, term);
+            GraphCell cell = GraphUtilities.getCellWithObject(candidateGraph, term);
             if (cell == null)
                 continue;
             matchTerm(cell);
@@ -171,7 +170,7 @@ public class GraphMatch
      *
      * @param candidateCell the candidate term
      */
-    protected void matchTerm(DefaultGraphCell candidateCell)
+    protected void matchTerm(GraphCell candidateCell)
     {
         if (print)
             System.out.println("***********************************");
@@ -182,7 +181,7 @@ public class GraphMatch
         for (Iterator<?> i = targetTerms.iterator(); i.hasNext();)
         {
             Term targetTerm = (Term) i.next();
-            DefaultGraphCell targetCell = GraphUtilities.getCellWithObject(targetGraph, targetTerm);
+            GraphCell targetCell = GraphUtilities.getCellWithObject(targetGraph, targetTerm);
             if (targetCell == null)
                 continue;
 
@@ -219,7 +218,7 @@ public class GraphMatch
      * @param candidateCell the candidate terms
      * @return 0 if there are no candidates, else confidence / num_of_candidates
      */
-    protected double findParentsMatch(DefaultGraphCell targetCell, DefaultGraphCell candidateCell)
+    protected double findParentsMatch(GraphCell targetCell, GraphCell candidateCell)
     {
         ArrayList<?> targetParents = GraphUtilities.getAllParents(targetCell);
         ArrayList<?> candidateParents = GraphUtilities.getAllParents(candidateCell);
@@ -244,7 +243,7 @@ public class GraphMatch
      * @param candidateCell the candidate terms
      * @return 0 if there are no candidates, else confidence / num_of_candidates
      */
-    protected double findSiblingsMatch(DefaultGraphCell targetCell, DefaultGraphCell candidateCell)
+    protected double findSiblingsMatch(GraphCell targetCell, GraphCell candidateCell)
     {
         ArrayList<?> targetSiblings = GraphUtilities.getSiblings(targetCell);
         ArrayList<?> candidateSiblings = GraphUtilities.getSiblings(candidateCell);
@@ -295,7 +294,7 @@ public class GraphMatch
 
         for (Iterator<?> j = candidates.iterator(); j.hasNext();)
         {
-            DefaultGraphCell candidate = (DefaultGraphCell) j.next();
+            GraphCell candidate = (GraphCell) j.next();
             if (!(candidate.getUserObject() instanceof Term))
                 continue;
             Term candidateTerm = (Term) candidate.getUserObject();
@@ -306,7 +305,7 @@ public class GraphMatch
             double localConfidence = -1;
             for (Iterator<?> i = targets.iterator(); i.hasNext();)
             {
-                DefaultGraphCell target = (DefaultGraphCell) i.next();
+                GraphCell target = (GraphCell) i.next();
                 if (!(target.getUserObject() instanceof Term))
                     continue;
                 Term targetTerm = (Term) target.getUserObject();

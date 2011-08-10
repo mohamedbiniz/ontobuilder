@@ -6,16 +6,14 @@ import java.util.List;
 
 import org.jdom.Element;
 
-import com.jgraph.JGraph;
-
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.ontology.domain.GuessedDomain;
 import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
+import ac.technion.iem.ontobuilder.core.utils.graphs.Graph;
 import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationParameters;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
-import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
@@ -291,8 +289,8 @@ public class CombinedAlgorithm extends TermValueAlgorithm
 
             double termValueMatchMatrix[][] = combineMatrices(termMatchMatrix, valueMatchMatrix);
 
-            JGraph targetGraph = new OntologyGui(targetOntology).getGraph();
-            JGraph candidateGraph = new OntologyGui(candidateOntology).getGraph();
+            Graph targetGraph = targetOntology.getGraph();
+            Graph candidateGraph = candidateOntology.getGraph();
             GraphMatch graphMatch = new GraphMatch(termValueMatchMatrix, originalTargetTerms,
                 originalCandidateTerms, targetGraph, candidateGraph);
             graphMatch.setParentsWeight(graphAlgorithm.getParentsWeight());
