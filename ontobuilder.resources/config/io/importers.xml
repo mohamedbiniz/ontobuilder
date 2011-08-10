@@ -2,7 +2,7 @@
 <!DOCTYPE importers SYSTEM "dtds/import.dtd">
 <importers>
         <importer>
-                <classpath>com.modica.ontobuilder.imports.WSDLImporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.imports.WSDLImporter</classpath>
                 <type>WSDL</type>
                 <extension>wsdl</extension>
 		<shortDescription>WSDL</shortDescription>
@@ -10,7 +10,7 @@
                 <icon>wsdl.gif</icon>
         </importer>
 	<importer>
-                <classpath>com.modica.ontobuilder.imports.XSDImporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.imports.XSDImporter</classpath>
                 <type>XML Schema</type>
                 <extension>xsd</extension>
 		<shortDescription>XML Schema</shortDescription>
@@ -18,7 +18,7 @@
                 <icon>xsd.gif</icon>
         </importer>
 	<importer>
-                <classpath>com.modica.ontobuilder.imports.HTMLImporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.imports.HTMLImporter</classpath>
                 <type>HTML</type>
                 <extension>html</extension>
 		<shortDescription>HTML</shortDescription>
@@ -26,7 +26,7 @@
                 <icon>htmlfile.gif</icon>
         </importer>
 	<importer>
-                <classpath>com.modica.ontobuilder.imports.OWLImporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.imports.OWLImporter</classpath>
                 <type>OWL</type>
                 <extension>owl</extension>
 		<shortDescription>OWL</shortDescription>
@@ -34,7 +34,7 @@
                 <icon>owl.gif</icon>
         </importer>
 	<importer>
-                <classpath>com.modica.ontobuilder.imports.OWLImporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.imports.OWLImporter</classpath>
                 <type>RDF</type>
                 <extension>rdf</extension>
 		<shortDescription>RDF</shortDescription>
