@@ -334,5 +334,11 @@ public class AttributeGui extends OntologyObjectGui
         dialog.setVisible(true);// show();
         return a;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return attribute == null ? "<NULL>" : attribute.toString();
+    }
 
 }

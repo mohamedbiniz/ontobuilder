@@ -340,4 +340,10 @@ public class OntologyClassGui extends OntologyObjectGui
         dialog.setVisible(true);// show();
         return c;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return ontologyClass == null ? "<NULL>" : ontologyClass.toString();
+    }
 }

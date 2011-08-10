@@ -17,18 +17,19 @@ public class OntologyTreeModel extends DefaultTreeModel
     private static final long serialVersionUID = 1L;
 
     protected Ontology ontology;
+    protected OntologyGui ontologyGui;
 
     public OntologyTreeModel(OntologyGui model)
     {
         super(model.getTreeBranch());
         this.ontology = model.getOntology();
+        this.ontologyGui = model;
         updateTree();
     }
 
     public void updateTree()
     {
-        OntologyGui ontologyGui = new OntologyGui();
-        ontologyGui.setOntology(ontology);
+//        ontologyGui.setOntology(ontology);
         setRoot(ontologyGui.getTreeBranch());
     }
 

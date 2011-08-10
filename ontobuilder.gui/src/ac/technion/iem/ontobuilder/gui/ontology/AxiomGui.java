@@ -249,4 +249,10 @@ public class AxiomGui extends OntologyObjectGui
         dialog.setVisible(true);// show();
         return a;
     }
+    
+    @Override
+    public String toString()
+    {
+    	return _axiom == null ? "<NULL>" : _axiom.toString();
+    }
 }
