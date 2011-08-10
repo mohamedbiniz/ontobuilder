@@ -3,7 +3,7 @@
 <exporters>
         <exporter>
                 <key>XmlOntologyExporter</key>
-                <classpath>com.modica.ontobuilder.exports.XmlOntologyExporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.exports.XmlOntologyExporter</classpath>
                 <exClass>Ontology</exClass>
                 <type>XML</type>
                 <extension>xml</extension>
@@ -13,7 +13,7 @@
         </exporter>
         <exporter>
         	<key>BizTalkOntologyExporter</key>
-                <classpath>com.modica.ontobuilder.exports.BizTalkOntologyExporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.exports.BizTalkOntologyExporter</classpath>
                 <exClass>Ontology</exClass>
                 <type>BizTalk</type>
                 <extension>xml</extension>
@@ -23,7 +23,7 @@
         </exporter>
         <exporter>
         	<key>BinaryOntologyExporter</key>
-                <classpath>com.modica.ontobuilder.exports.BinaryOntologyExporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.exports.BinaryOntologyExporter</classpath>
                 <exClass>Ontology</exClass>
                 <type>TXT</type>
                 <extension>txt</extension>
@@ -33,7 +33,7 @@
         </exporter>
         <exporter>
         	<key>BestMatchingExporter</key>
-                <classpath>com.modica.ontobuilder.exports.BestMatchingExporter</classpath>
+                <classpath>ac.technion.iem.ontobuilder.io.exports.BestMatchingExporter</classpath>
                 <exClass>Matching</exClass>
                 <type>Default XML</type>
                 <extension>xml</extension>
