@@ -21,6 +21,7 @@ public class CombinedAlgorithmGui extends TermValueAlgorithmGui
     
     public CombinedAlgorithmGui(Algorithm abstractAlgorithm)
     {
+        super(abstractAlgorithm);
         _combinedAlgorithm = (CombinedAlgorithm)abstractAlgorithm;
     }
     

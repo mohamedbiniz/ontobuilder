@@ -24,10 +24,6 @@ public class TermValueAlgorithmGui extends AbstractAlgorithmGui
         _termValueAlgorithm = (TermValueAlgorithm)abstractAlgorithm;
     }
     
-    protected TermValueAlgorithmGui()
-    {
-    }
-    
     public void updateProperties(HashMap<?, ?> properties)
     {
         double termWeight = new Double(properties.get(

@@ -21,6 +21,7 @@ public class GraphAlgorithmGui extends TermValueAlgorithmGui
     
     public GraphAlgorithmGui(Algorithm abstractAlgorithm)
     {
+        super(abstractAlgorithm);
         _graphAlgorithm = (GraphAlgorithm)abstractAlgorithm;
     }
     

@@ -521,4 +521,9 @@ public class TermGui extends OntologyObjectGui
     {
     	return term == null ? "<NULL>" : term.toString(); 
     }
+    
+    public Term getTerm()
+    {
+        return term;
+    }
 }

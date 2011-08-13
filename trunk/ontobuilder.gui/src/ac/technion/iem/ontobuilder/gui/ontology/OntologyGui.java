@@ -922,7 +922,11 @@ public class OntologyGui extends JPanel
      */
     protected void commandAddClass()
     {
-        OntologyClass parent = (OntologyClass) actionObject;
+        OntologyClass parent = null;
+        if (actionObject instanceof OntologyClass)
+            parent = (OntologyClass) actionObject;
+        if (actionObject instanceof OntologyClassGui)
+            parent = ((OntologyClassGui) actionObject).getOntolgoyClass();
         OntologyClass c = OntologyClassGui.createClassDialog(parent);
         if (c == null)
             return;
@@ -938,9 +942,9 @@ public class OntologyGui extends JPanel
         Term t = TermGui.createTermDialog(ontologyCore);
         if (t == null)
             return;
-        Term parent = (Term) actionObject;
+        TermGui parent = (TermGui) actionObject;
         if (parent != null)
-            parent.addTerm(t);
+            parent.getTerm().addTerm(t);
         else
             addTerm(t);
     }
@@ -955,7 +959,12 @@ public class OntologyGui extends JPanel
             return;
         if (actionObject instanceof DomainEntry)
             actionObject = ((DomainEntry) actionObject).getEntry();
-        OntologyClass parent = (OntologyClass) actionObject;
+        
+        OntologyClass parent = null;
+        if (actionObject instanceof OntologyClassGui)
+            parent = ((OntologyClassGui) actionObject).getOntolgoyClass();
+        if (actionObject instanceof TermGui)
+            parent = ((TermGui) actionObject).getTerm().getSuperClass();
         if (parent != null)
             parent.addAttribute(a);
     }
@@ -968,7 +977,13 @@ public class OntologyGui extends JPanel
         Axiom a = AxiomGui.createAxiomDialog();
         if (a == null)
             return;
-        OntologyClass parent = (OntologyClass) actionObject;
+        
+        OntologyClass parent = null;
+        if (actionObject instanceof OntologyClassGui)
+            parent = ((OntologyClassGui) actionObject).getOntolgoyClass();
+        if (actionObject instanceof TermGui)
+            parent = ((TermGui) actionObject).getTerm().getSuperClass();
+        
         if (parent != null)
             parent.addAxiom(a);
     }
@@ -978,10 +993,10 @@ public class OntologyGui extends JPanel
      */
     public void commandAddRelationship()
     {
-        Term source = (Term) actionObject;
-        Relationship r = RelationshipGui.createRelationshipDialog(source, this);
+        TermGui source = (TermGui) actionObject;
+        Relationship r = RelationshipGui.createRelationshipDialog(source.getTerm(), this);
         if (r != null)
-            source.addRelationship(r);
+            source.getTerm().addRelationship(r);
     }
 
     /**

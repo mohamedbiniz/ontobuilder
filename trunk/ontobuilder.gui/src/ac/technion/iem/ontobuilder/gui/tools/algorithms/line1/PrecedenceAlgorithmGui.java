@@ -21,6 +21,7 @@ public class PrecedenceAlgorithmGui extends TermValueAlgorithmGui
     
     public PrecedenceAlgorithmGui(Algorithm abstractAlgorithm)
     {
+        super(abstractAlgorithm);
         _precedenceAlgorithm = (PrecedenceAlgorithm)abstractAlgorithm;
     }
     
