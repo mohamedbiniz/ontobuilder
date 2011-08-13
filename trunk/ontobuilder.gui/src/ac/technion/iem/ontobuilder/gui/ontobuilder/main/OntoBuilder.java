@@ -68,6 +68,7 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyUtilities;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelAdapter;
 import ac.technion.iem.ontobuilder.core.ontology.event.OntologyModelEvent;
+import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelAdapter;
 import ac.technion.iem.ontobuilder.core.thesaurus.event.ThesaurusModelEvent;
@@ -134,7 +135,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
 import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
-import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 import com.jgraph.JGraph;
 

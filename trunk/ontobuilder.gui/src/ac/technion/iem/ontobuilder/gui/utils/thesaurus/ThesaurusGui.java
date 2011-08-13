@@ -30,6 +30,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusWord;
@@ -41,7 +42,6 @@ import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.action.Actions;
 import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
 import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
-import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: Thesaurus</p>

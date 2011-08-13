@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Vector;
 
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
+import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.thesaurus.Thesaurus;
 import ac.technion.iem.ontobuilder.core.thesaurus.ThesaurusException;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
@@ -18,7 +19,6 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AbstractAlgori
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.Algorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmException;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.misc.AlgorithmUtilities;
-import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: OntoBuilder</p>
