@@ -9,7 +9,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -87,12 +86,12 @@ public class ExactMappingTool extends JPanel
             javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12),
             Color.BLACK));
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12));
-        jLabel2.setIcon(new javax.swing.ImageIcon("images/ontology.gif"));
+        jLabel2.setIcon(ApplicationUtilities.getImage("ontology.gif"));
         jLabel2.setText("Candidate Ontology:");
         jPanel2.add(jLabel2, new AbsoluteConstraints(15, 30, 170, -1));
 
         jLabel21.setFont(new java.awt.Font("Arial", 1, 12));
-        jLabel21.setIcon(new javax.swing.ImageIcon("images/ontology.gif"));
+        jLabel21.setIcon(ApplicationUtilities.getImage("ontology.gif"));
         jLabel21.setText("Target Ontology:");
         jPanel2.add(jLabel21, new AbsoluteConstraints(15, 60, 170, -1));
 
@@ -101,7 +100,7 @@ public class ExactMappingTool extends JPanel
         jPanel2.add(candOntology, new AbsoluteConstraints(180, 30, 380, 20));
 
         CandButton.setToolTipText("Select candidate ontology");
-        CandButton.setIcon(new ImageIcon("images/openontology.gif"));
+        CandButton.setIcon(ApplicationUtilities.getImage("openontology.gif"));
         CandButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent event)
@@ -112,7 +111,7 @@ public class ExactMappingTool extends JPanel
         jPanel2.add(CandButton, new AbsoluteConstraints(570, 30, 50, 20));
 
         TargetButton.setToolTipText("Select target ontology");
-        TargetButton.setIcon(new ImageIcon("images/openontology.gif"));
+        TargetButton.setIcon(ApplicationUtilities.getImage("openontology.gif"));
         TargetButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent event)
@@ -125,7 +124,7 @@ public class ExactMappingTool extends JPanel
         jPanel1.add(jPanel2, new AbsoluteConstraints(30, 90, 750, 100));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 28));
-        jLabel1.setIcon(new javax.swing.ImageIcon(""));
+        jLabel1.setIcon(ApplicationUtilities.getImage(""));
         jLabel1.setText("Exact Mapping Editor");
         jPanel1.add(jLabel1, new AbsoluteConstraints(240, 20, 400, 80));
 
@@ -156,7 +155,7 @@ public class ExactMappingTool extends JPanel
             javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12),
             Color.BLACK));
         // Load maping
-        loadButton.setIcon(new ImageIcon("images/open.gif"));
+        loadButton.setIcon(ApplicationUtilities.getImage("open.gif"));
         loadButton.setToolTipText("Load existing mapping");
         loadButton.addActionListener(new ActionListener()
         {
@@ -207,7 +206,7 @@ public class ExactMappingTool extends JPanel
         });
         jPanel3.add(loadButton, new AbsoluteConstraints(70, 20, 30, 30));
 
-        viewTermsButton.setIcon(new ImageIcon("images/ontowizard.gif"));
+        viewTermsButton.setIcon(ApplicationUtilities.getImage("ontowizard.gif"));
         viewTermsButton.setToolTipText("Populate editor table");
         viewTermsButton.addActionListener(new ActionListener()
         {
@@ -218,8 +217,8 @@ public class ExactMappingTool extends JPanel
         });
         jPanel3.add(viewTermsButton, new AbsoluteConstraints(100, 20, 30, 30));
 
-        saveButton.setIcon(new javax.swing.ImageIcon("images/savematch.gif"));
-        saveButton.setIcon(new ImageIcon("images/saveontology.gif"));
+        saveButton.setIcon(ApplicationUtilities.getImage("savematch.gif"));
+        saveButton.setIcon(ApplicationUtilities.getImage("saveontology.gif"));
         saveButton.setToolTipText("Save mapping");
         saveButton.addActionListener(new ActionListener()
         {
