@@ -117,7 +117,7 @@ public class OntologyClassGui extends OntologyObjectGui
         for (Iterator<OntologyClass> i = ontologyClass.getInstances().iterator(); i.hasNext();)
         {
             Object o = i.next();
-            if (!(o instanceof Term))
+            if (!(o instanceof TermGui))
                 subClassesNode.add(getTreeBranch());
         }
         return root;
@@ -345,5 +345,10 @@ public class OntologyClassGui extends OntologyObjectGui
     public String toString()
     {
     	return ontologyClass == null ? "<NULL>" : ontologyClass.toString();
+    }
+    
+    public OntologyClass getOntolgoyClass()
+    {
+        return ontologyClass;
     }
 }
