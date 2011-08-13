@@ -7,7 +7,7 @@ import java.util.Vector;
  * Title: Labeled Vertex
  * </p>
  * <p>
- * Description: Object used for SimilarityFlodingAlgorithm in com.modica.algorithm. Used both to
+ * Description: Object used for SimilarityFlodingAlgorithm. Used both to
  * represent a single named node (and then only the field 'name' is used), or a double named node
  * (and the also 'name2' is used).
  * </p>
