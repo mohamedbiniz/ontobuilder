@@ -678,7 +678,7 @@ public class Ontology extends OntologyObject
     {
         if (name == null || isLight)
             return null;
-        Vector<Object> classes = getClasses();
+        Vector<Object> classes = getClasses(true);
         for (Iterator<Object> i = classes.iterator(); i.hasNext();)
         {
             OntologyClass ontologyClass = (OntologyClass) i.next();
@@ -688,14 +688,14 @@ public class Ontology extends OntologyObject
         return null;
     }
 
-    public Vector<Object> getClasses()
+    public Vector<Object> getClasses(boolean includeSubClasses)
     {
         Vector<Object> cs = new Vector<Object>();
         for (Iterator<OntologyClass> i = classes.iterator(); i.hasNext();)
         {
             OntologyClass c = (OntologyClass) i.next();
             cs.add(c);
-            getClassesRec(c, cs);
+            if (includeSubClasses) getClassesRec(c, cs);
         }
         return cs;
     }

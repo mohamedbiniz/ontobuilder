@@ -214,7 +214,7 @@ public class TermGui extends OntologyObjectGui
             }
         });
 
-        Vector<Object> classes = model.getClasses();
+        Vector<Object> classes = model.getClasses(true);
         classes.add(0, "               ");
         final ComboBox cmbTermClass = new ComboBox(classes);
         cmbTermClass.setSelectedIndex(0);

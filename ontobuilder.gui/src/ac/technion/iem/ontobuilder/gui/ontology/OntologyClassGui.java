@@ -116,9 +116,12 @@ public class OntologyClassGui extends OntologyObjectGui
         root.add(subClassesNode);
         for (Iterator<OntologyClass> i = ontologyClass.getInstances().iterator(); i.hasNext();)
         {
-            Object o = i.next();
-            if (!(o instanceof TermGui))
-                subClassesNode.add(getTreeBranch());
+        	OntologyClass o = i.next();
+            if (!(o instanceof Term))
+            {
+            	OntologyClassGui oGui = new OntologyClassGui(o);
+                subClassesNode.add(oGui.getTreeBranch());
+            }
         }
         return root;
     }
