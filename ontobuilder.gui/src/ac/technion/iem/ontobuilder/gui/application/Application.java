@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 
+import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.utils.properties.ApplicationOptions;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertyException;
 import ac.technion.iem.ontobuilder.core.utils.properties.ResourceException;
@@ -29,7 +30,6 @@ import ac.technion.iem.ontobuilder.gui.elements.About;
 import ac.technion.iem.ontobuilder.gui.elements.MenuBar;
 import ac.technion.iem.ontobuilder.gui.elements.StatusBar;
 import ac.technion.iem.ontobuilder.gui.elements.ToolBar;
-import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>Title: Application</p>

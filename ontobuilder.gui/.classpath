@@ -16,6 +16,5 @@
 	<classpathentry kind="lib" path="lib/cutils.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_16"/>
 	<classpathentry kind="lib" path="lib/jgraph.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ontobuilder.resources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

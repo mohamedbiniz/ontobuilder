@@ -7,11 +7,11 @@ import javax.swing.JTable;
 
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarity;
 import ac.technion.iem.ontobuilder.core.ontology.domain.DomainSimilarityEntry;
+import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
 import ac.technion.iem.ontobuilder.gui.utils.GuiStringUtilities;
-import ac.technion.iem.ontobuilder.resources.OntoBuilderResources;
 
 /**
  * <p>
