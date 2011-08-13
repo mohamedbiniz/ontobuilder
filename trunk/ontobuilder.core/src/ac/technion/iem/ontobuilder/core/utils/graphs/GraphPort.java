@@ -49,10 +49,10 @@ public class GraphPort extends GraphCell
 	@Override
 	public int hashCode()
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((_edges == null) ? 0 : _edges.hashCode());
-		return result;
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((_edges == null) ? 0 : _edges.hashCode());
+		return super.hashCode();//result;
 	}
 
 	@Override

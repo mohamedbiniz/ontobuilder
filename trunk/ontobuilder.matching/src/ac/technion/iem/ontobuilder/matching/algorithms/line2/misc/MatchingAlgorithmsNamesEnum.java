@@ -20,7 +20,7 @@ public enum MatchingAlgorithmsNamesEnum
     PRECEDENCE("Precedence Match"), 
     COMPOSITION("Graph Match"),
     // NEW_PRECEDENCE("New Precedence Match"),
-    SIMILARITY_FLOODING("Similarity Flooding Algorithm");
+    SIMILARITY_FLOODING("SimilarityFlooding Match");
 
     private String _name;
 

@@ -15,4 +15,9 @@ public class OntoBuilderWrapperException extends Exception
     {
         super(msg);
     }
+
+    public OntoBuilderWrapperException(String msg, Throwable e)
+    {
+        super(msg,e);
+    }
 }
