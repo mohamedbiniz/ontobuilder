@@ -2115,8 +2115,10 @@ public final class OntoBuilder extends Application
      * Execute the "NewOntology" command
      */
     public void commandNewOntology()
-    {
-        Ontology ontology = OntologyGui.createOntologyDialog().getOntology();
+    {       
+        OntologyGui ontologyGui = OntologyGui.createOntologyDialog();        
+        Ontology ontology = ontologyGui.getOntology();
+
         try
         {
             Ontology template = OntologyGui.open(new File("ontologies/base.xml"));
