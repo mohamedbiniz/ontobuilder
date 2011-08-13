@@ -5,7 +5,7 @@ package ac.technion.iem.ontobuilder.core.utils.graphs;
  * Title: LabeledEdge
  * </p>
  * <p>
- * Description: Object used for SimilarityFlodingAlgorithm in com.modica.algorithm . Basically, a
+ * Description: Object used for SimilarityFlodingAlgorithm . Basically, a
  * directed edge with a label connecting two LabeledVertex objects
  * </p>
  * 
