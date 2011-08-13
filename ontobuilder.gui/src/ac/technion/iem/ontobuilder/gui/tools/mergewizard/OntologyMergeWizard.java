@@ -484,8 +484,6 @@ public class OntologyMergeWizard
     {
         final WizardStatus status = new WizardStatus();
 
-        // final com.modica.gui.TextField txtOntologyName=new com.modica.gui.TextField(15);
-
         final JDialog dialog = new JDialog(parent,
             ApplicationUtilities.getResourceString("mergewizard.windowTitle"), true);
         JPanel panel = new JPanel();
