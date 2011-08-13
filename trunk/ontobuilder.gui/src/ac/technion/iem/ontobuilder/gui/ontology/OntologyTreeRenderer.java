@@ -6,13 +6,6 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import ac.technion.iem.ontobuilder.core.ontology.Attribute;
-import ac.technion.iem.ontobuilder.core.ontology.Axiom;
-import ac.technion.iem.ontobuilder.core.ontology.Domain;
-import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
-import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
-import ac.technion.iem.ontobuilder.core.ontology.Relationship;
-import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 
 /**
@@ -83,19 +76,19 @@ public class OntologyTreeRenderer extends DefaultTreeCellRenderer
             else if (nodeString.equals(ApplicationUtilities.getResourceString("ontology.domain")))
                 setIcon(ApplicationUtilities.getImage("domain.gif"));
         }
-        else if (object instanceof Term)
+        else if (object instanceof TermGui)
             setIcon(ApplicationUtilities.getImage("term.gif"));
-        else if (object instanceof OntologyClass)
+        else if (object instanceof OntologyClassGui)
             setIcon(ApplicationUtilities.getImage("class.gif"));
-        else if (object instanceof Relationship)
+        else if (object instanceof RelationshipGui)
             setIcon(ApplicationUtilities.getImage("relationship.gif"));
-        else if (object instanceof Axiom)
+        else if (object instanceof AxiomGui)
             setIcon(ApplicationUtilities.getImage("axiom.gif"));
-        else if (object instanceof Attribute)
+        else if (object instanceof AttributeGui)
             setIcon(ApplicationUtilities.getImage("attribute.gif"));
-        else if (object instanceof Domain)
+        else if (object instanceof DomainGui)
             setIcon(ApplicationUtilities.getImage("domain.gif"));
-        else if (object instanceof DomainEntry)
+        else if (object instanceof DomainEntryGui)
             setIcon(ApplicationUtilities.getImage("domainentry.gif"));
         return this;
     }
