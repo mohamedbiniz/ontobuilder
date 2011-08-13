@@ -34,7 +34,7 @@ import ac.technion.iem.ontobuilder.matching.meta.match.MatchedAttributePair;
  * Extends {@link AbstractAlgorithm}
  * 
  * @author Written by Tomer Hary, and Amir Taller as part of a seminar group, 08/2005
- * @see LabeledVertex and LabeledEdge in com.modica.graph
+ * @see LabeledVertex and LabeledEdge in ac.technion.iem.ontobuilder.core.utils.graphs.graph
  */
 
 public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
