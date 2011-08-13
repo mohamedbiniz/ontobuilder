@@ -56,7 +56,7 @@ public class CupidAnalyzer
 
     private static void printUsage()
     {
-        System.out.println("Usage: java com.modica.biztalk.CupidAnalyzer <file>");
+        System.out.println("Usage: java cac.technion.iem.ontobuilder.gui.utils.biztalk.CupidAnalyzer <file>");
     }
 
     private static void createLinksTable(File file) throws IOException, JDOMException
