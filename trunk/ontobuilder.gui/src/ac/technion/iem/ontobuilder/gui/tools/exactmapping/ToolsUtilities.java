@@ -2,15 +2,14 @@ package ac.technion.iem.ontobuilder.gui.tools.exactmapping;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkEntityResolver;
@@ -33,33 +32,19 @@ public class ToolsUtilities
      * @param file the {@link File} with the tools to intialize
      * @throws ToolsException when failed to loaf from the document
      */
-    public static void intializeTools(File file) throws ToolsException
+    public static void intializeTools(InputStream resourceStream) throws ToolsException
     {
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            // if(reader==null)
-            // {
-            // String params[]={file.getAbsolutePath()};
-            // throw new
-            // ToolsException(StringUtilities.getReplacedString(ApplicationUtilities.getResourceString("error.algorithm.file"),params));
-            // }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceStream));
             SAXBuilder builder = new SAXBuilder(true);
             builder.setEntityResolver(new NetworkEntityResolver());
             Document doc = builder.build(reader);
             loadFromDocument(doc);
         }
-        catch (FileNotFoundException e)
-        {
-            throw new ToolsException(e.getMessage());
-        }
-        catch (JDOMException e)
-        {
-            throw new ToolsException(e.getMessage());
-        }
         catch (Exception e)
         {
-            throw new ToolsException(e.getMessage());
+            throw new ToolsException(e.getMessage(),e);
         }
     }
 

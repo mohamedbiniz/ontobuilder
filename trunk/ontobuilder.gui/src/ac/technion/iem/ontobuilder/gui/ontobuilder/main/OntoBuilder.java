@@ -21,10 +21,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -572,14 +572,12 @@ public final class OntoBuilder extends Application
     {
         try
         {
-        	URI uri = getClass().getResource("/config/tools.xml").toURI();
-            File toolsFile = new File(uri);
-            if (!toolsFile.exists())
+        	InputStream resource = getClass().getResourceAsStream("/config/tools.xml");
+            if (resource == null)
             {
                 return;
             }
-
-            ToolsUtilities.intializeTools(toolsFile);
+            ToolsUtilities.intializeTools(resource);
 
         }
         catch (Exception e)

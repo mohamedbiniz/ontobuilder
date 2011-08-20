@@ -15,9 +15,19 @@ public class ToolsException extends Exception
      *
      * @param arg0 the message
      */
-    public ToolsException(String arg0)
+    public ToolsException(String message)
     {
-        super(arg0);
+        super(message);
+    }
+
+    /**
+     * Constructs a ToolsException
+     *
+     * @param arg0 the message
+     */
+    public ToolsException(String message, Throwable e)
+    {
+        super(message,e);
     }
 
 }
