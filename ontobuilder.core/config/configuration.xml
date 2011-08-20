@@ -106,13 +106,13 @@
         <default>10</default>
     </parameter>
     <parameter>
-        <name>proxyPort</name>
-        <value />
-    </parameter>
-    <parameter>
         <name>domPanelVisible</name>
         <value>false</value>
         <default>false</default>
+    </parameter>
+    <parameter>
+        <name>proxyPort</name>
+        <value />
     </parameter>
     <parameter>
         <name>sourcePanelVisible</name>
