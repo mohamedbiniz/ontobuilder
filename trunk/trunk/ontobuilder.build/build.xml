@@ -1,4 +1,4 @@
-<project name="OntoBuilder">
+<project name="OntoBuilder" default="Build With GUI">
 	
 	<property name="app.name" value="OntoBuilder"/>
 	<property name="app.vendor" value="Technion - Israel Institute of Technology"/>
