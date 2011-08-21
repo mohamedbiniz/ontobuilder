@@ -842,7 +842,8 @@ public class Term extends OntologyClass
     {
         Element termElement = new Element("term");
         termElement.setAttribute(new org.jdom.Attribute("id", Long.toString(id)));
-        termElement.setAttribute(new org.jdom.Attribute("name", name));
+        if (name != null)
+            termElement.setAttribute(new org.jdom.Attribute("name", name));
         if (value != null)
             termElement.setAttribute(new org.jdom.Attribute("value", value.toString()));
         if (superClass != null)
