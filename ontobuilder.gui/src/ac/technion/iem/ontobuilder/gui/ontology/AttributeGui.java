@@ -341,4 +341,24 @@ public class AttributeGui extends OntologyObjectGui
     	return attribute == null ? "<NULL>" : attribute.toString();
     }
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AttributeGui other = (AttributeGui) obj;
+		if (attribute == null)
+		{
+			if (other.attribute != null)
+				return false;
+		}
+		else if (!attribute.equals(other.attribute))
+			return false;
+		return true;
+	}
+
 }

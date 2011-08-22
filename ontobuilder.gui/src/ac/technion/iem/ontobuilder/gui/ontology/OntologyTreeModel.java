@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import ac.technion.iem.ontobuilder.core.ontology.Ontology;
+import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 
 /**
  * <p>Title: OntologyTreeModel</p>
@@ -40,6 +41,8 @@ public class OntologyTreeModel extends DefaultTreeModel
 
     public DefaultMutableTreeNode findNodeWithUserObject(DefaultMutableTreeNode root, Object object)
     {
+        if (object instanceof OntologyClass) 
+        	object = OntologyObjectGuiFactory.getOntologyObjectGui((OntologyClass) object);
         for (Enumeration<?> children = root.breadthFirstEnumeration(); children.hasMoreElements();)
         {
             DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
@@ -54,9 +57,10 @@ public class OntologyTreeModel extends DefaultTreeModel
         return findChildNodeWithUserObject((DefaultMutableTreeNode) root, object);
     }
 
-    public DefaultMutableTreeNode findChildNodeWithUserObject(DefaultMutableTreeNode root,
-        Object object)
+    public DefaultMutableTreeNode findChildNodeWithUserObject(DefaultMutableTreeNode root, Object object)
     {
+        if (object instanceof OntologyClass) 
+        	object = OntologyObjectGuiFactory.getOntologyObjectGui((OntologyClass) object);
         for (Enumeration<?> children = root.children(); children.hasMoreElements();)
         {
             DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
@@ -75,6 +79,8 @@ public class OntologyTreeModel extends DefaultTreeModel
     public ArrayList<DefaultMutableTreeNode> findNodesWithUserObject(DefaultMutableTreeNode root,
         Object object)
     {
+        if (object instanceof OntologyClass) 
+        	object = OntologyObjectGuiFactory.getOntologyObjectGui((OntologyClass) object);
         ArrayList<DefaultMutableTreeNode> nodes = new ArrayList<DefaultMutableTreeNode>();
         for (Enumeration<?> allNodes = root.breadthFirstEnumeration(); allNodes.hasMoreElements();)
         {

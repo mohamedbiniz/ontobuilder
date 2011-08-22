@@ -255,4 +255,24 @@ public class AxiomGui extends OntologyObjectGui
     {
     	return _axiom == null ? "<NULL>" : _axiom.toString();
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AxiomGui other = (AxiomGui) obj;
+		if (_axiom == null)
+		{
+			if (other._axiom != null)
+				return false;
+		}
+		else if (!_axiom.equals(other._axiom))
+			return false;
+		return true;
+	}
 }

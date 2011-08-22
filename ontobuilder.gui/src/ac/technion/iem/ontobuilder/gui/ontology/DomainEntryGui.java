@@ -436,4 +436,24 @@ public class DomainEntryGui extends OntologyObjectGui
     {
     	return domainEntry == null ? "<NULL>" : domainEntry.toString();
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DomainEntryGui other = (DomainEntryGui) obj;
+		if (domainEntry == null)
+		{
+			if (other.domainEntry != null)
+				return false;
+		}
+		else if (!domainEntry.equals(other.domainEntry))
+			return false;
+		return true;
+	}
 }
