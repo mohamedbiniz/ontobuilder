@@ -72,4 +72,24 @@ public class DomainGui extends OntologyObjectGui
     {
     	return domain == null ? "<NULL>" : domain.toString();
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DomainGui other = (DomainGui) obj;
+		if (domain == null)
+		{
+			if (other.domain != null)
+				return false;
+		}
+		else if (!domain.equals(other.domain))
+			return false;
+		return true;
+	}
 }

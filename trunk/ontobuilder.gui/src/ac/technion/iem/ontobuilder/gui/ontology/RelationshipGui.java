@@ -316,4 +316,24 @@ public class RelationshipGui extends OntologyObjectGui
     {
     	return relationship == null ? "<NULL>" : relationship.toString();
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RelationshipGui other = (RelationshipGui) obj;
+		if (relationship == null)
+		{
+			if (other.relationship != null)
+				return false;
+		}
+		else if (!relationship.equals(other.relationship))
+			return false;
+		return true;
+	}
 }

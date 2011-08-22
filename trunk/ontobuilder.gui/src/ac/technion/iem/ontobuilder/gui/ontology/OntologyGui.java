@@ -2174,4 +2174,24 @@ public class OntologyGui extends JPanel
         ontologyCore = ontology;
     }
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OntologyGui other = (OntologyGui) obj;
+		if (ontologyCore == null)
+		{
+			if (other.ontologyCore != null)
+				return false;
+		}
+		else if (!ontologyCore.equals(other.ontologyCore))
+			return false;
+		return true;
+	}
+
 }

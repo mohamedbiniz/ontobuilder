@@ -7,6 +7,7 @@ import ac.technion.iem.ontobuilder.core.ontology.DomainEntry;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
+import ac.technion.iem.ontobuilder.core.ontology.Term;
 
 public class OntologyObjectGuiFactory
 {
@@ -14,6 +15,9 @@ public class OntologyObjectGuiFactory
     {
         if (ontologyObject instanceof Attribute)
             return new AttributeGui((Attribute)ontologyObject);
+
+        if (ontologyObject instanceof Term)
+            return new TermGui((Term)ontologyObject);
         
         if (ontologyObject instanceof Axiom)
             return new AxiomGui((Axiom)ontologyObject);

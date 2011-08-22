@@ -354,4 +354,24 @@ public class OntologyClassGui extends OntologyObjectGui
     {
         return ontologyClass;
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OntologyClassGui other = (OntologyClassGui) obj;
+		if (ontologyClass == null)
+		{
+			if (other.ontologyClass != null)
+				return false;
+		}
+		else if (!ontologyClass.equals(other.ontologyClass))
+			return false;
+		return true;
+	}
 }

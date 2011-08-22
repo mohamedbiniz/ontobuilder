@@ -526,4 +526,24 @@ public class TermGui extends OntologyObjectGui
     {
         return term;
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TermGui other = (TermGui) obj;
+		if (term == null)
+		{
+			if (other.term != null)
+				return false;
+		}
+		else if (!term.equals(other.term))
+			return false;
+		return true;
+	}
 }
