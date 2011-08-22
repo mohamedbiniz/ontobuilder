@@ -23,8 +23,8 @@ import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationEvent
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.SiteMapOperationListener;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.URLVisitedEvent;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.event.URLVisitedListener;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.AElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.AElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilitiesGui;
 import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
 
 /**
@@ -180,15 +180,15 @@ public class SiteMap
             title = (Element) titles.item(0);
         node.setTitle(DOMUtilities.getTextValue(title));
 
-        ArrayList<?> _A_Elements = HTMLUtilities.getAElements(document, node.getURL());
+        ArrayList<?> _A_Elements = HTMLUtilitiesGui.getAElements(document, node.getURL());
         for (int i = 0; i < _A_Elements.size(); i++)
         {
-            AElement aElement = (AElement) _A_Elements.get(i);
+            AElementGui aElement = (AElementGui) _A_Elements.get(i);
             visitURL(aElement.getURL(), depth);
         }
         for (int i = 0; i < _A_Elements.size(); i++)
         {
-            AElement aElement = (AElement) _A_Elements.get(i);
+            AElementGui aElement = (AElementGui) _A_Elements.get(i);
             SiteMapNode childNode = new SiteMapNode(aElement.getURL(), aElement.getDescription());
             node.addChild(childNode);
             if (NetworkUtilities.isSameDomain(aElement.getURL(), domain) &&

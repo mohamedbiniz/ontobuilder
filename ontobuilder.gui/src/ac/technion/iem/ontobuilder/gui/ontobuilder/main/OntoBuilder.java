@@ -112,7 +112,7 @@ import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFilePreviewer;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.GeneralFileView;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilitiesGui;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyBIZFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyFileFilter;
 import ac.technion.iem.ontobuilder.gui.utils.files.ontology.OntologyFileViewer;
@@ -660,7 +660,7 @@ public final class OntoBuilder extends Application
 
         // File Chooser
         FileUtilities.configureFileDialogViewer(FileUtilities.fileViewer);
-        FileUtilities.filePreviewer.addPreviewer(HTMLUtilities.htmlFilePreviewer);
+        FileUtilities.filePreviewer.addPreviewer(HTMLUtilitiesGui.htmlFilePreviewer);
         FileUtilities.filePreviewer.addPreviewer(XMLUtilities.xmlFilePreviewer);
         if (Boolean.valueOf(
             (String) options.getOptionValue(FileUtilities.PREVIEW_PANEL_VISIBLE_PROPERTY))
@@ -1648,11 +1648,11 @@ public final class OntoBuilder extends Application
                     }
                     try
                     {
-                        final URL refreshURL = HTMLUtilities.getMETARefresh(document);
+                        final URL refreshURL = HTMLUtilitiesGui.getMETARefresh(document);
                         if (refreshURL != null &&
                             Boolean.valueOf(
                                 (String) options
-                                    .getOptionValue(HTMLUtilities.HTML_META_NAVIGATION_PROPERTY))
+                                    .getOptionValue(HTMLUtilitiesGui.HTML_META_NAVIGATION_PROPERTY))
                                 .booleanValue())
                         {
                             SwingUtilities.invokeLater(new Runnable()
@@ -1753,7 +1753,7 @@ public final class OntoBuilder extends Application
                         (String) options.getOptionValue(MainPanel.ELEMENTS_PANEL_VISIBLE_PROPERTY))
                         .booleanValue())
                     {
-                        JTree elementsTree = HTMLUtilities.getElementsHierarchy(document, url);
+                        JTree elementsTree = HTMLUtilitiesGui.getElementsHierarchy(document, url);
                         elementsTree.addTreeSelectionListener(new TreeSelectionListener()
                         {
                             public void valueChanged(TreeSelectionEvent e)

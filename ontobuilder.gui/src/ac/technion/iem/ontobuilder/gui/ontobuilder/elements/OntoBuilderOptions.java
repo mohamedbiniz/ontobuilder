@@ -37,7 +37,7 @@ import ac.technion.iem.ontobuilder.gui.ontobuilder.main.OntoBuilder;
 import ac.technion.iem.ontobuilder.gui.tools.sitemap.SiteMap;
 import ac.technion.iem.ontobuilder.gui.utils.browser.Browser;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilitiesGui;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.io.exports.ExportUtilities;
 import ac.technion.iem.ontobuilder.io.imports.ImportUtilities;
@@ -666,7 +666,7 @@ public class OntoBuilderOptions extends Options
                             .getResourceString("options.browser.navigation.metaNavigation"),
                         Boolean.valueOf(
                             (String) options
-                                .getOptionValue(HTMLUtilities.HTML_META_NAVIGATION_PROPERTY))
+                                .getOptionValue(HTMLUtilitiesGui.HTML_META_NAVIGATION_PROPERTY))
                             .booleanValue());
                     chkMETANavigation.setToolTipText(ApplicationUtilities
                         .getResourceString("options.browser.navigation.metaNavigation"));
@@ -1525,7 +1525,7 @@ public class OntoBuilderOptions extends Options
 
         options.setOptionValue(DOMUtilities.XML_VALIDATION_PROPERTY,
             (new Boolean(chkXMLValidation.isSelected())).toString());
-        options.setOptionValue(HTMLUtilities.HTML_META_NAVIGATION_PROPERTY, (new Boolean(
+        options.setOptionValue(HTMLUtilitiesGui.HTML_META_NAVIGATION_PROPERTY, (new Boolean(
             chkMETANavigation.isSelected())).toString());
 
         options.setOptionValue(FileUtilities.PREVIEW_PANEL_VISIBLE_PROPERTY, (new Boolean(
@@ -1627,7 +1627,7 @@ public class OntoBuilderOptions extends Options
         chkXMLValidation.setSelected(Boolean.valueOf(
             (String) options.getOptionValue(DOMUtilities.XML_VALIDATION_PROPERTY)).booleanValue());
         chkMETANavigation.setSelected(Boolean.valueOf(
-            (String) options.getOptionValue(HTMLUtilities.HTML_META_NAVIGATION_PROPERTY))
+            (String) options.getOptionValue(HTMLUtilitiesGui.HTML_META_NAVIGATION_PROPERTY))
             .booleanValue());
 
         chkFilePreview.setSelected(Boolean.valueOf(

@@ -112,7 +112,7 @@ public class ValueAlgorithm extends TermAlgorithm
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms(true));
         }
 
         if (!candidateOntology.isLight())
@@ -122,7 +122,7 @@ public class ValueAlgorithm extends TermAlgorithm
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms(true));
         }
 
     }

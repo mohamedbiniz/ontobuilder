@@ -1,10 +1,13 @@
 package ac.technion.iem.ontobuilder.gui.utils.files.html;
 
 import java.awt.Component;
+
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.HTMLElement;
+import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.INPUTElement;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 
 /**
@@ -49,9 +52,9 @@ public class ElementsTreeRenderer extends DefaultTreeCellRenderer
             }
             return this;
         }
-        else if (object instanceof HTMLElement)
+        else if (object instanceof HTMLElementGui)
         {
-            HTMLElement node = (HTMLElement) object;
+            HTMLElementGui node = (HTMLElementGui) object;
             if (node.getType().equals(HTMLElement.A))
                 setIcon(ApplicationUtilities.getImage("link.gif"));
             if (node.getType().equals(HTMLElement.META))
@@ -62,7 +65,7 @@ public class ElementsTreeRenderer extends DefaultTreeCellRenderer
                 setIcon(ApplicationUtilities.getImage("form.gif"));
             else if (node.getType().equals(HTMLElement.INPUT))
             {
-                INPUTElement input = (INPUTElement) node;
+                INPUTElementGui input = (INPUTElementGui) node;
                 if (input.getInputType().equals(INPUTElement.HIDDEN))
                     setIcon(ApplicationUtilities.getImage("hidden.gif"));
                 else if (input.getInputType().equals(INPUTElement.TEXT))
@@ -93,7 +96,7 @@ public class ElementsTreeRenderer extends DefaultTreeCellRenderer
                     setIcon(ApplicationUtilities.getImage("option.gif"));
                 else if (input.getInputType().equals(INPUTElement.SELECT))
                 {
-                    if (((SELECTElement) input).isMultiple())
+                    if (((SELECTElementGui) input).isMultiple())
                         setIcon(ApplicationUtilities.getImage("list.gif"));
                     else
                         setIcon(ApplicationUtilities.getImage("select.gif"));

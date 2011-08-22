@@ -2,7 +2,7 @@ package ac.technion.iem.ontobuilder.gui.tools.ontowizard;
 
 import java.util.ArrayList;
 
-import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElementGui;
 
 /**
  * <p>Title: WizardStatus</p>
@@ -18,7 +18,7 @@ public class WizardStatus
     public static final short FINISH_ACTION = 3;
 
     protected short nextAction;
-    protected FORMElement form;
+    protected FORMElementGui form;
     protected ArrayList<?> forms;
 
     /**
@@ -53,7 +53,7 @@ public class WizardStatus
      * 
      * @param form the form
      */
-    public void setForm(FORMElement form)
+    public void setForm(FORMElementGui form)
     {
         this.form = form;
     }
@@ -63,7 +63,7 @@ public class WizardStatus
      * 
      * @return the form
      */
-    public FORMElement getForm()
+    public FORMElementGui getForm()
     {
         return form;
     }

@@ -83,6 +83,7 @@ import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 import ac.technion.iem.ontobuilder.core.utils.files.StringOutputStream;
 import ac.technion.iem.ontobuilder.core.utils.network.NetworkUtilities;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
+import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.INPUTElement;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesCellEditor;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
@@ -92,24 +93,24 @@ import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
 import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
 import ac.technion.iem.ontobuilder.gui.elements.TextField;
 import ac.technion.iem.ontobuilder.gui.utils.files.common.FileUtilities;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ButtonINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementOption;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.FileINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HiddenINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.INPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ImageINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.OPTIONElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.PasswordINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementOption;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ResetINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ButtonINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementOptionGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FileINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilitiesGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HiddenINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.INPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ImageINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.OPTIONElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.PasswordINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementOptionGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ResetINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElementGui;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.OrderedDefaultPort;
 import ac.technion.iem.ontobuilder.gui.utils.hypertree.NodeHyperTree;
@@ -1043,7 +1044,7 @@ public class OntologyGui extends JPanel
         if (actionObject instanceof OntologyClass)
         {
             OntologyClass c = (OntologyClass) actionObject;
-            Vector<?> terms = ontologyCore.getTerms();
+            Vector<?> terms = ontologyCore.getTerms(false);
             for (Iterator<?> i = terms.iterator(); i.hasNext();)
                 if (c.equals(((Term) i.next()).getSuperClass()))
                 {
@@ -1716,14 +1717,14 @@ public class OntologyGui extends JPanel
         OntologyClass imageInputClass = ontologyGenerateHelper.getImageInputClass();
         Term pageTerm = ontologyGenerateHelper.getPageTerm();
             
-        JTree elementsTree = HTMLUtilities.getFORMElementsHierarchy(document, url);
-        ArrayList<?> f = HTMLUtilities.extractFormsFromTree((DefaultMutableTreeNode) elementsTree
+        JTree elementsTree = HTMLUtilitiesGui.getFORMElementsHierarchy(document, url);
+        ArrayList<?> f = HTMLUtilitiesGui.extractFormsFromTree((DefaultMutableTreeNode) elementsTree
             .getModel().getRoot());
 
         Term prevFormTerm = null;
         for (Iterator<?> j = f.iterator(); j.hasNext();)
         {
-            FORMElement form = (FORMElement) j.next();
+            FORMElementGui form = (FORMElementGui) j.next();
             Term formTerm = new Term(formClass, form.getName());
             if (prevFormTerm != null)
             {
@@ -1737,11 +1738,11 @@ public class OntologyGui extends JPanel
             Term prevInputTerm = null;
             for (int k = 0; k < form.getInputsCount(); k++)
             {
-                INPUTElement input = form.getInput(k);
+                INPUTElementGui input = form.getInput(k);
                 Term inputTerm = null;
                 if (input.getInputType().equals(INPUTElement.TEXT))
                 {
-                    TextINPUTElement textInput = (TextINPUTElement) input;
+                    TextINPUTElementGui textInput = (TextINPUTElementGui) input;
                     inputTerm = new Term(textInputClass, textInput.getLabel(), textInput.getValue());
                     inputTerm.setAttributeValue("name", textInput.getName());
                     inputTerm.setAttributeValue("defaultValue", textInput.getDefaultValue());
@@ -1754,7 +1755,7 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.PASSWORD))
                 {
-                    PasswordINPUTElement passwordInput = (PasswordINPUTElement) input;
+                    PasswordINPUTElementGui passwordInput = (PasswordINPUTElementGui) input;
                     inputTerm = new Term(passwordInputClass, passwordInput.getLabel(),
                         passwordInput.getValue());
                     inputTerm.setAttributeValue("name", passwordInput.getName());
@@ -1769,7 +1770,7 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.FILE))
                 {
-                    FileINPUTElement fileInput = (FileINPUTElement) input;
+                    FileINPUTElementGui fileInput = (FileINPUTElementGui) input;
                     inputTerm = new Term(fileInputClass, fileInput.getLabel(), fileInput.getValue());
                     inputTerm.setAttributeValue("name", fileInput.getName());
                     if (fileInput.getSize() != -1)
@@ -1781,13 +1782,13 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.HIDDEN))
                 {
-                    HiddenINPUTElement hiddenInput = (HiddenINPUTElement) input;
+                    HiddenINPUTElementGui hiddenInput = (HiddenINPUTElementGui) input;
                     inputTerm = new Term(hiddenInputClass, input.getName(), hiddenInput.getValue());
                     inputTerm.setAttributeValue("name", hiddenInput.getName());
                 }
                 else if (input.getInputType().equals(INPUTElement.CHECKBOX))
                 {
-                    CheckboxINPUTElement checkboxInput = (CheckboxINPUTElement) input;
+                    CheckboxINPUTElementGui checkboxInput = (CheckboxINPUTElementGui) input;
                     inputTerm = new Term(checkboxInputClass, checkboxInput.getLabel(),
                         checkboxInput.getValue());
                     inputTerm.setAttributeValue("name", checkboxInput.getName());
@@ -1795,7 +1796,7 @@ public class OntologyGui extends JPanel
                         ApplicationUtilities.getResourceString("ontology.domain.choice"), "choice");
                     for (int o = 0; o < checkboxInput.getOptionsCount(); o++)
                     {
-                        CheckboxINPUTElementOption option = checkboxInput.getOption(o);
+                        CheckboxINPUTElementOptionGui option = checkboxInput.getOption(o);
                         Term optionTerm = new Term(option.getLabel(), option.getValue());
                         optionTerm.addAttribute(new Attribute("checked", new Boolean(option
                             .isChecked())));
@@ -1807,7 +1808,7 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.RADIO))
                 {
-                    RadioINPUTElement radioInput = (RadioINPUTElement) input;
+                    RadioINPUTElementGui radioInput = (RadioINPUTElementGui) input;
                     inputTerm = new Term(radioInputClass, radioInput.getLabel(),
                         radioInput.getValue());
                     inputTerm.setAttributeValue("name", radioInput.getName());
@@ -1815,7 +1816,7 @@ public class OntologyGui extends JPanel
                         ApplicationUtilities.getResourceString("ontology.domain.choice"), "choice");
                     for (int o = 0; o < radioInput.getOptionsCount(); o++)
                     {
-                        RadioINPUTElementOption option = radioInput.getOption(o);
+                        RadioINPUTElementOptionGui option = radioInput.getOption(o);
                         Term optionTerm = new Term(option.getLabel(), option.getValue());
                         optionTerm.addAttribute(new Attribute("checked", new Boolean(option
                             .isChecked())));
@@ -1827,7 +1828,7 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.SELECT))
                 {
-                    SELECTElement selectInput = (SELECTElement) input;
+                    SELECTElementGui selectInput = (SELECTElementGui) input;
                     inputTerm = new Term(selectInputClass, selectInput.getLabel(),
                         selectInput.getValue());
                     inputTerm.setAttributeValue("name", selectInput.getName());
@@ -1835,7 +1836,7 @@ public class OntologyGui extends JPanel
                         ApplicationUtilities.getResourceString("ontology.domain.choice"), "choice");
                     for (int o = 0; o < selectInput.getOptionsCount(); o++)
                     {
-                        OPTIONElement option = selectInput.getOption(o);
+                        OPTIONElementGui option = selectInput.getOption(o);
                         Term optionTerm = new Term(option.getLabel(), option.getValue());
                         optionTerm.addAttribute(new Attribute("selected", new Boolean(option
                             .isSelected())));
@@ -1847,7 +1848,7 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.TEXTAREA))
                 {
-                    TEXTAREAElement textareaInput = (TEXTAREAElement) input;
+                    TEXTAREAElementGui textareaInput = (TEXTAREAElementGui) input;
                     inputTerm = new Term(textareaInputClass, textareaInput.getLabel(),
                         textareaInput.getValue());
                     inputTerm.setAttributeValue("name", textareaInput.getName());
@@ -1861,25 +1862,25 @@ public class OntologyGui extends JPanel
                 }
                 else if (input.getInputType().equals(INPUTElement.BUTTON))
                 {
-                    ButtonINPUTElement buttonInput = (ButtonINPUTElement) input;
+                    ButtonINPUTElementGui buttonInput = (ButtonINPUTElementGui) input;
                     inputTerm = new Term(buttonInputClass, buttonInput.getValue());
                     inputTerm.setAttributeValue("name", buttonInput.getName());
                 }
                 else if (input.getInputType().equals(INPUTElement.SUBMIT))
                 {
-                    SubmitINPUTElement submitInput = (SubmitINPUTElement) input;
+                    SubmitINPUTElementGui submitInput = (SubmitINPUTElementGui) input;
                     inputTerm = new Term(submitInputClass, submitInput.getValue());
                     inputTerm.setAttributeValue("name", submitInput.getName());
                 }
                 else if (input.getInputType().equals(INPUTElement.RESET))
                 {
-                    ResetINPUTElement resetInput = (ResetINPUTElement) input;
+                    ResetINPUTElementGui resetInput = (ResetINPUTElementGui) input;
                     inputTerm = new Term(resetInputClass, resetInput.getValue());
                     inputTerm.setAttributeValue("name", resetInput.getName());
                 }
                 else if (input.getInputType().equals(INPUTElement.IMAGE))
                 {
-                    ImageINPUTElement imageInput = (ImageINPUTElement) input;
+                    ImageINPUTElementGui imageInput = (ImageINPUTElementGui) input;
                     inputTerm = new Term(imageInputClass, imageInput.getAlt());
                     inputTerm.setAttributeValue("name", imageInput.getName());
                     inputTerm.setAttributeValue("src", imageInput.getSrc());
@@ -1941,7 +1942,7 @@ public class OntologyGui extends JPanel
         NodeHyperTree termsNode = new NodeHyperTree(
             PropertiesHandler.getResourceString("ontology.terms"), NodeHyperTree.TERM);
         root.add(termsNode);
-        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
         {
             TermGui termGui = new TermGui((Term) i.next());
             termsNode.add(termGui.getHyperTreeNode(showRelations, showClasses,
@@ -1967,18 +1968,18 @@ public class OntologyGui extends JPanel
         GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
         attributes.put(vertex, map);
 
-        if (!ontologyCore.getTerms().isEmpty())
+        if (!ontologyCore.getTerms(false).isEmpty())
         {
             DefaultPort toChildPort = new OrderedDefaultPort("toChild");
             vertex.add(toChildPort);
-            for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+            for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
             {
                 TermGui termGui = new TermGui((Term) i.next());
                 termGui.buildGraphHierarchy(toChildPort, cells, attributes, cs);
             }
             if (GraphUtilities.getShowPrecedenceLinks())
             {
-                for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+                for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
                 {
                     TermGui termGui = new TermGui((Term) i.next());
                     termGui.buildPrecedenceRelationships(cells, attributes, cs);
@@ -2001,18 +2002,18 @@ public class OntologyGui extends JPanel
         GraphConstants.setIcon(map, ApplicationUtilities.getImage("ontology.gif"));
         attributes.put(vertex, map);
 
-        if (!ontologyCore.getTerms().isEmpty())
+        if (!ontologyCore.getTerms(false).isEmpty())
         {
             DefaultPort toChildPort = new DefaultPort("toChild");
             vertex.add(toChildPort);
-            for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+            for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
             {
                 TermGui termGui = new TermGui((Term) i.next());
                 termGui.buildGraphHierarchy(toChildPort, cells, attributes, cs);
             }
             if (GraphUtilities.getShowPrecedenceLinks())
             {
-                for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+                for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
                 {
                     TermGui termGui = new TermGui((Term) i.next());
                     termGui.buildPrecedenceRelationships(cells, attributes, cs);
@@ -2056,7 +2057,7 @@ public class OntologyGui extends JPanel
     {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(
             PropertiesHandler.getResourceString("ontology.terms"));
-        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
         {
             Term t = (Term) i.next();
             DefaultMutableTreeNode termNode = new DefaultMutableTreeNode(t);
@@ -2099,7 +2100,7 @@ public class OntologyGui extends JPanel
                 ontologyCore.getSiteURL() != null ? ontologyCore.getSiteURL().toExternalForm() : null
             },
             {
-                PropertiesHandler.getResourceString("ontology.terms"), new Integer(ontologyCore.getTerms().size())
+                PropertiesHandler.getResourceString("ontology.terms"), new Integer(ontologyCore.getTerms(false).size())
             }
         };
         JTable properties = new JTable(new PropertiesTableModel(columnNames, 4, data)
@@ -2159,7 +2160,7 @@ public class OntologyGui extends JPanel
         DefaultMutableTreeNode termsNode = new DefaultMutableTreeNode(
             PropertiesHandler.getResourceString("ontology.terms"));
         root.add(termsNode);
-        for (Iterator<Term> i = ontologyCore.getTerms().iterator(); i.hasNext();)
+        for (Iterator<Term> i = ontologyCore.getTerms(false).iterator(); i.hasNext();)
         {
             TermGui termGui = new TermGui((Term) i.next());
             termsNode.add(termGui.getTreeBranch());
