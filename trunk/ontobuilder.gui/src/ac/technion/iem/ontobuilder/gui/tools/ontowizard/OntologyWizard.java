@@ -57,30 +57,31 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyClass;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.utils.dom.DOMUtilities;
 import ac.technion.iem.ontobuilder.core.utils.files.StringOutputStream;
+import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.INPUTElement;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.ObjectWithProperties;
 import ac.technion.iem.ontobuilder.gui.elements.MultilineLabel;
 import ac.technion.iem.ontobuilder.gui.elements.TextField;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.elements.PropertiesPanel;
 import ac.technion.iem.ontobuilder.gui.ontobuilder.main.OntoBuilder;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ButtonINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementOption;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.FileINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilities;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.HiddenINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.INPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ImageINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.OPTIONElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.PasswordINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementOption;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.ResetINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElement;
-import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElement;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ButtonINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.CheckboxINPUTElementOptionGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FORMElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.FileINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HTMLUtilitiesGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.HiddenINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.INPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ImageINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.OPTIONElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.PasswordINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.RadioINPUTElementOptionGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.ResetINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SELECTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.SubmitINPUTElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TEXTAREAElementGui;
+import ac.technion.iem.ontobuilder.gui.utils.files.html.TextINPUTElementGui;
 
 /**
  * <p>Title: OntologyWizard</p>
@@ -165,7 +166,7 @@ public class OntologyWizard
             if (status.getNextAction() == WizardStatus.NEXT_ACTION)
             {
                 forms.add(new DialogInformation(currentDocument, status.getForms(), currentURL));
-                FORMElement form = status.getForm();
+                FORMElementGui form = status.getForm();
                 currentURL = form.getAction();
                 try
                 {
@@ -327,7 +328,7 @@ public class OntologyWizard
             Term prevFormTerm = null;
             for (Iterator<?> j = f.iterator(); j.hasNext();)
             {
-                FORMElement form = (FORMElement) j.next();
+                FORMElementGui form = (FORMElementGui) j.next();
                 Term formTerm = new Term(formClass, form.getName());
                 if (prevFormTerm != null)
                 {
@@ -341,11 +342,11 @@ public class OntologyWizard
                 Term prevInputTerm = null;
                 for (int k = 0; k < form.getInputsCount(); k++)
                 {
-                    INPUTElement input = form.getInput(k);
+                    INPUTElementGui input = form.getInput(k);
                     Term inputTerm = null;
                     if (input.getInputType().equals(INPUTElement.TEXT))
                     {
-                        TextINPUTElement textInput = (TextINPUTElement) input;
+                        TextINPUTElementGui textInput = (TextINPUTElementGui) input;
                         inputTerm = new Term(textInputClass, textInput.getLabel(),
                             textInput.getValue());
                         inputTerm.setAttributeValue("name", textInput.getName());
@@ -360,7 +361,7 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.PASSWORD))
                     {
-                        PasswordINPUTElement passwordInput = (PasswordINPUTElement) input;
+                        PasswordINPUTElementGui passwordInput = (PasswordINPUTElementGui) input;
                         inputTerm = new Term(passwordInputClass, passwordInput.getLabel(),
                             passwordInput.getValue());
                         inputTerm.setAttributeValue("name", passwordInput.getName());
@@ -377,7 +378,7 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.FILE))
                     {
-                        FileINPUTElement fileInput = (FileINPUTElement) input;
+                        FileINPUTElementGui fileInput = (FileINPUTElementGui) input;
                         inputTerm = new Term(fileInputClass, fileInput.getLabel(),
                             fileInput.getValue());
                         inputTerm.setAttributeValue("name", fileInput.getName());
@@ -391,14 +392,14 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.HIDDEN))
                     {
-                        HiddenINPUTElement hiddenInput = (HiddenINPUTElement) input;
+                        HiddenINPUTElementGui hiddenInput = (HiddenINPUTElementGui) input;
                         inputTerm = new Term(hiddenInputClass, input.getName(),
                             hiddenInput.getValue());
                         inputTerm.setAttributeValue("name", hiddenInput.getName());
                     }
                     else if (input.getInputType().equals(INPUTElement.CHECKBOX))
                     {
-                        CheckboxINPUTElement checkboxInput = (CheckboxINPUTElement) input;
+                        CheckboxINPUTElementGui checkboxInput = (CheckboxINPUTElementGui) input;
                         inputTerm = new Term(checkboxInputClass, checkboxInput.getLabel(),
                             checkboxInput.getValue());
                         inputTerm.setAttributeValue("name", checkboxInput.getName());
@@ -407,7 +408,7 @@ public class OntologyWizard
                             "choice");
                         for (int o = 0; o < checkboxInput.getOptionsCount(); o++)
                         {
-                            CheckboxINPUTElementOption option = checkboxInput.getOption(o);
+                            CheckboxINPUTElementOptionGui option = checkboxInput.getOption(o);
                             Term optionTerm = new Term(option.getLabel(), option.getValue());
                             optionTerm.addAttribute(new Attribute("checked", new Boolean(option
                                 .isChecked())));
@@ -419,7 +420,7 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.RADIO))
                     {
-                        RadioINPUTElement radioInput = (RadioINPUTElement) input;
+                        RadioINPUTElementGui radioInput = (RadioINPUTElementGui) input;
                         inputTerm = new Term(radioInputClass, radioInput.getLabel(),
                             radioInput.getValue());
                         inputTerm.setAttributeValue("name", radioInput.getName());
@@ -428,7 +429,7 @@ public class OntologyWizard
                             "choice");
                         for (int o = 0; o < radioInput.getOptionsCount(); o++)
                         {
-                            RadioINPUTElementOption option = radioInput.getOption(o);
+                            RadioINPUTElementOptionGui option = radioInput.getOption(o);
                             Term optionTerm = new Term(option.getLabel(), option.getValue());
                             optionTerm.addAttribute(new Attribute("checked", new Boolean(option
                                 .isChecked())));
@@ -440,7 +441,7 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.SELECT))
                     {
-                        SELECTElement selectInput = (SELECTElement) input;
+                        SELECTElementGui selectInput = (SELECTElementGui) input;
                         inputTerm = new Term(selectInputClass, selectInput.getLabel(),
                             selectInput.getValue());
                         inputTerm.setAttributeValue("name", selectInput.getName());
@@ -449,7 +450,7 @@ public class OntologyWizard
                             "choice");
                         for (int o = 0; o < selectInput.getOptionsCount(); o++)
                         {
-                            OPTIONElement option = selectInput.getOption(o);
+                            OPTIONElementGui option = selectInput.getOption(o);
                             Term optionTerm = new Term(option.getLabel(), option.getValue());
                             optionTerm.addAttribute(new Attribute("selected", new Boolean(option
                                 .isSelected())));
@@ -461,7 +462,7 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.TEXTAREA))
                     {
-                        TEXTAREAElement textareaInput = (TEXTAREAElement) input;
+                        TEXTAREAElementGui textareaInput = (TEXTAREAElementGui) input;
                         inputTerm = new Term(textareaInputClass, textareaInput.getLabel(),
                             textareaInput.getValue());
                         inputTerm.setAttributeValue("name", textareaInput.getName());
@@ -478,25 +479,25 @@ public class OntologyWizard
                     }
                     else if (input.getInputType().equals(INPUTElement.BUTTON))
                     {
-                        ButtonINPUTElement buttonInput = (ButtonINPUTElement) input;
+                        ButtonINPUTElementGui buttonInput = (ButtonINPUTElementGui) input;
                         inputTerm = new Term(buttonInputClass, buttonInput.getValue());
                         inputTerm.setAttributeValue("name", buttonInput.getName());
                     }
                     else if (input.getInputType().equals(INPUTElement.SUBMIT))
                     {
-                        SubmitINPUTElement submitInput = (SubmitINPUTElement) input;
+                        SubmitINPUTElementGui submitInput = (SubmitINPUTElementGui) input;
                         inputTerm = new Term(submitInputClass, submitInput.getValue());
                         inputTerm.setAttributeValue("name", submitInput.getName());
                     }
                     else if (input.getInputType().equals(INPUTElement.RESET))
                     {
-                        ResetINPUTElement resetInput = (ResetINPUTElement) input;
+                        ResetINPUTElementGui resetInput = (ResetINPUTElementGui) input;
                         inputTerm = new Term(resetInputClass, resetInput.getValue());
                         inputTerm.setAttributeValue("name", resetInput.getName());
                     }
                     else if (input.getInputType().equals(INPUTElement.IMAGE))
                     {
-                        ImageINPUTElement imageInput = (ImageINPUTElement) input;
+                        ImageINPUTElementGui imageInput = (ImageINPUTElementGui) input;
                         inputTerm = new Term(imageInputClass, imageInput.getAlt());
                         inputTerm.setAttributeValue("name", imageInput.getName());
                         inputTerm.setAttributeValue("src", imageInput.getSrc());
@@ -880,8 +881,8 @@ public class OntologyWizard
         }
 
         // HTML Elements
-        JTree elementsTree = HTMLUtilities.getFORMElementsHierarchy(doc, url);
-        status.setForms(HTMLUtilities.extractFormsFromTree((DefaultMutableTreeNode) elementsTree
+        JTree elementsTree = HTMLUtilitiesGui.getFORMElementsHierarchy(doc, url);
+        status.setForms(HTMLUtilitiesGui.extractFormsFromTree((DefaultMutableTreeNode) elementsTree
             .getModel().getRoot()));
         elementsTree.addTreeSelectionListener(new TreeSelectionListener()
         {
@@ -897,17 +898,17 @@ public class OntologyWizard
                 if (object instanceof ObjectWithProperties)
                 {
                     propertiesPanel.showProperties(((ObjectWithProperties) object).getProperties());
-                    if (object instanceof FORMElement)
+                    if (object instanceof FORMElementGui)
                     {
-                        previewPanel.add(BorderLayout.CENTER, ((FORMElement) object).getComponent());
-                        status.setForm((FORMElement) object);
+                        previewPanel.add(BorderLayout.CENTER, ((FORMElementGui) object).getComponent());
+                        status.setForm((FORMElementGui) object);
                     }
                 }
                 else
                 {
                     propertiesPanel.showProperties(null);
                 }
-                nextButton.setEnabled(object instanceof FORMElement);
+                nextButton.setEnabled(object instanceof FORMElementGui);
                 previewPanel.revalidate();
             }
         });

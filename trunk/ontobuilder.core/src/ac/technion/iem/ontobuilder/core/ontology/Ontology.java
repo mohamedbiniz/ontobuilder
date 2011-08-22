@@ -435,7 +435,7 @@ public class Ontology extends OntologyObject
      */
     public int getAllTermsCount()
     {
-        return getTerms().size();
+        return getTerms(true).size();
     }
 
     /**
@@ -724,7 +724,7 @@ public class Ontology extends OntologyObject
 
         if (name == null)
             return null;
-        Vector<Term> terms = getTerms();
+        Vector<Term> terms = getTerms(true);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
         {
             Term term = (Term) i.next();
@@ -742,7 +742,7 @@ public class Ontology extends OntologyObject
      */
     public Term getTermByID(long id)
     {
-        Vector<Term> tmpTerms = this.getTerms();
+        Vector<Term> tmpTerms = this.getTerms(true);
         for (int i = 0; i < tmpTerms.size(); i++)
             if (((Term) tmpTerms.get(i)).getId() == id)
                 return (Term) tmpTerms.get(i);
@@ -760,7 +760,7 @@ public class Ontology extends OntologyObject
 
         if (name == null)
             return null;
-        Vector<Term> terms = getTerms();
+        Vector<Term> terms = getTerms(true);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
         {
             Term term = (Term) i.next();
@@ -781,14 +781,14 @@ public class Ontology extends OntologyObject
     /**
      * Get a list of all the {@link Term}
      */
-    public Vector<Term> getTerms()
+    public Vector<Term> getTerms(boolean includeSubTerms)
     {
         Vector<Term> ts = new Vector<Term>();
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
         {
             Term t = (Term) i.next();
             ts.add(t);
-            getTermsRec(t, ts);
+            if (includeSubTerms) getTermsRec(t, ts);
         }
         return ts;
     }
@@ -806,7 +806,7 @@ public class Ontology extends OntologyObject
     public Vector<Relationship> getRelationships()
     {
         Vector<Relationship> rs = new Vector<Relationship>();
-        Vector<Term> terms = getTerms();
+        Vector<Term> terms = getTerms(true);
         for (Iterator<Term> i = terms.iterator(); i.hasNext();)
         {
             Term t = (Term) i.next();
@@ -1186,18 +1186,18 @@ public class Ontology extends OntologyObject
         GraphCell vertex = new GraphCell(getName());
         cells.add(vertex);
 
-        if (!this.getTerms().isEmpty())
+        if (!this.getTerms(true).isEmpty())
         {
             GraphPort toChildPort = new OrderedGraphPort("toChild");
             vertex.addChild(toChildPort);
-            for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+            for (Iterator<Term> i = this.getTerms(true).iterator(); i.hasNext();)
             {
                 Term term = (Term) i.next();
                 term.buildGraphHierarchy(toChildPort, cells, attributes, cs);
             }
 //            if (GraphUtilities.getShowPrecedenceLinks())
             {
-                for (Iterator<Term> i = this.getTerms().iterator(); i.hasNext();)
+                for (Iterator<Term> i = this.getTerms(true).iterator(); i.hasNext();)
                 {
                     Term term = (Term) i.next();
                     term.buildPrecedenceRelationships(cells, attributes, cs);

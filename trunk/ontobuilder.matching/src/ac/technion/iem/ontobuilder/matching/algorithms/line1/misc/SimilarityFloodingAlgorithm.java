@@ -419,7 +419,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
      */
     private Vector<LabeledVertex> getVertexes(Ontology ontology)
     {
-        Vector<?> terms = ontology.getTerms();
+        Vector<?> terms = ontology.getTerms(true);
         Vector<LabeledVertex> result = new Vector<LabeledVertex>();
         for (int i = 0; i < terms.size(); i++)
         {
@@ -490,7 +490,7 @@ public class SimilarityFloodingAlgorithm extends AbstractAlgorithm
      */
     private ArrayList<Term> getTerms(Ontology o)
     {
-        Vector<Term> terms = o.getTerms();
+        Vector<Term> terms = o.getTerms(true);
         ArrayList<Term> result = new ArrayList<Term>();
         for (int i = 0; i < terms.size(); i++)
         {

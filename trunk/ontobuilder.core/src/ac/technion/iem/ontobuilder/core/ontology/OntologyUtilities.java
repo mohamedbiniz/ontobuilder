@@ -124,7 +124,7 @@ public class OntologyUtilities
 
     public static ArrayList<Term> getTermsOfClass(Ontology ontology, String className)
     {
-        Vector<?> terms = ontology.getTerms();
+        Vector<?> terms = ontology.getTerms(true);
         ArrayList<Term> result = new ArrayList<Term>();
         for (Iterator<?> i = terms.iterator(); i.hasNext();)
         {

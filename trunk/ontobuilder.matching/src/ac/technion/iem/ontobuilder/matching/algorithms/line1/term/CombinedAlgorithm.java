@@ -194,7 +194,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms(true));
         }
 
         if (!candidateOntology.isLight())
@@ -207,7 +207,7 @@ public class CombinedAlgorithm extends TermValueAlgorithm
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms(true));
         }
     }
 

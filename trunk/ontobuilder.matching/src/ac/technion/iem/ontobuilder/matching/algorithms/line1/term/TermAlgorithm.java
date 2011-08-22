@@ -84,7 +84,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
         }
         else
         {
-            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms());
+            originalTargetTerms = new ArrayList<Term>(targetOntology.getTerms(true));
         }
 
         if (!candidateOntology.isLight())
@@ -95,7 +95,7 @@ public class TermAlgorithm extends AbstractAlgorithm implements MatchComparator
         }
         else
         {
-            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms());
+            originalCandidateTerms = new ArrayList<Term>(candidateOntology.getTerms(true));
         }
 
     }
