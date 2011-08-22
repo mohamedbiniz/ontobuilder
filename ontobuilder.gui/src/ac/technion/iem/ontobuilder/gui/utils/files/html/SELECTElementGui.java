@@ -299,6 +299,7 @@ public class SELECTElementGui extends INPUTElementGui
     	return selectElement.paramString();
     }
 
+    @SuppressWarnings("unused")
     private String encode(String s)
     {
         try
