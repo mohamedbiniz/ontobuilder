@@ -10,6 +10,10 @@ import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.TermValueAlgorithm;
 import ac.technion.iem.ontobuilder.matching.algorithms.line1.term.ValueAlgorithm;
 
+/**
+ * <p>Title: AlgorithmsGuiFactory</p>
+ * <p>Description: Creates an algorithm Gui according to the input algorithm type</p>
+ */
 public class AlgorithmsGuiFactory
 {
     public static AbstractAlgorithmGui getAlgorithmGui(Algorithm algorithm)

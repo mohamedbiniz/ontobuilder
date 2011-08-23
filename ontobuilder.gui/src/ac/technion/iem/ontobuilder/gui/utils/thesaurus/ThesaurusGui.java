@@ -44,7 +44,8 @@ import ac.technion.iem.ontobuilder.gui.elements.PopupListener;
 import ac.technion.iem.ontobuilder.gui.elements.PopupTrigger;
 
 /**
- * <p>Title: Thesaurus</p>
+ * <p>Title: ThesaurusGui</p>
+ * <p>Description: Implements the methods of the Thesaurus used by the GUI</p>
  * Extends {@link JPanel} 
  */
 public class ThesaurusGui extends JPanel

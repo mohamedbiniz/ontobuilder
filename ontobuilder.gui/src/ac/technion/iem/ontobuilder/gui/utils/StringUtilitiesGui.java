@@ -7,7 +7,14 @@ import javax.swing.table.TableModel;
 
 import ac.technion.iem.ontobuilder.core.utils.StringUtilities;
 
-public class GuiStringUtilities extends StringUtilities
+/**
+ * <p>
+ * Title: StringUtilitiesGui
+ * </p>
+  * <p>Description: Implements the methods of the StringUtilities used by the GUI</p>
+  * extends {@link StringUtilities}
+ */
+public class StringUtilitiesGui extends StringUtilities
 {
 
 	public static String getJTableStringRepresentation(JTable table)

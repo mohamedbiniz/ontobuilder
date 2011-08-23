@@ -9,6 +9,10 @@ import ac.technion.iem.ontobuilder.core.ontology.OntologyObject;
 import ac.technion.iem.ontobuilder.core.ontology.Relationship;
 import ac.technion.iem.ontobuilder.core.ontology.Term;
 
+/**
+ * <p>Title: OntologyObjectGuiFactory</p>
+ * <p>Description: Creates an ontology Gui object according to the input ontology object</p>
+ */
 public class OntologyObjectGuiFactory
 {
     public static OntologyObjectGui getOntologyObjectGui(OntologyObject ontologyObject)

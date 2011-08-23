@@ -18,7 +18,7 @@ import org.jdom.input.SAXBuilder;
 
 import ac.technion.iem.ontobuilder.core.biztalk.Link;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.gui.utils.GuiStringUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.StringUtilitiesGui;
 
 /**
  * <p>Title: CupidAnalyzer</p>
@@ -39,8 +39,8 @@ public class CupidAnalyzer
         {
             File file = new File(args[0]);
             createLinksTable(file);
-            String linksTableString = GuiStringUtilities.getJTableStringRepresentation(linksTable);
-            String tentativeLinksTableString = GuiStringUtilities
+            String linksTableString = StringUtilitiesGui.getJTableStringRepresentation(linksTable);
+            String tentativeLinksTableString = StringUtilitiesGui
                 .getJTableStringRepresentation(tentativeLinksTable);
             System.out.println("Cupid results for '" + file + "'\n\n\n");
             System.out.println("Links\n");
