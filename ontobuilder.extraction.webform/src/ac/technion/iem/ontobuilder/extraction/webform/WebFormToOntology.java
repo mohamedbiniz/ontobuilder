@@ -42,6 +42,12 @@ import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.SubmitINP
 import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.TEXTAREAElement;
 import ac.technion.iem.ontobuilder.extraction.webform.utils.files.html.TextINPUTElement;
 
+/**
+ * Ontology extractor from a web form
+ *
+ * @author Y.A
+ * @version 2.2
+ */
 public class WebFormToOntology
 {
 	private URL url;
@@ -50,12 +56,24 @@ public class WebFormToOntology
 	private Document document;
 	private ArrayList<FORMElement> formsToExtract;
 	
+	/**
+	 * Constructs a WebFormToOntology
+	 *
+	 * @param url URL with the forms from which to extract the ontology
+	 * @param formsToExtract specific FORM elements to extract from the URL, 
+	 * all other forms will be ignored 
+	 */
 	public WebFormToOntology(URL url, ArrayList<FORMElement> formsToExtract)
 	{
 		this.url = url;
 		this.formsToExtract = formsToExtract;
 	}
 	
+	/**
+     * Constructs a WebFormToOntology
+     *
+     * @param url URL with the forms from which to extract the ontology
+     */
 	public WebFormToOntology(URL url)
 	{
 		this(url,null);
@@ -80,6 +98,12 @@ public class WebFormToOntology
         }
 	}
 
+	/**
+	 * Generate an ontology from the URL 
+	 *
+	 * @return the generated ontology
+	 * @throws IOException
+	 */
 	public Ontology generateOntology() throws IOException
     {
 		init();
