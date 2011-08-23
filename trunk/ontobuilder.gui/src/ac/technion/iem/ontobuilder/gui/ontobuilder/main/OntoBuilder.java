@@ -139,7 +139,8 @@ import ac.technion.iem.ontobuilder.matching.match.MatchOntologyHandler;
 import com.jgraph.JGraph;
 
 /**
- * <p>Title: DOMPanel</p>
+ * <p>Title: OntoBuilder</p>
+ * <p>Description: Initializes the main GUI of OntoBuilder</p>
  * Extends a {@link Application}
  */
 public final class OntoBuilder extends Application

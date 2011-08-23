@@ -19,7 +19,7 @@ import ac.technion.iem.ontobuilder.core.ontology.Term;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.ontology.OntologyGui;
-import ac.technion.iem.ontobuilder.gui.utils.GuiStringUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.StringUtilitiesGui;
 import ac.technion.iem.ontobuilder.gui.utils.graphs.GraphUtilities;
 import ac.technion.iem.ontobuilder.matching.match.Match;
 import ac.technion.iem.ontobuilder.matching.match.MatchInformation;
@@ -274,21 +274,21 @@ public class MatchInformationGui
         sb.append("\n");
         sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.matches"))
             .append("\n");
-        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMatchTable()));
+        sb.append(StringUtilitiesGui.getJTableStringRepresentation(getMatchTable()));
         sb.append("\n\n");
         sb.append(PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatches"))
             .append("\n");
-        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMismatchTable()));
+        sb.append(StringUtilitiesGui.getJTableStringRepresentation(getMismatchTable()));
         sb.append("\n\n");
         sb.append(
             PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatchesTarget"))
             .append("\n");
-        sb.append(GuiStringUtilities.getJTableStringRepresentation(getMismatchTargetOntologyTable()));
+        sb.append(StringUtilitiesGui.getJTableStringRepresentation(getMismatchTargetOntologyTable()));
         sb.append("\n\n");
         sb.append(
             PropertiesHandler.getResourceString("mergewizard.matchInformation.mismatchesCandidate"))
             .append("\n");
-        sb.append(GuiStringUtilities
+        sb.append(StringUtilitiesGui
             .getJTableStringRepresentation(getMismatchCandidateOntologyTable()));
         return sb.toString();
     }

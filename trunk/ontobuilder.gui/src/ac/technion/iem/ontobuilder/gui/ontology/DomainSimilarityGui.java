@@ -11,7 +11,7 @@ import ac.technion.iem.ontobuilder.core.resources.OntoBuilderResources;
 import ac.technion.iem.ontobuilder.core.utils.properties.PropertiesHandler;
 import ac.technion.iem.ontobuilder.gui.application.ApplicationUtilities;
 import ac.technion.iem.ontobuilder.gui.application.PropertiesTableModel;
-import ac.technion.iem.ontobuilder.gui.utils.GuiStringUtilities;
+import ac.technion.iem.ontobuilder.gui.utils.StringUtilitiesGui;
 
 /**
  * <p>
@@ -81,7 +81,7 @@ public class DomainSimilarityGui
         }
 
         DomainSimilarity.buildDomainMatrix(PropertiesHandler.getStringProperty("domain.domainMatrix"));
-        System.out.println(GuiStringUtilities
+        System.out.println(StringUtilitiesGui
             .getJTableStringRepresentation(getDomainSimilarityTable()));
         System.out.println(args[0] + " <-> " + args[1] + " = " +
             DomainSimilarity.getDomainSimilarity(args[0], args[1]));
